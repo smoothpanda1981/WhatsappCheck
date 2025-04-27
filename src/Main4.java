@@ -52,18 +52,6 @@ public class Main4 {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         Runnable task = () -> {
             try {
-                // 1) Récupérer l'heure locale actuelle
-                LocalTime now = LocalTime.now();
-
-                // 2) Définir les bornes
-                LocalTime start = LocalTime.of(2, 30);  // 02:30
-                LocalTime end   = LocalTime.of(5, 30);  // 05:30
-
-                // 3) Vérifier si now est après (ou égal) à start ET avant (ou égal) à end
-                boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
-
-                // Exemple d'utilisation
-                if (!isInWindow) {
                     String newLine1 = "";
 
                     StringBuffer sb = new StringBuffer();
@@ -77,7 +65,12 @@ public class Main4 {
                         sb.append("FD : " + statutShorten);
                         newLine1 = newLine1 + "FD : " + statutShorten;
                     } else {
-                        String statutShorten = statut.replace("en ligne aujourd’hui à ", "");
+                        String statutShorten = "";
+                        if (statut.contains("en ligne aujourd’hui à ")) {
+                            statutShorten = statut.replace("en ligne aujourd’hui à ", "");
+                        } else {
+                            statutShorten = statut.replace("en ligne hier à ", "");
+                        }
                         //System.out.println("Heure : " + statutShorten + " (Domon)");
                         if (statutShorten.equals(oldStatusShorten1)) {
                             statutShorten = "==:==";
@@ -100,7 +93,12 @@ public class Main4 {
                         sb.append(statutShorten2 + " : SP");
                         newLine1 = newLine1 + statutShorten2 + " : SP";
                     } else {
-                        String statutShorten2 = statut2.replace("en ligne aujourd’hui à ", "");
+                        String statutShorten2 = "";
+                        if (statut2.contains("en ligne aujourd’hui à ")) {
+                            statutShorten2 = statut2.replace("en ligne aujourd’hui à ", "");
+                        } else {
+                            statutShorten2 = statut2.replace("en ligne hier à ", "");
+                        }
                         //System.out.println("Heure : " + statutShorten2 + " (Park)");
                         if (statutShorten2.equals(oldStatusShorten2)) {
                             statutShorten2 = "==:==";
@@ -144,7 +142,6 @@ public class Main4 {
 
                     searchAndClickContact(driver, "YAN WANG", 10);
                     sendMessage(driver, sb2.toString(), 5);
-                }
             } catch (Exception e) {
                 System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
             }
