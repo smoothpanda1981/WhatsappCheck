@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main5 {
+public class Main6 {
     private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats.txt";
 
     /*
@@ -97,11 +97,15 @@ public class Main5 {
                     oldStatusShorten1 = sTab[1];
                     oldStatusShorten2 = sTab[2];
 
-                    if (oldLine1.equals(newLine1)) {
+                    if (newLine1.equals("FD : ==:== <=> ==:== : SP")) {
                         line1Identical = true;
                     } else {
-                        line1Identical = false;
-                        oldLine1 = newLine1;
+                        if (oldLine1.equals(newLine1)) {
+                            line1Identical = true;
+                        } else {
+                            line1Identical = false;
+                            oldLine1 = newLine1;
+                        }
                     }
 
                     /*sTab = generateNewLine(statut3, statut2, oldStatusShorten3, oldStatusShorten4, "DA", "SP");
@@ -147,11 +151,13 @@ public class Main5 {
                         if (!line3Identical) {
                             sb2.append(System.lineSeparator()).append(oldLine3).append(System.lineSeparator());
                         }*/
+                        searchAndClickContact(driver, "YAN WANG", 10);
+                        sendMessage(driver, sb2.toString(), 5);
                     }
                     writeResultToFile(sb2);
 
-                    searchAndClickContact(driver, "YAN WANG", 10);
-                    sendMessage(driver, sb2.toString(), 5);
+                    /*searchAndClickContact(driver, "YAN WANG", 10);
+                    sendMessage(driver, sb2.toString(), 5);*/
                 }
             } catch (Exception e) {
                 System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
@@ -224,9 +230,9 @@ public class Main5 {
         }
         sb.append(System.lineSeparator());
 
-        if (newLine1.equals(prefix1 + " : ==:== <=> ==:== : " + prefix2)) {
-            newLine1 = prefix1 + " : " + statut.replace("en ligne aujourd’hui à ", "") + " <=> " + statut2.replace("en ligne aujourd’hui à ", "") + " : " + prefix2;
-        }
+//        if (newLine1.equals(prefix1 + " : ==:== <=> ==:== : " + prefix2)) {
+//            newLine1 = prefix1 + " : " + statut.replace("en ligne aujourd’hui à ", "") + " <=> " + statut2.replace("en ligne aujourd’hui à ", "") + " : " + prefix2;
+//        }
 
         result[0] = newLine1;
         result[1] = oldStatusShorten1;
