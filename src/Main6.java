@@ -78,6 +78,10 @@ public class Main6 {
                     String newLine2 = "";
                     String newLine3 = "";
 
+                    StringBuffer sb2 = new StringBuffer();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+                    sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+
                     StringBuffer sb = new StringBuffer();
                     //System.out.println("******************************");
                     searchAndClickContact(driver, "Domon Frédéric", 10);
@@ -132,9 +136,7 @@ public class Main6 {
                         oldLine3 = newLine3;
                     }*/
 
-                    StringBuffer sb2 = new StringBuffer();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm");
-                    sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+
                     //sb2.append(LocalDateTime.now().format(formatter));
                     if (line1Identical) {
                         //sb2.append("NO CHANGES").append(System.lineSeparator());;
