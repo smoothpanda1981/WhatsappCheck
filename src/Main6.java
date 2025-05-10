@@ -84,11 +84,11 @@ public class Main6 {
 
                     StringBuffer sb = new StringBuffer();
                     //System.out.println("******************************");
-                    searchAndClickContact(driver, "Domon Frédéric", 10);
-                    String statut = getContactStatus(driver, 5);
-
-                    searchAndClickContact(driver, "Stéphanie Park", 10);
+                    searchAndClickContact(driver, "Park", 10);
                     String statut2 = getContactStatus(driver, 5);
+
+                    searchAndClickContact(driver, "Domon", 10);
+                    String statut = getContactStatus(driver, 5);
 
                     //searchAndClickContact(driver, "Damien Aguer", 10);
                     //String statut3 = getContactStatus(driver, 5);
