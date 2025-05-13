@@ -274,7 +274,7 @@ public class Main6 {
         return statusElem.getText().trim();
     }
 
-    public static void searchAndClickContact(WebDriver driver, String contactName, int timeoutSec) {
+    public static void searchAndClickContact(WebDriver driver, String contactName, int timeoutSec) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
 
         // 1) Cliquer sur la barre de recherche
@@ -290,7 +290,7 @@ public class Main6 {
 
         // 3) Attendre que les résultats apparaissent (au moins un <span @title>)
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//span[@title]"), 0));
-
+        Thread.sleep(1500);
 
         // 4) Cliquer sur le premier résultat avec gestion de StaleElementReferenceException
         int attempts = 0;
