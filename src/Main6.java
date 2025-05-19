@@ -40,6 +40,7 @@ public class Main6 {
     private static boolean line1Identical = false;
     /*private static boolean line2Identical = false;
     private static boolean line3Identical = false;*/
+    private static boolean newRestart = true;
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -144,6 +145,10 @@ public class Main6 {
                         sb2 = new StringBuffer();
                         sb2.append("_").append(time).append("_").append(System.lineSeparator());
                     } else {
+                        if (newRestart) {
+                            sb2.append(" (restart)");
+                            newRestart = false;
+                        }
                         if (!line1Identical) {
                             sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
                         }
