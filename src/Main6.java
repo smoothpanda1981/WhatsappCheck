@@ -105,7 +105,7 @@ public class Main6 {
                     if (newLine1.equals("FD : ==:== <=> ==:== : SP")) {
                         line1Identical = true;
                     } else {
-                        if (oldLine1.equals(newLine1)) {
+                        if (oldLine1.equals(newLine1) && !newLine1.contains("en ligne")) {
                             line1Identical = true;
                         } else {
                             line1Identical = false;
