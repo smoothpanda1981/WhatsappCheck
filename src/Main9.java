@@ -142,13 +142,13 @@ public class Main9 {
                     long nextDelay;
                     if (line1Identical) {
                         // si identique → 3 minutes
-                        nextDelay = 3;
+                        nextDelay = 180;
                     } else {
-                        // si différent → 1 minute
-                        nextDelay = 1;
+                        // si différent → 0.5 minute
+                        nextDelay = 30;
                     }
                     // On reprogramme la même tâche avec le délai adapté
-                    scheduler.schedule(this, nextDelay, TimeUnit.MINUTES);
+                    scheduler.schedule(this, nextDelay, TimeUnit.SECONDS);
                 }
             }
         };
