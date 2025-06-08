@@ -1,16 +1,31 @@
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.docs.v1.Docs;
+import com.google.api.services.docs.v1.DocsScopes;
+import com.google.api.services.docs.v1.model.BatchUpdateDocumentRequest;
+import com.google.api.services.docs.v1.model.InsertTextRequest;
+import com.google.api.services.docs.v1.model.Request;
+import com.google.auth.http.HttpCredentialsAdapter;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -19,187 +34,122 @@ import java.util.concurrent.TimeUnit;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main101 {
-    private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats.txt";
+    private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats-roomz.txt";
+    private static final  String targetId_B = "2210c58e-393d-4452-a086-650123181ea9";
+    private static final  String targetId_D = "639b2da4-11f7-4226-ad79-8c0dfdc6599f";
+    private static final  String targetId_F = "6fa52c65-84b5-4338-a081-dc154666db0b";
+    private static final  String targetId_A = "6ad2265f-f596-4b47-8eff-00e3662e0d5e";
+    private static final  String targetId_C = "5cbdb346-f49a-48c4-8c7b-b0526a51a4f6";
 
+    // --- NOUVEAU pour Google Docs ---
+    private static final String APPLICATION_NAME      = "RoomzMonitor";
+    private static final String CREDENTIALS_FILE_PATH = "/home/ywang/IdeaProjects/credentials.json";
+    private static final String GOOGLE_DOC_ID         = "1jFh1xfHb7p8D3Yx9BZj_Zb1wRD_t7vJcyHO7T_r5tWY";
     /*
     Command line to open chrome : google-chrome --remote-debugging-port=9222 --user-data-dir="/home/ywang/IdeaProjects/profil-personnel"
      */
 
     // Variables globales pour stocker les anciennes lignes
-    private static String oldStatusShorten1 = "";
-    private static String oldStatusShorten2 = "";
-    /*private static String oldStatusShorten3 = "";
-    private static String oldStatusShorten4 = "";
-    private static String oldStatusShorten5 = "";
-    private static String oldStatusShorten6 = "";*/
-    private static String oldLine1 = "";
-    /*private static String oldLine2 = "";
-    private static String oldLine3 = "";*/
+    private static String oldtargetIdB = "";
+    private static String oldtargetIdD = "";
+    private static String oldtargetIdF = "";
+    private static String oldtargetIdA = "";
+    private static String oldtargetIdC = "";
 
-    // Flags pour indiquer si les lignes sont identiques
-    private static boolean line1Identical = false;
-    /*private static boolean line2Identical = false;
-    private static boolean line3Identical = false;*/
-    private static boolean newRestart = true;
+    private static StringBuffer sb = new StringBuffer();
 
 
     public static void main(String[] args) throws InterruptedException {
-        ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("debuggerAddress", "127.0.0.1:9222");
+        FirefoxBinary binary = new FirefoxBinary();
+        binary.addCommandLineOptions("--start-debugger-server", "9222");
 
-        // IMPORTANT : utilisez le même ChromeDriver que votre version de Chrome
-        WebDriver driver = new ChromeDriver(options);
+        FirefoxOptions options = new FirefoxOptions();
+        options.setBinary(binary);
+        // -no-remote permet d'ouvrir un profil parallèle sans interférer avec une instance existante
+        options.addArguments("-no-remote");
+        // si vous souhaitez réutiliser un profil spécifique :
+        options.addArguments("-profile", "/home/ywang/IdeaProjects/profil-personnel");
 
-        // À présent driver contrôle la fenêtre Chrome existante
-        //System.out.println("Titre de la page courante: " + driver.getTitle());
+        // 3) Lancez Firefox
+        WebDriver driver = new FirefoxDriver(options);
 
-        // Vous pouvez naviguer, cliquer, etc.
-        driver.get("https://web.whatsapp.com/");
+        String roomzUrl = "https://viewer.roomz.io/?roomz-public-id=TI-YlnNDfkeIN8o4ZgWeLA";
+        driver.get(roomzUrl);
         Thread.sleep(10000);  // ajustez selon votre connexion / machine
         //System.out.println("Titre : " + driver.getTitle());
 
-        // ───────────────────────────────────────────────────────────────────────────
-        // 2) Ouvrir un SECOND onglet pour Roomz puis récupérer data-workspaceId
-        // ───────────────────────────────────────────────────────────────────────────
-
-        // a) Ouvrir un nouvel onglet (Selenium 4+)
-        WebDriver roomzTab = driver.switchTo().newWindow(WindowType.TAB);
-        // b) Charger l’URL Roomz
-        String roomzUrl = "https://viewer.roomz.io/?roomz-public-id=TI-YlnNDfkeIN8o4ZgWeLA";
-        roomzTab.get(roomzUrl);
-
-        // c) Attendre que la page Roomz soit bien chargée (ou que l’élément contenant data-workspaceId soit présent)
-        WebDriverWait waitRoomz = new WebDriverWait(driver, Duration.ofSeconds(5));
-        // Ici on attend qu’il existe au moins un élément ayant l’attribut data-workspaceId
-        By workspaceLocator = By.xpath("//*[@id=\"view\"]/div/div/div/div[2]/div[2]/div/svg/g[159]");
-        waitRoomz.until(ExpectedConditions.presenceOfElementLocated(workspaceLocator));
-
-        // d) Récupérer l’élément
-        WebElement workspaceElement = driver.findElement(workspaceLocator);
-
-        // e) Lire la classe
-        String classValue = workspaceElement.getAttribute("class");
-        System.out.println("Class de l'élément <g>[159] = " + classValue);
-
         // Planification de la tâche toutes les 5 minutes
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        Runnable task = () -> {
-            try {
-                // 1) Récupérer l'heure locale actuelle
-                LocalTime now = LocalTime.now();
+        final Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // a) Vérifier la fenêtre temporelle (02:30 - 05:30)
+                    LocalTime now = LocalTime.now();
+                    LocalTime start = LocalTime.of(6, 30);
+                    LocalTime end = LocalTime.of(19, 30);
+                    boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
 
-                // 2) Définir les bornes
-                LocalTime start = LocalTime.of(2, 30);  // 02:30
-                LocalTime end   = LocalTime.of(5, 30);  // 05:30
-
-                // 3) Vérifier si now est après (ou égal) à start ET avant (ou égal) à end
-                boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
-
-                // Exemple d'utilisation
-                if (!isInWindow) {
-                    /* ***************************** */
-                    String newLine1 = "";
-                    String newLine2 = "";
-                    String newLine3 = "";
-
-                    StringBuffer sb2 = new StringBuffer();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
-                    sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
-
-                    StringBuffer sb3 = new StringBuffer();
-
-                    StringBuffer sb = new StringBuffer();
-                    //System.out.println("******************************");
-                    searchAndClickContact(driver, "Park", 10);
-                    String statut2 = getContactStatus(driver, 5);
-
-                    searchAndClickContact(driver, "Domon", 10);
-                    String statut = getContactStatus(driver, 5);
-
-                    //searchAndClickContact(driver, "Damien Aguer", 10);
-                    //String statut3 = getContactStatus(driver, 5);
-
-                    //searchAndClickContact(driver, "Alexandre Massot", 10);
-                    //String statut4 = getContactStatus(driver, 5);
-
-                    String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1, oldStatusShorten2, "FD", "SP");
-                    newLine1 = sTab[0];
-                    oldStatusShorten1 = sTab[1];
-                    oldStatusShorten2 = sTab[2];
-
-                    if (newLine1.equals("FD : ==:== <=> ==:== : SP")) {
-                        line1Identical = true;
-                    } else {
-                        if (oldLine1.equals(newLine1) && !newLine1.contains("en ligne")) {
-                            line1Identical = true;
-                        } else {
-                            line1Identical = false;
-                            oldLine1 = newLine1;
+                    if (true) {
+                    //if (isInWindow) {
+                        // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
+                        String whatsappHandle = "";
+                        for (String handle : driver.getWindowHandles()) {
+                            driver.switchTo().window(handle);
+                            if (driver.getCurrentUrl().startsWith("https://viewer.roomz.io/")) {
+                                whatsappHandle = handle;
+                                break;
+                            }
                         }
+                        driver.switchTo().window(whatsappHandle);
+                        Thread.sleep(1000);
+
+                        String bureau_b = getClassByTargetId(driver, targetId_B);
+                        bureau_b = bureau_b.replace("shape workspace-shape fill-", "");
+                        String bureau_d = getClassByTargetId(driver, targetId_D);
+                        bureau_d = bureau_d.replace("shape workspace-shape fill-", "");
+                        String bureau_f = getClassByTargetId(driver, targetId_F);
+                        bureau_f = bureau_f.replace("shape workspace-shape fill-", "");
+                        String bureau_a = getClassByTargetId(driver, targetId_A);
+                        bureau_a = bureau_a.replace("shape workspace-shape fill-", "");
+                        String bureau_c = getClassByTargetId(driver, targetId_C);
+                        bureau_c = bureau_c.replace("shape workspace-shape fill-", "");
+
+
+                        // 4) Construire la nouvelle ligne et mettre à jour le flag line1Identical
+                        String [] result = generateNewLines(bureau_b, bureau_d, bureau_f, bureau_a, bureau_c, oldtargetIdB, oldtargetIdD, oldtargetIdF, oldtargetIdA, oldtargetIdC, sb);
+                        StringBuffer sbFinal = new StringBuffer();
+                        sbFinal.setLength(0);
+                        sbFinal.append(result[0]);
+
+                        if (Boolean.parseBoolean(result[1])) {
+                            oldtargetIdB = bureau_b;
+                        }
+                        if (Boolean.parseBoolean(result[2])) {
+                            oldtargetIdD = bureau_d;
+                        }
+                        if (Boolean.parseBoolean(result[3])) {
+                            oldtargetIdF = bureau_f;
+                        }
+                        if (Boolean.parseBoolean(result[4])) {
+                            oldtargetIdA = bureau_a;
+                        }
+                        if (Boolean.parseBoolean(result[5])) {
+                            oldtargetIdC = bureau_c;
+                        }
+
+                        writeResultToFile(sbFinal);
+
+                        appendToGoogleDoc(GOOGLE_DOC_ID, sbFinal.toString());
                     }
-
-                    /*sTab = generateNewLine(statut3, statut2, oldStatusShorten3, oldStatusShorten4, "DA", "SP");
-                    newLine2 = sTab[0];
-                    oldStatusShorten3 = sTab[1];
-                    oldStatusShorten4 = sTab[2];
-
-                    if (oldLine2.equals(newLine2)) {
-                        line2Identical = true;
-                    } else {
-                        line2Identical = false;
-                        oldLine2 = newLine2;
-                    }*/
-
-                    /*sTab = generateNewLine(statut4, statut2, oldStatusShorten5, oldStatusShorten6, "AM", "SP");
-                    newLine3 = sTab[0];
-                    oldStatusShorten5 = sTab[1];
-                    oldStatusShorten6 = sTab[2];
-
-                    if (oldLine3.equals(newLine3)) {
-                        line3Identical = true;
-                    } else {
-                        line3Identical = false;
-                        oldLine3 = newLine3;
-                    }*/
-
-
-                    //sb2.append(LocalDateTime.now().format(formatter));
-                    if (line1Identical) {
-                        //sb2.append("NO CHANGES").append(System.lineSeparator());;
-                        String time = sb2.toString();
-                        sb2 = new StringBuffer();
-                        sb2.append("_").append(time).append("_").append(System.lineSeparator());
-                    } else {
-                        if (newRestart) {
-                            sb2.append(" (restart)");
-                            sb3.append("restart : ");
-                            newRestart = false;
-                        }
-                        if (!line1Identical) {
-                            sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
-                            sb3.append(oldLine1).append(System.lineSeparator());
-                        }
-                       /* if (!line2Identical) {
-                            sb2.append(System.lineSeparator()).append(oldLine2).append(System.lineSeparator());
-                        }
-                        if (!line3Identical) {
-                            sb2.append(System.lineSeparator()).append(oldLine3).append(System.lineSeparator());
-                        }*/
-                        searchAndClickContact(driver, "YAN WANG", 10);
-                        sendMessage(driver, sb3.toString(), 5);
-                    }
-                    writeResultToFile(sb2);
-
-                    /*searchAndClickContact(driver, "YAN WANG", 10);
-                    sendMessage(driver, sb2.toString(), 5);*/
+                } catch (Exception e) {
+                    System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
                 }
-            } catch (Exception e) {
-                System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
             }
         };
 
         // Démarrer immédiatement puis toutes les 5 minutes
-        scheduler.scheduleAtFixedRate(task, 0, 3, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.MINUTES);
 
         // Empêche le programme de se terminer
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -208,69 +158,119 @@ public class Main101 {
         }));
     }
 
-    public static String[] generateNewLine(String statut, String statut2, String oldStatusShorten1, String oldStatusShorten2, String prefix1, String prefix2) {
-        String[] result = new String[3];
-        StringBuffer sb = new StringBuffer();
-        String newLine1 = "";
-        //System.out.println("Statut du contact : " + statut);
-        if (statut.equals("en ligne")) {
-            //System.out.println("Actuellement en ligne");
-            String statutShorten = "en ligne";
-            sb.append(prefix1 + " : " + statutShorten);
-            newLine1 = newLine1 + prefix1 + " : " + statutShorten;
-        } else {
-            String statutShorten = "";
-            if (statut.contains("en ligne aujourd’hui à ")) {
-                statutShorten = statut.replace("en ligne aujourd’hui à ", "");
-            } else {
-                statutShorten = statut.replace("en ligne hier à ", "");
-            }
-            //System.out.println("Heure : " + statutShorten + " (Domon)");
-            if (statutShorten.equals(oldStatusShorten1)) {
-                statutShorten = "==:==";
-                sb.append(prefix1 + " : " + statutShorten);
-            } else {
-                oldStatusShorten1 = statutShorten;
-                sb.append(prefix1 + " : " + statutShorten);
-            }
-            newLine1 = newLine1 + prefix1 + " : " + statutShorten;
+    /** Initialise et renvoie un client Google Docs authentifié via compte de service. */
+    private static Docs getDocsService() throws Exception {
+        // Lit la clé JSON du compte de service
+        GoogleCredentials creds = GoogleCredentials
+                .fromStream(new FileInputStream(CREDENTIALS_FILE_PATH))
+                .createScoped(Collections.singleton(DocsScopes.DOCUMENTS));
+
+        return new Docs.Builder(
+                GoogleNetHttpTransport.newTrustedTransport(),
+                JacksonFactory.getDefaultInstance(),
+                new HttpCredentialsAdapter(creds))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+    }
+
+    /**
+     * Ajoute (append) du texte à la fin du document Google Docs identifié par docId.
+     */
+    private static void appendToGoogleDoc(String docId, String text) throws Exception {
+        Docs docsService = getDocsService();
+
+        // Construire la requête d'insertion : on positionne index = 1 pour le début,
+        // ou index = document_length pour la fin. Ici on append à la fin :
+        int endIndex = docsService.documents()
+                .get(docId)
+                .execute()
+                .getBody()
+                .getContent()
+                .size() - 1;
+
+        Request insertRequest = new Request()
+                .setInsertText(new InsertTextRequest()
+                        .setText(text + "\n")
+                        .setLocation(new com.google.api.services.docs.v1.model.Location()
+                                .setIndex(endIndex)));
+
+        BatchUpdateDocumentRequest body = new BatchUpdateDocumentRequest()
+                .setRequests(Collections.singletonList(insertRequest));
+
+        docsService.documents()
+                .batchUpdate(docId, body)
+                .execute();
+    }
+
+
+    public static String getClassByTargetId (WebDriver driver, String targetId) {
+        // 1) Attendre que le SVG soit chargé
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("svg")));
+
+// 2) Construire un locator CSS qui matche l'attribut à la valeur voulue
+        By workspaceLocator = By.cssSelector(
+                "svg g.shape.workspace-shape[data-workspaceId='" + targetId + "']"
+        );
+
+        // 3) Récupérer l'élément
+        WebElement workspaceG = wait.until(
+                ExpectedConditions.presenceOfElementLocated(workspaceLocator)
+        );
+
+        // 4) Lire ses attributs
+        String classValue   = workspaceG.getAttribute("class");
+
+        return classValue;
+    }
+
+    public static String[] generateNewLines(String bureau_B, String bureau_D, String bureau_F, String bureau_A, String bureau_C, String oldtargetIdB, String oldtargetIdD, String oldtargetIdF,  String oldtargetIdA,  String oldtargetIdC, StringBuffer sb) {
+        String[] result = new String[6];
+
+        String changeValueOfB = "false";
+        String changeValueOfD = "false";
+        String changeValueOfF = "false";
+        String changeValueOfA = "false";
+        String changeValueOfC = "false";
+
+        System.out.println(bureau_B + " = " + oldtargetIdB);
+        System.out.println(bureau_D + " = " + oldtargetIdD);
+        System.out.println(bureau_F + " = " + oldtargetIdF);
+        System.out.println(bureau_A + " = " + oldtargetIdA);
+        System.out.println(bureau_C + " = " + oldtargetIdC);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+        sb.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+
+        if (!bureau_B.equals(oldtargetIdB)) {
+            changeValueOfB = "true";
+            sb.append(System.lineSeparator()).append(" B : " + bureau_B);
         }
-        sb.append(" <=> ");
-        newLine1 = newLine1 + " <=> ";
-
-
-        //System.out.println("Statut du contact : " + statut2);
-        if (statut2.equals("en ligne")) {
-            //System.out.println("Actuellement en ligne");
-            String statutShorten2 = "en ligne";
-            sb.append(statutShorten2 + " : " + prefix2);
-            newLine1 = newLine1 + statutShorten2 + " : " + prefix2;
-        } else {
-            String statutShorten2 = "";
-            if (statut2.contains("en ligne aujourd’hui à ")) {
-                statutShorten2 = statut2.replace("en ligne aujourd’hui à ", "");
-            } else {
-                statutShorten2 = statut2.replace("en ligne hier à ", "");
-            }
-            //System.out.println("Heure : " + statutShorten2 + " (Park)");
-            if (statutShorten2.equals(oldStatusShorten2)) {
-                statutShorten2 = "==:==";
-                sb.append(statutShorten2 + " : " + prefix2);
-            } else {
-                oldStatusShorten2 = statutShorten2;
-                sb.append(statutShorten2 + " : " + prefix2);
-            }
-            newLine1 = newLine1 + statutShorten2 + " : " + prefix2;
+        if (!bureau_D.equals(oldtargetIdD)) {
+            changeValueOfD = "true";
+            sb.append(System.lineSeparator()).append(" D : " + bureau_D);
+        }
+        if (!bureau_F.equals(oldtargetIdF)) {
+            changeValueOfF = "true";
+            sb.append(System.lineSeparator()).append(" F : " + bureau_F);
+        }
+        if (!bureau_A.equals(oldtargetIdA)) {
+            changeValueOfA = "true";
+            sb.append(System.lineSeparator()).append(" A : " + bureau_A);
+        }
+        if (!bureau_C.equals(oldtargetIdC)) {
+            changeValueOfC = "true";
+            sb.append(System.lineSeparator()).append(" C : " + bureau_C);
         }
         sb.append(System.lineSeparator());
 
-//        if (newLine1.equals(prefix1 + " : ==:== <=> ==:== : " + prefix2)) {
-//            newLine1 = prefix1 + " : " + statut.replace("en ligne aujourd’hui à ", "") + " <=> " + statut2.replace("en ligne aujourd’hui à ", "") + " : " + prefix2;
-//        }
+        result[0] =  sb.toString();
+        result[1] =  changeValueOfB;
+        result[2] =  changeValueOfD;
+        result[3] =  changeValueOfF;
+        result[4] =  changeValueOfA;
+        result[5] =  changeValueOfC;
 
-        result[0] = newLine1;
-        result[1] = oldStatusShorten1;
-        result[2] = oldStatusShorten2;
         return result;
     }
 
@@ -293,57 +293,5 @@ public class Main101 {
         } catch (IOException e) {
             throw new RuntimeException("Erreur lors de l'écriture du fichier : " + e.getMessage(), e);
         }
-    }
-
-    public static String getContactStatus(WebDriver driver, int timeoutSec) throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
-
-        Thread.sleep(6000);
-        //By statusLocator = By.xpath("//header//span[@dir='auto' and starts-with(@title,'en ligne')]");
-        By statusLocator = By.xpath("//*[@id=\"main\"]/header/div[2]/div[2]/span");
-        WebElement statusElem = wait.until(ExpectedConditions.visibilityOfElementLocated(statusLocator));
-
-        return statusElem.getText().trim();
-    }
-
-    public static void searchAndClickContact(WebDriver driver, String contactName, int timeoutSec) throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
-
-        // 1) Cliquer sur la barre de recherche
-        WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@contenteditable='true' and @data-tab='3']")));
-        searchBar.click();
-
-        // 2) Vider le champ si nécessaire (sélectionner tout et supprimer)
-        searchBar.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        searchBar.sendKeys(Keys.DELETE);
-
-        // 3) Taper le nom du contact
-        searchBar.sendKeys(contactName);
-
-        // 3) Attendre que les résultats apparaissent (au moins un <span @title>)
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//span[@title]"), 0));
-        Thread.sleep(1500);
-
-        // 4) Cliquer sur le premier résultat avec gestion de StaleElementReferenceException
-        int attempts = 0;
-        while (attempts < 3) {
-            try {
-                List<WebElement> results = driver.findElements(By.xpath("//span[@title]"));
-                if (results.isEmpty()) {
-                    throw new RuntimeException("Aucun résultat trouvé pour " + contactName);
-                }
-                results.get(0).click();
-                return;
-            } catch (StaleElementReferenceException e) {
-                attempts++;
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    throw new RuntimeException("Interrupted during retry", ie);
-                }
-            }
-        }
-        throw new RuntimeException("Impossible de cliquer sur le premier résultat après plusieurs tentatives");
     }
 }
