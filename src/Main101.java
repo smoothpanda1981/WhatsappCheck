@@ -14,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -56,8 +57,6 @@ public class Main101 {
     private static String oldtargetIdA = "";
     private static String oldtargetIdC = "";
 
-    private static StringBuffer sb = new StringBuffer();
-
 
     public static void main(String[] args) throws InterruptedException {
         FirefoxBinary binary = new FirefoxBinary();
@@ -75,6 +74,15 @@ public class Main101 {
 
         String roomzUrl = "https://viewer.roomz.io/?roomz-public-id=TI-YlnNDfkeIN8o4ZgWeLA";
         driver.get(roomzUrl);
+        String roomzHandle  = driver.getWindowHandle();
+
+        // 3) Ouvrez un second onglet sur Messenger
+        String messengerUrl    = "https://www.messenger.com/";
+        WebDriver messengerTab = driver.switchTo().newWindow(WindowType.TAB);
+        messengerTab.get(messengerUrl);
+        String messengerHandle = driver.getWindowHandle();
+
+        driver.switchTo().window(roomzHandle);
         Thread.sleep(10000);  // ajustez selon votre connexion / machine
         //System.out.println("Titre : " + driver.getTitle());
 
@@ -90,8 +98,7 @@ public class Main101 {
                     LocalTime end = LocalTime.of(19, 30);
                     boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
 
-                    if (true) {
-                    //if (isInWindow) {
+                    if (isInWindow) {
                         // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
                         String whatsappHandle = "";
                         for (String handle : driver.getWindowHandles()) {
@@ -117,7 +124,7 @@ public class Main101 {
 
 
                         // 4) Construire la nouvelle ligne et mettre à jour le flag line1Identical
-                        String [] result = generateNewLines(bureau_b, bureau_d, bureau_f, bureau_a, bureau_c, oldtargetIdB, oldtargetIdD, oldtargetIdF, oldtargetIdA, oldtargetIdC, sb);
+                        String [] result = generateNewLines(bureau_b, bureau_d, bureau_f, bureau_a, bureau_c, oldtargetIdB, oldtargetIdD, oldtargetIdF, oldtargetIdA, oldtargetIdC);
                         StringBuffer sbFinal = new StringBuffer();
                         sbFinal.setLength(0);
                         sbFinal.append(result[0]);
@@ -140,7 +147,39 @@ public class Main101 {
 
                         writeResultToFile(sbFinal);
 
-                        appendToGoogleDoc(GOOGLE_DOC_ID, sbFinal.toString());
+                        if (Boolean.parseBoolean(result[1]) || Boolean.parseBoolean(result[2]) || Boolean.parseBoolean(result[3]) || Boolean.parseBoolean(result[4]) || Boolean.parseBoolean(result[5])) {
+                            String messengerHandle = "";
+                            for (String handle : driver.getWindowHandles()) {
+                                driver.switchTo().window(handle);
+                                if (driver.getCurrentUrl().startsWith("https://www.messenger.com/")) {
+                                    messengerHandle = handle;
+                                    break;
+                                }
+                            }
+                            driver.switchTo().window(messengerHandle);
+
+                            WebDriverWait waitMessenger = new WebDriverWait(driver, Duration.ofSeconds(15));
+                            By yanWangLink = By.xpath("//a[.//span[text()='Yan Wang']]");
+                            WebElement conversation = waitMessenger.until(
+                                    ExpectedConditions.elementToBeClickable(yanWangLink)
+                            );
+                            conversation.click();
+
+                            // 3) Sélectionner la zone de saisie (textarea) et y insérer sbFinal
+                            By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
+                            WebElement inputBox = waitMessenger.until(
+                                    ExpectedConditions.elementToBeClickable(inputLocator)
+                            );
+                            Actions actions = new Actions(driver);
+                            actions.click(inputBox)
+                                    .sendKeys(sbFinal.toString())
+                                    .sendKeys(Keys.ENTER)
+                                    .perform();
+
+                            // 4a) Option 1 : Envoyer en appuyant sur ENTER
+                            inputBox.sendKeys(Keys.ENTER);
+                        }
+
                     }
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
@@ -149,7 +188,7 @@ public class Main101 {
         };
 
         // Démarrer immédiatement puis toutes les 5 minutes
-        scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(task, 0, 180, TimeUnit.SECONDS);
 
         // Empêche le programme de se terminer
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -224,7 +263,7 @@ public class Main101 {
         return classValue;
     }
 
-    public static String[] generateNewLines(String bureau_B, String bureau_D, String bureau_F, String bureau_A, String bureau_C, String oldtargetIdB, String oldtargetIdD, String oldtargetIdF,  String oldtargetIdA,  String oldtargetIdC, StringBuffer sb) {
+    public static String[] generateNewLines(String bureau_B, String bureau_D, String bureau_F, String bureau_A, String bureau_C, String oldtargetIdB, String oldtargetIdD, String oldtargetIdF,  String oldtargetIdA,  String oldtargetIdC) {
         String[] result = new String[6];
 
         String changeValueOfB = "false";
@@ -233,12 +272,7 @@ public class Main101 {
         String changeValueOfA = "false";
         String changeValueOfC = "false";
 
-        System.out.println(bureau_B + " = " + oldtargetIdB);
-        System.out.println(bureau_D + " = " + oldtargetIdD);
-        System.out.println(bureau_F + " = " + oldtargetIdF);
-        System.out.println(bureau_A + " = " + oldtargetIdA);
-        System.out.println(bureau_C + " = " + oldtargetIdC);
-
+        StringBuffer sb = new StringBuffer();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
         sb.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
 
