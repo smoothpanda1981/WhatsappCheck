@@ -31,6 +31,8 @@ public class Main10 {
     // Variables globales pour stocker les anciennes lignes
     private static String oldStatusShorten1 = "";
     private static String oldStatusShorten2 = "";
+    private static String oldStatusShorten5 = "";
+    private static String oldStatusShorten6 = "";
     private static String oldLine1 = "";
 
     // Flags pour indiquer si les lignes sont identiques
@@ -71,7 +73,7 @@ public class Main10 {
                 try {
                     // a) Vérifier la fenêtre temporelle (02:30 - 05:30)
                     LocalTime now = LocalTime.now();
-                    LocalTime start = LocalTime.of(2, 30);
+                    LocalTime start = LocalTime.of(2, 35);
                     LocalTime end = LocalTime.of(5, 30);
                     boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
 
@@ -135,9 +137,27 @@ public class Main10 {
                                 if (!oldLine1.contains("FD : ==:==") && !oldLine1.contains("==:== : SP")) {
                                     searchAndClickContact(driver, "Roy", 10);
                                     String statut5 = getContactStatus(driver, 5);
-                                    String br = generateForRoy(statut5, "BR");
-                                    sb2.append(System.lineSeparator()).append(oldLine1 + " (" + br + ")").append(System.lineSeparator());
-                                    sb3.append(oldLine1 + " (" + br + ")").append(System.lineSeparator());
+                                    String br = generateForExtra(statut5, "BR");
+                                    if (!br.equals(oldStatusShorten5)) {
+                                        oldStatusShorten5 = br;
+                                        sb2.append(System.lineSeparator()).append(oldLine1 + " (" + br + ")").append(System.lineSeparator());
+                                        sb3.append(oldLine1 + " (" + br + ")").append(System.lineSeparator());
+                                    } else {
+                                        sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
+                                        sb3.append(oldLine1).append(System.lineSeparator());
+                                    }
+                                } else if (oldLine1.contains("FD : ==:==") && !oldLine1.contains("==:== : SP")) {
+                                    searchAndClickContact(driver, "Aguer", 10);
+                                    String statut6 = getContactStatus(driver, 5);
+                                    String da = generateForExtra(statut6, "DA");
+                                    if (!da.equals(oldStatusShorten6)) {
+                                        oldStatusShorten6 = da;
+                                        sb2.append(System.lineSeparator()).append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
+                                        sb3.append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
+                                    } else {
+                                        sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
+                                        sb3.append(oldLine1).append(System.lineSeparator());
+                                    }
                                 } else {
                                     sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
                                     sb3.append(oldLine1).append(System.lineSeparator());
@@ -242,7 +262,7 @@ public class Main10 {
         return result;
     }
 
-    public static String generateForRoy (String statut5, String prefix5) {
+    public static String generateForExtra (String statut5, String prefix5) {
         String result = "";
         if (statut5.equals("en ligne")) {
             //System.out.println("Actuellement en ligne");
