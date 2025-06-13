@@ -22,9 +22,7 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
@@ -92,6 +90,10 @@ public class Main101 {
             @Override
             public void run() {
                 try {
+                    DayOfWeek today = LocalDate.now().getDayOfWeek();
+                    if (today == DayOfWeek.SUNDAY || today == DayOfWeek.SATURDAY) {
+                        return;
+                    }
                     // a) Vérifier la fenêtre temporelle (02:30 - 05:30)
                     LocalTime now = LocalTime.now();
                     LocalTime start = LocalTime.of(6, 30);
