@@ -143,8 +143,17 @@ public class Main10 {
                                         sb2.append(System.lineSeparator()).append(oldLine1 + " (" + br + ")").append(System.lineSeparator());
                                         sb3.append(oldLine1 + " (" + br + ")").append(System.lineSeparator());
                                     } else {
-                                        sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
-                                        sb3.append(oldLine1).append(System.lineSeparator());
+                                        searchAndClickContact(driver, "Aguer", 10);
+                                        String statut6 = getContactStatus(driver, 5);
+                                        String da = generateForExtra(statut6, "DA");
+                                        if (!da.equals(oldStatusShorten6)) {
+                                            oldStatusShorten6 = da;
+                                            sb2.append(System.lineSeparator()).append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
+                                            sb3.append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
+                                        } else {
+                                            sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
+                                            sb3.append(oldLine1).append(System.lineSeparator());
+                                        }
                                     }
                                 } else if (oldLine1.contains("FD : ==:==") && !oldLine1.contains("==:== : SP")) {
                                     searchAndClickContact(driver, "Aguer", 10);
@@ -178,7 +187,7 @@ public class Main10 {
                         nextDelay = 180;
                     } else {
                         // si différent → 0.5 minute
-                        nextDelay = 30;
+                        nextDelay = 40;
                     }
                     // On reprogramme la même tâche avec le délai adapté
                     scheduler.schedule(this, nextDelay, TimeUnit.SECONDS);
