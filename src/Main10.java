@@ -37,6 +37,7 @@ public class Main10 {
 
     // Flags pour indiquer si les lignes sont identiques
     private static boolean line1Identical = false;
+    private static boolean isOutOfWindow = false;
     private static boolean newRestart = true;
 
 
@@ -73,11 +74,10 @@ public class Main10 {
                 try {
                     // a) Vérifier la fenêtre temporelle (02:30 - 05:30)
                     LocalTime now = LocalTime.now();
-                    LocalTime start = LocalTime.of(2, 35);
+                    LocalTime start = LocalTime.of(1, 30);
                     LocalTime end = LocalTime.of(5, 30);
-                    boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
+                    isOutOfWindow = !now.isBefore(start) && !now.isAfter(end);
 
-                    if (!isInWindow) {
                         // 1) Variables préparatoires pour le compte-rendu
                         String newLine1 = "";
                         StringBuffer sb2 = new StringBuffer();
@@ -176,18 +176,27 @@ public class Main10 {
                             sendMessage(driver, sb3.toString(), 5);
                         }
                         writeResultToFile(sb2);
-                    }
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
                 } finally {
                     // 6) À la fin de l'exécution de ce tour, on calcule le délai d'attente avant le prochain
                     long nextDelay;
-                    if (line1Identical) {
-                        // si identique → 3 minutes
-                        nextDelay = 180;
+                    if (isOutOfWindow) {
+                        if (line1Identical) {
+                            // si identique → 3 minutes
+                            nextDelay = 360;
+                        } else {
+                            // si différent → 0.5 minute
+                            nextDelay = 60;
+                        }
                     } else {
-                        // si différent → 0.5 minute
-                        nextDelay = 40;
+                        if (line1Identical) {
+                            // si identique → 3 minutes
+                            nextDelay = 180;
+                        } else {
+                            // si différent → 0.5 minute
+                            nextDelay = 40;
+                        }
                     }
                     // On reprogramme la même tâche avec le délai adapté
                     scheduler.schedule(this, nextDelay, TimeUnit.SECONDS);
