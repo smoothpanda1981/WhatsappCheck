@@ -33,6 +33,7 @@ public class Main10 {
     private static String oldStatusShorten2 = "";
     private static String oldStatusShorten5 = "";
     private static String oldStatusShorten6 = "";
+    private static String oldStatusShorten8 = "";
     private static String oldLine1 = "";
 
     // Flags pour indiquer si les lignes sont identiques
@@ -135,21 +136,31 @@ public class Main10 {
                             }
                             if (!line1Identical) {
                                 if (!oldLine1.contains("FD : ==:==") && !oldLine1.contains("==:== : SP")) {
+                                    searchAndClickContact(driver, "Aguer", 10);
+                                    String statut6 = getContactStatus(driver, 5);
+                                    String da = generateForExtra(statut6, "DA");
+
                                     searchAndClickContact(driver, "Roy", 10);
                                     String statut5 = getContactStatus(driver, 5);
                                     String br = generateForExtra(statut5, "BR");
-                                    if (!br.equals(oldStatusShorten5)) {
+
+                                    if (!da.equals(oldStatusShorten6)) {
+                                        oldStatusShorten6 = da;
+                                        sb2.append(System.lineSeparator()).append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
+                                        sb3.append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
+                                    } else if (!br.equals(oldStatusShorten5)) {
                                         oldStatusShorten5 = br;
                                         sb2.append(System.lineSeparator()).append(oldLine1 + " (" + br + ")").append(System.lineSeparator());
                                         sb3.append(oldLine1 + " (" + br + ")").append(System.lineSeparator());
                                     } else {
-                                        searchAndClickContact(driver, "Aguer", 10);
-                                        String statut6 = getContactStatus(driver, 5);
-                                        String da = generateForExtra(statut6, "DA");
-                                        if (!da.equals(oldStatusShorten6)) {
-                                            oldStatusShorten6 = da;
-                                            sb2.append(System.lineSeparator()).append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
-                                            sb3.append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
+                                        searchAndClickContact(driver, "Massot", 10);
+                                        String statut8 = getContactStatus(driver, 5);
+                                        String am = generateForExtra(statut8, "AM");
+
+                                        if (!am.equals(oldStatusShorten8)) {
+                                            oldStatusShorten8 = am;
+                                            sb2.append(System.lineSeparator()).append(oldLine1 + " (" + am + ")").append(System.lineSeparator());
+                                            sb3.append(oldLine1 + " (" + am + ")").append(System.lineSeparator());
                                         } else {
                                             sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
                                             sb3.append(oldLine1).append(System.lineSeparator());
