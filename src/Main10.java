@@ -206,7 +206,7 @@ public class Main10 {
                             nextDelay = 180;
                         } else {
                             // si différent → 0.5 minute
-                            nextDelay = 40;
+                            nextDelay = 30;
                         }
                     }
                     // On reprogramme la même tâche avec le délai adapté
