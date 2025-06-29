@@ -137,6 +137,7 @@ public class Main102 {
                                 needTimeForMC = false;
                             }
                     }
+                    Thread.sleep(3000);
 
                     String messengerHandle = "";
                     for (String handle : driver.getWindowHandles()) {
@@ -189,7 +190,6 @@ public class Main102 {
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
                             sbFinal.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
                             sbFinal.append(System.lineSeparator()).append("MC : ").append(status);
-                            needTimeForMC = false;
                         } else {
                             sbFinal.append("MC : ").append(status);
                             needTimeForMC = true;
