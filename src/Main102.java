@@ -50,6 +50,8 @@ public class Main102 {
     private static String oldtargetIdF = "";
     private static String oldtargetIdA = "";
     private static String oldtargetIdC = "";
+    private static String oldMCStatus = "";
+    private static boolean needTimeForMC = true;
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -92,9 +94,9 @@ public class Main102 {
                     LocalTime start = LocalTime.of(6, 30);
                     LocalTime end = LocalTime.of(19, 30);
                     boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
+                    StringBuffer sbFinal = new StringBuffer();
 
-                    if (isInWindow) {
-                        if (today != DayOfWeek.SUNDAY && today != DayOfWeek.SATURDAY) {
+                    if (true) { //if (isInWindow && today != DayOfWeek.SUNDAY && today != DayOfWeek.SATURDAY) {
                             // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
                             String whatsappHandle = "";
                             for (String handle : driver.getWindowHandles()) {
@@ -121,7 +123,6 @@ public class Main102 {
 
                             // 4) Construire la nouvelle ligne et mettre à jour le flag line1Identical
                             String [] result = generateNewLines(bureau_b, bureau_d, bureau_f, bureau_a, bureau_c, oldtargetIdB, oldtargetIdD, oldtargetIdF, oldtargetIdA, oldtargetIdC);
-                            StringBuffer sbFinal = new StringBuffer();
                             sbFinal.setLength(0);
                             sbFinal.append(result[0]);
 
@@ -144,96 +145,123 @@ public class Main102 {
                             writeResultToFile(sbFinal);
 
                             if (Boolean.parseBoolean(result[1]) || Boolean.parseBoolean(result[2]) || Boolean.parseBoolean(result[3]) || Boolean.parseBoolean(result[4]) || Boolean.parseBoolean(result[5])) {
-                                String messengerHandle = "";
-                                for (String handle : driver.getWindowHandles()) {
-                                    driver.switchTo().window(handle);
-                                    if (driver.getCurrentUrl().startsWith("https://www.messenger.com/")) {
-                                        messengerHandle = handle;
-                                        break;
-                                    }
-                                }
-                                driver.switchTo().window(messengerHandle);
-
-                                WebDriverWait waitMessenger = new WebDriverWait(driver, Duration.ofSeconds(15));
-                                By searchLocator = By.xpath(
-                                        "//input[@type='search']"
-                                                + " | //input[contains(@placeholder,'Rechercher')]"
-                                );
-                                WebElement searchBox = waitMessenger.until(
-                                        ExpectedConditions.elementToBeClickable(searchLocator)
-                                );
-                                searchBox.click();
-                                searchBox.clear();
-                                searchBox.sendKeys("Yan Wang");
-                                searchBox.sendKeys(Keys.ENTER);
-
-                                // 2) Cliquer sur la conversation « Marie-Claude Poirier »
-                                //By convLocator = By.xpath("//a[.//span[text()='Marie-Claude Poirier']]");
-                                By convLocator = By.xpath("(//a[.//span[text()='Yan Wang']])[1]");
-                                WebElement conversation = waitMessenger.until(
-                                        ExpectedConditions.elementToBeClickable(convLocator)
-                                );
-                                conversation.click();
-
-                                // 3) Sélectionner la zone de saisie (textarea) et y insérer sbFinal
-                                By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                                WebElement inputBox = waitMessenger.until(
-                                        ExpectedConditions.elementToBeClickable(inputLocator)
-                                );
-                                Actions actions = new Actions(driver);
-                                actions.click(inputBox)
-                                        .sendKeys(sbFinal.toString())
-                                        .sendKeys(Keys.ENTER)
-                                        .perform();
-
-                                // 4a) Option 1 : Envoyer en appuyant sur ENTER
-                                inputBox.sendKeys(Keys.ENTER);
+                                needTimeForMC = false;
                             }
-
-                        }
                     }
 
-                    String messenger2Handle = "";
+                    String messengerHandle = "";
                     for (String handle : driver.getWindowHandles()) {
                         driver.switchTo().window(handle);
                         if (driver.getCurrentUrl().startsWith("https://www.messenger.com/")) {
-                            messenger2Handle = handle;
+                            messengerHandle = handle;
                             break;
                         }
                     }
-                    driver.switchTo().window(messenger2Handle);
+                    driver.switchTo().window(messengerHandle);
 
-                    WebDriverWait wait2Messenger = new WebDriverWait(driver, Duration.ofSeconds(15));
+                    WebDriverWait waitMessenger = new WebDriverWait(driver, Duration.ofSeconds(15));
                     // 1) Trouver et activer le champ de recherche
-                    By searchLocator = By.xpath(
-                            "//input[@type='search']"
-                                    + " | //input[contains(@placeholder,'Rechercher')]"
-                    );
-                    WebElement searchBox = wait2Messenger.until(
+                    By searchLocator = By.xpath("//input[@type='search']"
+                            + " | //input[contains(@placeholder,'Rechercher')]");
+                    WebElement searchBox = waitMessenger.until(
                             ExpectedConditions.elementToBeClickable(searchLocator)
                     );
                     searchBox.click();
                     searchBox.clear();
-                    searchBox.sendKeys("Marie-Claude Poirier");
-                    searchBox.sendKeys(Keys.ENTER);
+                    searchBox.sendKeys("Poirier");
+
+                    // court délai pour laisser l’IHM montrer la liste
+                    Thread.sleep(3000);
 
                     // 2) Cliquer sur la conversation « Marie-Claude Poirier »
-                    //By convLocator = By.xpath("//a[.//span[text()='Marie-Claude Poirier']]");
-                    By convLocator = By.xpath("(//a[.//span[text()='Marie-Claude Poirier']])[1]");
-                    WebElement conversation = wait2Messenger.until(
-                            ExpectedConditions.elementToBeClickable(convLocator)
+                    By convLocator = By.xpath(
+                            "/html/body/div[1]/div/div/div/div/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div/div[1]/ul/li[1]/ul/div[2]/li/a/div[1]/div[2]/div/div/span/span");
+                    WebElement conversation = waitMessenger.until(
+                            ExpectedConditions.refreshed(
+                                    ExpectedConditions.elementToBeClickable(convLocator)
+                            )
                     );
                     conversation.click();
 
                     // 4) Récupérer le statut qui suit immédiatement le nom
                     By statusBy = By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/div/div[1]/div[1]/div/div[3]/div/div/div[1]/div/div/div/div[2]/div/div/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div[4]/div/span");
-                    WebElement statusElem = wait2Messenger.until(
+                    WebElement statusElem = waitMessenger.until(
                             ExpectedConditions.visibilityOfElementLocated(statusBy)
                     );
 
                     // 4) Afficher le texte
                     String status = statusElem.getText().trim();
-                    System.out.println("Statut de Marie-Claude Poirier : " + status);
+                    Thread.sleep(3000);
+                    if (!oldMCStatus.equals(status)) {
+                        oldMCStatus = status;
+                        if (needTimeForMC) {
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+                            sbFinal.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+                            sbFinal.append(System.lineSeparator()).append("MC : ").append(status);
+                        } else {
+                            sbFinal.append("MC : ").append(status);
+                            needTimeForMC = true;
+                        }
+
+                        By searchLocator2 = By.xpath("//input[@type='search']"
+                                + " | //input[contains(@placeholder,'Rechercher')]");
+                        WebElement searchBox2 = waitMessenger.until(
+                                ExpectedConditions.elementToBeClickable(searchLocator2)
+                        );
+                        searchBox2.click();
+                        searchBox2.clear();
+                        searchBox2.sendKeys("Wang");
+
+                        // court délai pour laisser l’IHM montrer la liste
+                        Thread.sleep(3000);
+
+                        // 2) Cliquer sur la conversation « Marie-Claude Poirier »
+                        By convLocator2 = By.xpath(
+                                "/html/body/div[1]/div/div/div/div/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div/div[1]/ul/li[1]/ul/div[2]/li/a/div[1]/div[2]/div/div/span/span");
+                        WebElement conversation2 = waitMessenger.until(
+                                ExpectedConditions.refreshed(
+                                        ExpectedConditions.elementToBeClickable(convLocator2)
+                                )
+                        );
+                        conversation2.click();
+
+                        By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
+                        WebElement inputBox = waitMessenger.until(
+                                ExpectedConditions.elementToBeClickable(inputLocator)
+                        );
+
+// Utiliser try-catch pour gérer les erreurs potentielles
+                        try {
+                            Actions actions = new Actions(driver);
+                            actions.click(inputBox)
+                                    .sendKeys(sbFinal.toString())
+                                    .sendKeys(Keys.ENTER)
+                                    .perform();
+
+                            // Attendre un peu avant le second ENTER
+                            Thread.sleep(500);
+
+                            // Re-localiser l'élément pour éviter StaleElementReferenceException
+                            inputBox = waitMessenger.until(
+                                    ExpectedConditions.elementToBeClickable(inputLocator)
+                            );
+                            inputBox.sendKeys(Keys.ENTER);
+
+                        } catch (Exception e) {
+                            System.err.println("Erreur lors de l'envoi du message : " + e.getMessage());
+                            // Tentative alternative : utiliser Actions pour tout
+                            try {
+                                Actions actions = new Actions(driver);
+                                actions.click(inputBox)
+                                        .sendKeys(sbFinal.toString())
+                                        .sendKeys(Keys.ENTER)
+                                        .sendKeys(Keys.ENTER)
+                                        .perform();
+                            } catch (Exception e2) {
+                                System.err.println("Erreur alternative : " + e2.getMessage());
+                            }
+                        }
+                    }
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
                 }
@@ -241,7 +269,7 @@ public class Main102 {
         };
 
         // Démarrer immédiatement puis toutes les 5 minutes
-        scheduler.scheduleAtFixedRate(task, 0, 30, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(task, 0, 180, TimeUnit.SECONDS);
 
         // Empêche le programme de se terminer
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -249,51 +277,6 @@ public class Main102 {
             driver.quit();
         }));
     }
-
-    /** Initialise et renvoie un client Google Docs authentifié via compte de service. */
-    private static Docs getDocsService() throws Exception {
-        // Lit la clé JSON du compte de service
-        GoogleCredentials creds = GoogleCredentials
-                .fromStream(new FileInputStream(CREDENTIALS_FILE_PATH))
-                .createScoped(Collections.singleton(DocsScopes.DOCUMENTS));
-
-        return new Docs.Builder(
-                GoogleNetHttpTransport.newTrustedTransport(),
-                JacksonFactory.getDefaultInstance(),
-                new HttpCredentialsAdapter(creds))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-    }
-
-    /**
-     * Ajoute (append) du texte à la fin du document Google Docs identifié par docId.
-     */
-    private static void appendToGoogleDoc(String docId, String text) throws Exception {
-        Docs docsService = getDocsService();
-
-        // Construire la requête d'insertion : on positionne index = 1 pour le début,
-        // ou index = document_length pour la fin. Ici on append à la fin :
-        int endIndex = docsService.documents()
-                .get(docId)
-                .execute()
-                .getBody()
-                .getContent()
-                .size() - 1;
-
-        Request insertRequest = new Request()
-                .setInsertText(new InsertTextRequest()
-                        .setText(text + "\n")
-                        .setLocation(new com.google.api.services.docs.v1.model.Location()
-                                .setIndex(endIndex)));
-
-        BatchUpdateDocumentRequest body = new BatchUpdateDocumentRequest()
-                .setRequests(Collections.singletonList(insertRequest));
-
-        docsService.documents()
-                .batchUpdate(docId, body)
-                .execute();
-    }
-
 
     public static String getClassByTargetId (WebDriver driver, String targetId) {
         // 1) Attendre que le SVG soit chargé
@@ -359,18 +342,6 @@ public class Main102 {
         result[5] =  changeValueOfC;
 
         return result;
-    }
-
-    public static void sendMessage(WebDriver driver, String message, int timeoutSec) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
-        WebElement inputBox = wait.until(
-                ExpectedConditions.elementToBeClickable(
-                        By.xpath("//div[@contenteditable='true' and @data-tab='10']")
-                )
-        );
-        inputBox.click();
-        inputBox.sendKeys(message);
-        inputBox.sendKeys(Keys.ENTER);
     }
 
     public static void writeResultToFile(StringBuffer content) {
