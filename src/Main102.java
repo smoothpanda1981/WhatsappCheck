@@ -131,7 +131,7 @@ public class Main102 {
                                 oldtargetIdC = bureau_c;
                             }
 
-                            writeResultToFile(sbFinal);
+                            //writeResultToFile(sbFinal);
 
                             if (Boolean.parseBoolean(result[1]) || Boolean.parseBoolean(result[2]) || Boolean.parseBoolean(result[3]) || Boolean.parseBoolean(result[4]) || Boolean.parseBoolean(result[5])) {
                                 needTimeForMC = false;
@@ -259,8 +259,8 @@ public class Main102 {
                         } catch (Exception e) {
                             System.err.println("Other error: " + e.getMessage());
                         }
-
                     }
+                    writeResultToFile(sbFinal);
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
                 }
