@@ -85,7 +85,7 @@ public class Main102 {
                     boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
                     StringBuffer sbFinal = new StringBuffer();
 
-                    if (true) { //if (isInWindow && today != DayOfWeek.SUNDAY && today != DayOfWeek.SATURDAY) {
+                    if (isInWindow && today != DayOfWeek.SUNDAY && today != DayOfWeek.SATURDAY) {
                             // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
                             String whatsappHandle = "";
                             for (String handle : driver.getWindowHandles()) {
@@ -182,7 +182,7 @@ public class Main102 {
                     String status = statusElem.getText().trim();
                     Thread.sleep(3000);
 
-                    if (!oldMCStatus.equals(status)) {
+                    if (!oldMCStatus.equals(status) || status.equals("En ligne")) {
                         oldMCStatus = status;
                         if (needTimeForMC) {
                             sbFinal.setLength(0);
