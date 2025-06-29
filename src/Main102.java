@@ -1,12 +1,3 @@
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.docs.v1.Docs;
-import com.google.api.services.docs.v1.DocsScopes;
-import com.google.api.services.docs.v1.model.BatchUpdateDocumentRequest;
-import com.google.api.services.docs.v1.model.InsertTextRequest;
-import com.google.api.services.docs.v1.model.Request;
-import com.google.auth.http.HttpCredentialsAdapter;
-import com.google.auth.oauth2.GoogleCredentials;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -16,12 +7,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -192,12 +181,15 @@ public class Main102 {
                     // 4) Afficher le texte
                     String status = statusElem.getText().trim();
                     Thread.sleep(3000);
+
                     if (!oldMCStatus.equals(status)) {
                         oldMCStatus = status;
                         if (needTimeForMC) {
+                            sbFinal.setLength(0);
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
                             sbFinal.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
                             sbFinal.append(System.lineSeparator()).append("MC : ").append(status);
+                            needTimeForMC = false;
                         } else {
                             sbFinal.append("MC : ").append(status);
                             needTimeForMC = true;
@@ -225,42 +217,49 @@ public class Main102 {
                         );
                         conversation2.click();
 
-                        By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                        WebElement inputBox = waitMessenger.until(
-                                ExpectedConditions.elementToBeClickable(inputLocator)
-                        );
-
-// Utiliser try-catch pour gérer les erreurs potentielles
                         try {
+                            // Re-locate the input box fresh each time
+                            By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
+                            WebElement inputBox = waitMessenger.until(
+                                    ExpectedConditions.elementToBeClickable(inputLocator)
+                            );
+
                             Actions actions = new Actions(driver);
                             actions.click(inputBox)
                                     .sendKeys(sbFinal.toString())
                                     .sendKeys(Keys.ENTER)
                                     .perform();
 
-                            // Attendre un peu avant le second ENTER
+                            // Short pause between actions
                             Thread.sleep(500);
 
-                            // Re-localiser l'élément pour éviter StaleElementReferenceException
+                            // Re-locate the input box again
                             inputBox = waitMessenger.until(
                                     ExpectedConditions.elementToBeClickable(inputLocator)
                             );
                             inputBox.sendKeys(Keys.ENTER);
 
-                        } catch (Exception e) {
-                            System.err.println("Erreur lors de l'envoi du message : " + e.getMessage());
-                            // Tentative alternative : utiliser Actions pour tout
+                        } catch (StaleElementReferenceException e) {
+                            System.err.println("Stale element encountered, retrying...");
+                            // Retry the operation
                             try {
-                                Actions actions = new Actions(driver);
-                                actions.click(inputBox)
+                                By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
+                                WebElement inputBox = waitMessenger.until(
+                                        ExpectedConditions.elementToBeClickable(inputLocator)
+                                );
+                                new Actions(driver)
+                                        .click(inputBox)
                                         .sendKeys(sbFinal.toString())
                                         .sendKeys(Keys.ENTER)
                                         .sendKeys(Keys.ENTER)
                                         .perform();
                             } catch (Exception e2) {
-                                System.err.println("Erreur alternative : " + e2.getMessage());
+                                System.err.println("Retry failed: " + e2.getMessage());
                             }
+                        } catch (Exception e) {
+                            System.err.println("Other error: " + e.getMessage());
                         }
+
                     }
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
