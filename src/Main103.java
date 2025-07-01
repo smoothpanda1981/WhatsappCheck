@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main102 {
+public class Main103 {
     private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats-roomz.txt";
     private static final  String targetId_B = "2210c58e-393d-4452-a086-650123181ea9";
     private static final  String targetId_D = "639b2da4-11f7-4226-ad79-8c0dfdc6599f";
@@ -196,71 +196,7 @@ public class Main102 {
                             needTimeForMC = true;
                             System.out.println("if Changement les deux");
                         }
-
-                        By searchLocator2 = By.xpath("//input[@type='search']"
-                                + " | //input[contains(@placeholder,'Rechercher')]");
-                        WebElement searchBox2 = waitMessenger.until(
-                                ExpectedConditions.elementToBeClickable(searchLocator2)
-                        );
-                        searchBox2.click();
-                        searchBox2.clear();
-                        searchBox2.sendKeys("Wang");
-
-                        // court délai pour laisser l’IHM montrer la liste
-                        Thread.sleep(3000);
-
-                        // 2) Cliquer sur la conversation « Marie-Claude Poirier »
-                        By convLocator2 = By.xpath(
-                                "/html/body/div[1]/div/div/div/div/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div/div[1]/ul/li[1]/ul/div[2]/li/a/div[1]/div[2]/div/div/span/span");
-                        WebElement conversation2 = waitMessenger.until(
-                                ExpectedConditions.refreshed(
-                                        ExpectedConditions.elementToBeClickable(convLocator2)
-                                )
-                        );
-                        conversation2.click();
-                        Thread.sleep(2000);
-                        try {
-                            // Re-locate the input box fresh each time
-                            By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                            WebElement inputBox = waitMessenger.until(
-                                    ExpectedConditions.elementToBeClickable(inputLocator)
-                            );
-
-                            Actions actions = new Actions(driver);
-                            actions.click(inputBox)
-                                    .sendKeys(sbFinal.toString())
-                                    .sendKeys(Keys.ENTER)
-                                    .perform();
-
-                            // Short pause between actions
-                            Thread.sleep(500);
-
-                            // Re-locate the input box again
-                            inputBox = waitMessenger.until(
-                                    ExpectedConditions.elementToBeClickable(inputLocator)
-                            );
-                            inputBox.sendKeys(Keys.ENTER);
-
-                        } catch (StaleElementReferenceException e) {
-                            System.err.println("Stale element encountered, retrying...");
-                            // Retry the operation
-                            try {
-                                By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                                WebElement inputBox = waitMessenger.until(
-                                        ExpectedConditions.elementToBeClickable(inputLocator)
-                                );
-                                new Actions(driver)
-                                        .click(inputBox)
-                                        .sendKeys(sbFinal.toString())
-                                        .sendKeys(Keys.ENTER)
-                                        .sendKeys(Keys.ENTER)
-                                        .perform();
-                            } catch (Exception e2) {
-                                System.err.println("Retry failed: " + e2.getMessage());
-                            }
-                        } catch (Exception e) {
-                            System.err.println("Other error: " + e.getMessage());
-                        }
+                        writeResultsToYanDiscussion(driver, waitMessenger, sbFinal);
                     } else {
                         System.out.println("dand else");
                         if (needTimeForMC) {
@@ -268,71 +204,8 @@ public class Main102 {
                         } else {
                             needTimeForMC = true;
                             System.out.println("else else");
+                            writeResultsToYanDiscussion(driver, waitMessenger, sbFinal);
                         }
-                            By searchLocator2 = By.xpath("//input[@type='search']"
-                                    + " | //input[contains(@placeholder,'Rechercher')]");
-                            WebElement searchBox2 = waitMessenger.until(
-                                    ExpectedConditions.elementToBeClickable(searchLocator2)
-                            );
-                            searchBox2.click();
-                            searchBox2.clear();
-                            searchBox2.sendKeys("Wang");
-
-                            // court délai pour laisser l’IHM montrer la liste
-                            Thread.sleep(3000);
-
-                            // 2) Cliquer sur la conversation « Marie-Claude Poirier »
-                            By convLocator2 = By.xpath(
-                                    "/html/body/div[1]/div/div/div/div/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div/div[1]/ul/li[1]/ul/div[2]/li/a/div[1]/div[2]/div/div/span/span");
-                            WebElement conversation2 = waitMessenger.until(
-                                    ExpectedConditions.refreshed(
-                                            ExpectedConditions.elementToBeClickable(convLocator2)
-                                    )
-                            );
-                            conversation2.click();
-                            Thread.sleep(2000);
-                            try {
-                                // Re-locate the input box fresh each time
-                                By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                                WebElement inputBox = waitMessenger.until(
-                                        ExpectedConditions.elementToBeClickable(inputLocator)
-                                );
-
-                                Actions actions = new Actions(driver);
-                                actions.click(inputBox)
-                                        .sendKeys(sbFinal.toString())
-                                        .sendKeys(Keys.ENTER)
-                                        .perform();
-
-                                // Short pause between actions
-                                Thread.sleep(500);
-
-                                // Re-locate the input box again
-                                inputBox = waitMessenger.until(
-                                        ExpectedConditions.elementToBeClickable(inputLocator)
-                                );
-                                inputBox.sendKeys(Keys.ENTER);
-
-                            } catch (StaleElementReferenceException e) {
-                                System.err.println("Stale element encountered, retrying...");
-                                // Retry the operation
-                                try {
-                                    By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                                    WebElement inputBox = waitMessenger.until(
-                                            ExpectedConditions.elementToBeClickable(inputLocator)
-                                    );
-                                    new Actions(driver)
-                                            .click(inputBox)
-                                            .sendKeys(sbFinal.toString())
-                                            .sendKeys(Keys.ENTER)
-                                            .sendKeys(Keys.ENTER)
-                                            .perform();
-                                } catch (Exception e2) {
-                                    System.err.println("Retry failed: " + e2.getMessage());
-                                }
-                            } catch (Exception e) {
-                                System.err.println("Other error: " + e.getMessage());
-                            }
                     }
                     writeResultToFile(sbFinal);
                 } catch (Exception e) {
@@ -349,6 +222,73 @@ public class Main102 {
             scheduler.shutdown();
             driver.quit();
         }));
+    }
+
+    public static void writeResultsToYanDiscussion(WebDriver driver, WebDriverWait waitMessenger, StringBuffer sbFinal) throws InterruptedException {
+        By searchLocator2 = By.xpath("//input[@type='search']"
+                + " | //input[contains(@placeholder,'Rechercher')]");
+        WebElement searchBox2 = waitMessenger.until(
+                ExpectedConditions.elementToBeClickable(searchLocator2)
+        );
+        searchBox2.click();
+        searchBox2.clear();
+        searchBox2.sendKeys("Wang");
+
+        // court délai pour laisser l’IHM montrer la liste
+        Thread.sleep(3000);
+
+        // 2) Cliquer sur la conversation « Marie-Claude Poirier »
+        By convLocator2 = By.xpath(
+                "/html/body/div[1]/div/div/div/div/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div/div[1]/ul/li[1]/ul/div[2]/li/a/div[1]/div[2]/div/div/span/span");
+        WebElement conversation2 = waitMessenger.until(
+                ExpectedConditions.refreshed(
+                        ExpectedConditions.elementToBeClickable(convLocator2)
+                )
+        );
+        conversation2.click();
+        Thread.sleep(2000);
+        try {
+            // Re-locate the input box fresh each time
+            By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
+            WebElement inputBox = waitMessenger.until(
+                    ExpectedConditions.elementToBeClickable(inputLocator)
+            );
+
+            Actions actions = new Actions(driver);
+            actions.click(inputBox)
+                    .sendKeys(sbFinal.toString())
+                    .sendKeys(Keys.ENTER)
+                    .perform();
+
+            // Short pause between actions
+            Thread.sleep(500);
+
+            // Re-locate the input box again
+            inputBox = waitMessenger.until(
+                    ExpectedConditions.elementToBeClickable(inputLocator)
+            );
+            inputBox.sendKeys(Keys.ENTER);
+
+        } catch (StaleElementReferenceException e) {
+            System.err.println("Stale element encountered, retrying...");
+            // Retry the operation
+            try {
+                By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
+                WebElement inputBox = waitMessenger.until(
+                        ExpectedConditions.elementToBeClickable(inputLocator)
+                );
+                new Actions(driver)
+                        .click(inputBox)
+                        .sendKeys(sbFinal.toString())
+                        .sendKeys(Keys.ENTER)
+                        .sendKeys(Keys.ENTER)
+                        .perform();
+            } catch (Exception e2) {
+                System.err.println("Retry failed: " + e2.getMessage());
+            }
+        } catch (Exception e) {
+            System.err.println("Other error: " + e.getMessage());
+        }
     }
 
     public static String getClassByTargetId (WebDriver driver, String targetId) {
