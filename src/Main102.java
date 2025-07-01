@@ -216,7 +216,7 @@ public class Main102 {
                                 )
                         );
                         conversation2.click();
-
+                        Thread.sleep(2000);
                         try {
                             // Re-locate the input box fresh each time
                             By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");

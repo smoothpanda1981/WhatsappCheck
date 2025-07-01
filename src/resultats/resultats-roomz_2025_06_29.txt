@@ -1,0 +1,379 @@
+
+*** 2025-06-29  10:20:17 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:28:11 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:31:45 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:35:04 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:37:58 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:40:58 ***
+
+*** 2025-06-29  10:42:34 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:44:58 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:47:58 ***
+
+*** 2025-06-29  10:50:21 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:53:47 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:56:05 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:58:18 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  10:58:48 ***
+
+*** 2025-06-29  11:03:44 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  11:04:14 ***
+
+*** 2025-06-29  11:08:12 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  11:08:42 ***
+
+*** 2025-06-29  11:09:12 ***
+
+*** 2025-06-29  11:12:49 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  11:13:44 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  11:15:45 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  11:27:21 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  11:27:51 ***
+
+*** 2025-06-29  11:33:40 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  11:34:10 ***
+
+*** 2025-06-29  16:36:22 ***
+ B : green
+ D : green
+ F : green
+ A : green
+ C : green
+
+*** 2025-06-29  16:39:21 ***
+
+*** 2025-06-29  19:39:03 ***
+MC : En ligne il y a 4 h
+MC : En ligne
+*** 2025-06-29  19:45:02 ***
+MC : En ligne il y a 4 min
+MC : En ligne il y a 7 min
+*** 2025-06-29  19:51:01 ***
+MC : En ligne
+MC : En ligne
+*** 2025-06-29  19:57:01 ***
+MC : En ligne
+MC : En ligne
+*** 2025-06-29  20:03:01 ***
+MC : En ligne
+MC : En ligne
+*** 2025-06-29  20:09:02 ***
+MC : En ligne
+MC : En ligne il y a 6 min
+*** 2025-06-29  20:15:01 ***
+MC : En ligne il y a 9 min
+MC : En ligne il y a 12 min
+*** 2025-06-29  20:21:02 ***
+MC : En ligne il y a 15 min
+MC : En ligne il y a 18 min
+*** 2025-06-29  20:27:01 ***
+MC : En ligne il y a 21 min
+*** 2025-06-29  20:29:22 ***
+MC : En ligne il y a 23 min
+*** 2025-06-29  20:32:22 ***
+MC : En ligne il y a 26 min
+*** 2025-06-29  20:35:21 ***
+MC : En ligne il y a 29 min
+*** 2025-06-29  20:38:22 ***
+MC : En ligne il y a 32 min
+*** 2025-06-29  20:41:21 ***
+MC : En ligne il y a 35 min
+*** 2025-06-29  20:44:21 ***
+MC : En ligne il y a 38 min
+*** 2025-06-29  20:47:21 ***
+MC : En ligne il y a 41 min
+*** 2025-06-29  20:50:21 ***
+MC : En ligne il y a 44 min
+*** 2025-06-29  20:53:21 ***
+MC : En ligne il y a 47 min
+*** 2025-06-29  20:56:21 ***
+MC : En ligne il y a 50 min
+*** 2025-06-29  20:59:21 ***
+MC : En ligne il y a 53 min
+*** 2025-06-29  21:02:21 ***
+MC : En ligne il y a 56 min
+*** 2025-06-29  21:05:21 ***
+MC : En ligne il y a 59 min
+*** 2025-06-29  21:08:22 ***
+MC : En ligne il y a 1 h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*** 2025-06-29  22:08:21 ***
+MC : En ligne il y a 2 h
+
+
+
+
+
+*** 2025-06-29  22:26:38 ***
+MC : En ligne il y a 2 h
+*** 2025-06-29  22:28:58 ***
+MC : En ligne il y a 2 h
+
+
+
+
+
+*** 2025-06-29  22:46:56 ***
+MC : En ligne
+*** 2025-06-29  22:49:57 ***
+MC : En ligne il y a 4 min
+*** 2025-06-29  22:52:57 ***
+MC : En ligne il y a 7 min
+*** 2025-06-29  22:55:57 ***
+MC : En ligne il y a 10 min
+*** 2025-06-29  22:58:57 ***
+MC : En ligne il y a 13 min
+*** 2025-06-29  23:01:57 ***
+MC : En ligne il y a 16 min
+*** 2025-06-29  23:04:57 ***
+MC : En ligne il y a 19 min
+*** 2025-06-29  23:07:57 ***
+MC : En ligne il y a 22 min
+*** 2025-06-29  23:10:57 ***
+MC : En ligne il y a 25 min
+*** 2025-06-29  23:13:57 ***
+MC : En ligne il y a 28 min
+*** 2025-06-29  23:16:57 ***
+MC : En ligne il y a 31 min
+*** 2025-06-29  23:19:57 ***
+MC : En ligne il y a 34 min
+*** 2025-06-29  23:22:57 ***
+MC : En ligne il y a 37 min
+*** 2025-06-29  23:25:57 ***
+MC : En ligne il y a 40 min
+*** 2025-06-29  23:28:57 ***
+MC : En ligne il y a 43 min
+*** 2025-06-29  23:31:57 ***
+MC : En ligne il y a 46 min
+*** 2025-06-29  23:34:57 ***
+MC : En ligne il y a 49 min
+*** 2025-06-29  23:37:57 ***
+MC : En ligne il y a 52 min
+*** 2025-06-29  23:40:57 ***
+MC : En ligne il y a 55 min
+*** 2025-06-29  23:43:57 ***
+MC : En ligne il y a 58 min
+*** 2025-06-29  23:46:57 ***
+MC : En ligne il y a 1 h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*** 2025-06-30  00:46:56 ***
+MC : En ligne il y a 2 h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*** 2025-06-30  01:46:56 ***
+MC : En ligne il y a 3 h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*** 2025-06-30  02:46:56 ***
+MC : En ligne il y a 4 h
+
+
+
+*** 2025-06-30  03:50:05 ***
+MC : En ligne il y a 5 h
+
+
+
+*** 2025-06-30  04:50:05 ***
+MC : En ligne il y a 6 h
+
+*** 2025-06-30  05:20:04 ***
+MC : En ligne
+*** 2025-06-30  05:22:57 ***
+MC : En ligne
+*** 2025-06-30  05:25:57 ***
+MC : En ligne il y a 5 min
+*** 2025-06-30  05:28:57 ***
+MC : En ligne
+*** 2025-06-30  05:31:57 ***
+MC : En ligne
+*** 2025-06-30  05:34:57 ***
+MC : En ligne il y a 6 min
+*** 2025-06-30  05:37:57 ***
+MC : En ligne il y a 9 min
+*** 2025-06-30  05:40:57 ***
+MC : En ligne il y a 12 min
+*** 2025-06-30  05:43:57 ***
+MC : En ligne il y a 15 min
+*** 2025-06-30  05:46:57 ***
+MC : En ligne il y a 18 min
+*** 2025-06-30  05:49:57 ***
+MC : En ligne
