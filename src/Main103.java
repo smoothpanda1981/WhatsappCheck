@@ -183,7 +183,7 @@ public class Main103 {
                     String status = statusElem.getText().trim();
                     Thread.sleep(3000);
 
-                    if (!oldMCStatus.equals(status) && !status.equals("En ligne")) {
+                    if (!oldMCStatus.equals(status) || status.equals("En ligne")) {
                         oldMCStatus = status;
                         if (needTimeForMC) {
                             sbFinal.setLength(0);
