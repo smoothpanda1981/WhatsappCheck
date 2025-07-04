@@ -211,6 +211,7 @@ public class Main11 {
 
                         if (!line2Identical) {
                             sb2.append(oldLine2).append(System.lineSeparator());
+                            sb3.setLength(0);
                             sb3.append(oldLine2).append(System.lineSeparator());
 
                             searchAndClickContact(driver, "YAN WANG", 10);
@@ -223,7 +224,7 @@ public class Main11 {
                     // 6) À la fin de l'exécution de ce tour, on calcule le délai d'attente avant le prochain
                     long nextDelay;
                     if (isOutOfWindow) {
-                        if (line1Identical) {
+                        if (line1Identical && line2Identical) {
                             // si identique → 3 minutes
                             nextDelay = 360;
                         } else {
@@ -231,7 +232,7 @@ public class Main11 {
                             nextDelay = 60;
                         }
                     } else {
-                        if (line1Identical) {
+                        if (line1Identical && line2Identical) {
                             // si identique → 3 minutes
                             nextDelay = 180;
                         } else {
