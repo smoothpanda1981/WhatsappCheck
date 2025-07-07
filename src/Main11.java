@@ -107,11 +107,11 @@ public class Main11 {
                         searchAndClickContact(driver, "Park", 10);
                         String statut2 = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Domon", 10);
-                        String statut = getContactStatus(driver, 5);
-
                         searchAndClickContact(driver, "Girel", 10);
                         String statut11 = getContactStatus(driver, 5);
+
+                        searchAndClickContact(driver, "Domon", 10);
+                        String statut = getContactStatus(driver, 5);
 
                         // 4) Construire la nouvelle ligne et mettre à jour le flag line1Identical
                         String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1, oldStatusShorten2, "FD", "SP");
