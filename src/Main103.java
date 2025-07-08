@@ -116,24 +116,30 @@ public class Main103 {
                             sbFinal.append(result[0]);
 
                             if (Boolean.parseBoolean(result[1])) {
+                                System.out.println("changemnt du B");
                                 oldtargetIdB = bureau_b;
                             }
                             if (Boolean.parseBoolean(result[2])) {
+                                System.out.println("changemnt du D");
                                 oldtargetIdD = bureau_d;
                             }
                             if (Boolean.parseBoolean(result[3])) {
+                                System.out.println("changemnt du F");
                                 oldtargetIdF = bureau_f;
                             }
                             if (Boolean.parseBoolean(result[4])) {
+                                System.out.println("changemnt du A");
                                 oldtargetIdA = bureau_a;
                             }
                             if (Boolean.parseBoolean(result[5])) {
+                                System.out.println("changemnt du C");
                                 oldtargetIdC = bureau_c;
                             }
 
                             //writeResultToFile(sbFinal);
 
                             if (Boolean.parseBoolean(result[1]) || Boolean.parseBoolean(result[2]) || Boolean.parseBoolean(result[3]) || Boolean.parseBoolean(result[4]) || Boolean.parseBoolean(result[5])) {
+                                System.out.println("dans if  avec needTimeForMC false");
                                 needTimeForMC = false;
                             }
                     }
@@ -184,26 +190,27 @@ public class Main103 {
                     Thread.sleep(3000);
 
                     if (!oldMCStatus.equals(status) || status.equals("En ligne")) {
+                        System.out.println("dans if");
                         oldMCStatus = status;
                         if (needTimeForMC) {
                             sbFinal.setLength(0);
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
                             sbFinal.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
                             sbFinal.append(System.lineSeparator()).append("MC : ").append(status);
-                            System.out.println("if Changement uniquement MC");
+                            System.out.println("if Changement uniquement MC - needTimeForMC = true");
                         } else {
                             sbFinal.append("MC : ").append(status);
                             needTimeForMC = true;
-                            System.out.println("if Changement les deux");
+                            System.out.println("if Changement les deux C - needTimeForMC = false");
                         }
                         writeResultsToYanDiscussion(driver, waitMessenger, sbFinal);
                     } else {
                         System.out.println("dand else");
                         if (needTimeForMC) {
-                            System.out.println("else if");
+                            System.out.println("else if- needTimeForMC = true");
                         } else {
                             needTimeForMC = true;
-                            System.out.println("else else");
+                            System.out.println("else else - needTimeForMC = false");
                             writeResultsToYanDiscussion(driver, waitMessenger, sbFinal);
                         }
                     }
@@ -215,7 +222,7 @@ public class Main103 {
         };
 
         // Démarrer immédiatement puis toutes les 5 minutes
-        scheduler.scheduleAtFixedRate(task, 0, 180, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(task, 0, 150, TimeUnit.SECONDS);
 
         // Empêche le programme de se terminer
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
