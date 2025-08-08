@@ -1,3 +1,5 @@
+package old;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -17,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main102 {
+public class Main105 {
     private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats-roomz.txt";
     private static final  String targetId_B = "2210c58e-393d-4452-a086-650123181ea9";
     private static final  String targetId_D = "639b2da4-11f7-4226-ad79-8c0dfdc6599f";
@@ -40,7 +42,9 @@ public class Main102 {
     private static String oldtargetIdA = "";
     private static String oldtargetIdC = "";
     private static String oldMCStatus = "";
+    private static String oldSPStatus = "";
     private static boolean needTimeForMC = true;
+    private static boolean needTimeForSP = true;
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -116,25 +120,32 @@ public class Main102 {
                             sbFinal.append(result[0]);
 
                             if (Boolean.parseBoolean(result[1])) {
+                                System.out.println("changemnt du B");
                                 oldtargetIdB = bureau_b;
                             }
                             if (Boolean.parseBoolean(result[2])) {
+                                System.out.println("changemnt du D");
                                 oldtargetIdD = bureau_d;
                             }
                             if (Boolean.parseBoolean(result[3])) {
+                                System.out.println("changemnt du F");
                                 oldtargetIdF = bureau_f;
                             }
                             if (Boolean.parseBoolean(result[4])) {
+                                System.out.println("changemnt du A");
                                 oldtargetIdA = bureau_a;
                             }
                             if (Boolean.parseBoolean(result[5])) {
+                                System.out.println("changemnt du C");
                                 oldtargetIdC = bureau_c;
                             }
 
                             //writeResultToFile(sbFinal);
 
                             if (Boolean.parseBoolean(result[1]) || Boolean.parseBoolean(result[2]) || Boolean.parseBoolean(result[3]) || Boolean.parseBoolean(result[4]) || Boolean.parseBoolean(result[5])) {
+                                System.out.println("dans if  avec needTimeForMC false");
                                 needTimeForMC = false;
+                                needTimeForSP = false;
                             }
                     }
                     Thread.sleep(3000);
@@ -183,157 +194,93 @@ public class Main102 {
                     String status = statusElem.getText().trim();
                     Thread.sleep(3000);
 
-                    if (!oldMCStatus.equals(status) && !status.equals("En ligne")) {
+                    WebDriverWait waitMessenger2 = new WebDriverWait(driver, Duration.ofSeconds(15));
+                    // 1) Trouver et activer le champ de recherche
+                    By searchLocator2 = By.xpath("//input[@type='search']"
+                            + " | //input[contains(@placeholder,'Rechercher')]");
+                    WebElement searchBox2 = waitMessenger.until(
+                            ExpectedConditions.elementToBeClickable(searchLocator2)
+                    );
+                    searchBox2.click();
+                    searchBox2.clear();
+                    searchBox2.sendKeys("Park");
+
+                    // court délai pour laisser l’IHM montrer la liste
+                    Thread.sleep(3000);
+
+                    // 2) Cliquer sur la conversation « Marie-Claude Poirier »
+                    By convLocator2 = By.xpath(
+                            "/html/body/div[1]/div/div/div/div/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div/div[1]/ul/li[1]/ul/div[2]/li/a/div[1]/div[2]/div/div/span/span");
+                    WebElement conversation2 = waitMessenger.until(
+                            ExpectedConditions.refreshed(
+                                    ExpectedConditions.elementToBeClickable(convLocator2)
+                            )
+                    );
+                    conversation2.click();
+
+                    // 4) Récupérer le statut qui suit immédiatement le nom
+                    By statusBy2 = By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/div/div[1]/div[1]/div/div[3]/div/div/div[1]/div/div/div/div[2]/div/div/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div[4]/div/span");
+                    WebElement statusElem2 = waitMessenger.until(
+                            ExpectedConditions.visibilityOfElementLocated(statusBy2)
+                    );
+
+                    // 4) Afficher le texte
+                    String status2 = statusElem2.getText().trim();
+                    System.out.println("SP : " + status2);
+                    Thread.sleep(3000);
+
+                    if (!oldMCStatus.equals(status) || status.equals("En ligne")) {
+                        System.out.println("dans if");
                         oldMCStatus = status;
                         if (needTimeForMC) {
                             sbFinal.setLength(0);
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
                             sbFinal.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
                             sbFinal.append(System.lineSeparator()).append("MC : ").append(status);
-                            System.out.println("if Changement uniquement MC");
+                            System.out.println("if Changement uniquement MC - needTimeForMC = true");
                         } else {
                             sbFinal.append("MC : ").append(status);
                             needTimeForMC = true;
-                            System.out.println("if Changement les deux");
+                            System.out.println("if Changement les deux MC - needTimeForMC = false");
                         }
-
-                        By searchLocator2 = By.xpath("//input[@type='search']"
-                                + " | //input[contains(@placeholder,'Rechercher')]");
-                        WebElement searchBox2 = waitMessenger.until(
-                                ExpectedConditions.elementToBeClickable(searchLocator2)
-                        );
-                        searchBox2.click();
-                        searchBox2.clear();
-                        searchBox2.sendKeys("Wang");
-
-                        // court délai pour laisser l’IHM montrer la liste
-                        Thread.sleep(3000);
-
-                        // 2) Cliquer sur la conversation « Marie-Claude Poirier »
-                        By convLocator2 = By.xpath(
-                                "/html/body/div[1]/div/div/div/div/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div/div[1]/ul/li[1]/ul/div[2]/li/a/div[1]/div[2]/div/div/span/span");
-                        WebElement conversation2 = waitMessenger.until(
-                                ExpectedConditions.refreshed(
-                                        ExpectedConditions.elementToBeClickable(convLocator2)
-                                )
-                        );
-                        conversation2.click();
-                        Thread.sleep(2000);
-                        try {
-                            // Re-locate the input box fresh each time
-                            By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                            WebElement inputBox = waitMessenger.until(
-                                    ExpectedConditions.elementToBeClickable(inputLocator)
-                            );
-
-                            Actions actions = new Actions(driver);
-                            actions.click(inputBox)
-                                    .sendKeys(sbFinal.toString())
-                                    .sendKeys(Keys.ENTER)
-                                    .perform();
-
-                            // Short pause between actions
-                            Thread.sleep(500);
-
-                            // Re-locate the input box again
-                            inputBox = waitMessenger.until(
-                                    ExpectedConditions.elementToBeClickable(inputLocator)
-                            );
-                            inputBox.sendKeys(Keys.ENTER);
-
-                        } catch (StaleElementReferenceException e) {
-                            System.err.println("Stale element encountered, retrying...");
-                            // Retry the operation
-                            try {
-                                By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                                WebElement inputBox = waitMessenger.until(
-                                        ExpectedConditions.elementToBeClickable(inputLocator)
-                                );
-                                new Actions(driver)
-                                        .click(inputBox)
-                                        .sendKeys(sbFinal.toString())
-                                        .sendKeys(Keys.ENTER)
-                                        .sendKeys(Keys.ENTER)
-                                        .perform();
-                            } catch (Exception e2) {
-                                System.err.println("Retry failed: " + e2.getMessage());
-                            }
-                        } catch (Exception e) {
-                            System.err.println("Other error: " + e.getMessage());
-                        }
+                        writeResultsToYanDiscussion(driver, waitMessenger, sbFinal);
                     } else {
                         System.out.println("dand else");
                         if (needTimeForMC) {
-                            System.out.println("else if");
+                            System.out.println("else if- needTimeForMC = true");
                         } else {
                             needTimeForMC = true;
-                            System.out.println("else else");
+                            System.out.println("else else - needTimeForMC = false");
+                            writeResultsToYanDiscussion(driver, waitMessenger, sbFinal);
                         }
-                            By searchLocator2 = By.xpath("//input[@type='search']"
-                                    + " | //input[contains(@placeholder,'Rechercher')]");
-                            WebElement searchBox2 = waitMessenger.until(
-                                    ExpectedConditions.elementToBeClickable(searchLocator2)
-                            );
-                            searchBox2.click();
-                            searchBox2.clear();
-                            searchBox2.sendKeys("Wang");
-
-                            // court délai pour laisser l’IHM montrer la liste
-                            Thread.sleep(3000);
-
-                            // 2) Cliquer sur la conversation « Marie-Claude Poirier »
-                            By convLocator2 = By.xpath(
-                                    "/html/body/div[1]/div/div/div/div/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div/div[1]/ul/li[1]/ul/div[2]/li/a/div[1]/div[2]/div/div/span/span");
-                            WebElement conversation2 = waitMessenger.until(
-                                    ExpectedConditions.refreshed(
-                                            ExpectedConditions.elementToBeClickable(convLocator2)
-                                    )
-                            );
-                            conversation2.click();
-                            Thread.sleep(2000);
-                            try {
-                                // Re-locate the input box fresh each time
-                                By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                                WebElement inputBox = waitMessenger.until(
-                                        ExpectedConditions.elementToBeClickable(inputLocator)
-                                );
-
-                                Actions actions = new Actions(driver);
-                                actions.click(inputBox)
-                                        .sendKeys(sbFinal.toString())
-                                        .sendKeys(Keys.ENTER)
-                                        .perform();
-
-                                // Short pause between actions
-                                Thread.sleep(500);
-
-                                // Re-locate the input box again
-                                inputBox = waitMessenger.until(
-                                        ExpectedConditions.elementToBeClickable(inputLocator)
-                                );
-                                inputBox.sendKeys(Keys.ENTER);
-
-                            } catch (StaleElementReferenceException e) {
-                                System.err.println("Stale element encountered, retrying...");
-                                // Retry the operation
-                                try {
-                                    By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                                    WebElement inputBox = waitMessenger.until(
-                                            ExpectedConditions.elementToBeClickable(inputLocator)
-                                    );
-                                    new Actions(driver)
-                                            .click(inputBox)
-                                            .sendKeys(sbFinal.toString())
-                                            .sendKeys(Keys.ENTER)
-                                            .sendKeys(Keys.ENTER)
-                                            .perform();
-                                } catch (Exception e2) {
-                                    System.err.println("Retry failed: " + e2.getMessage());
-                                }
-                            } catch (Exception e) {
-                                System.err.println("Other error: " + e.getMessage());
-                            }
                     }
+
+                    if (!oldSPStatus.equals(status2) || status2.equals("En ligne")) {
+                        System.out.println("dans if");
+                        oldSPStatus = status2;
+                        if (needTimeForSP) {
+                            sbFinal.setLength(0);
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+                            sbFinal.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+                            sbFinal.append(System.lineSeparator()).append("SP : ").append(status2);
+                            System.out.println("if Changement uniquement SP - needTimeForSP = true");
+                        } else {
+                            sbFinal.append("SP : ").append(status2);
+                            needTimeForSP = true;
+                            System.out.println("if Changement les deux SP - needTimeForSP = false");
+                        }
+                        writeResultsToYanDiscussion(driver, waitMessenger, sbFinal);
+                    } else {
+                        System.out.println("dand else");
+                        if (needTimeForSP) {
+                            System.out.println("else if- needTimeForSP = true");
+                        } else {
+                            needTimeForSP = true;
+                            System.out.println("else else - needTimeForSP = false");
+                            writeResultsToYanDiscussion(driver, waitMessenger, sbFinal);
+                        }
+                    }
+
                     writeResultToFile(sbFinal);
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
@@ -342,13 +289,80 @@ public class Main102 {
         };
 
         // Démarrer immédiatement puis toutes les 5 minutes
-        scheduler.scheduleAtFixedRate(task, 0, 180, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(task, 0, 150, TimeUnit.SECONDS);
 
         // Empêche le programme de se terminer
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             scheduler.shutdown();
             driver.quit();
         }));
+    }
+
+    public static void writeResultsToYanDiscussion(WebDriver driver, WebDriverWait waitMessenger, StringBuffer sbFinal) throws InterruptedException {
+        By searchLocator2 = By.xpath("//input[@type='search']"
+                + " | //input[contains(@placeholder,'Rechercher')]");
+        WebElement searchBox2 = waitMessenger.until(
+                ExpectedConditions.elementToBeClickable(searchLocator2)
+        );
+        searchBox2.click();
+        searchBox2.clear();
+        searchBox2.sendKeys("Wang");
+
+        // court délai pour laisser l’IHM montrer la liste
+        Thread.sleep(3000);
+
+        // 2) Cliquer sur la conversation « Marie-Claude Poirier »
+        By convLocator2 = By.xpath(
+                "/html/body/div[1]/div/div/div/div/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div/div[1]/ul/li[1]/ul/div[2]/li/a/div[1]/div[2]/div/div/span/span");
+        WebElement conversation2 = waitMessenger.until(
+                ExpectedConditions.refreshed(
+                        ExpectedConditions.elementToBeClickable(convLocator2)
+                )
+        );
+        conversation2.click();
+        Thread.sleep(2000);
+        try {
+            // Re-locate the input box fresh each time
+            By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
+            WebElement inputBox = waitMessenger.until(
+                    ExpectedConditions.elementToBeClickable(inputLocator)
+            );
+
+            Actions actions = new Actions(driver);
+            actions.click(inputBox)
+                    .sendKeys(sbFinal.toString())
+                    .sendKeys(Keys.ENTER)
+                    .perform();
+
+            // Short pause between actions
+            Thread.sleep(500);
+
+            // Re-locate the input box again
+            inputBox = waitMessenger.until(
+                    ExpectedConditions.elementToBeClickable(inputLocator)
+            );
+            inputBox.sendKeys(Keys.ENTER);
+
+        } catch (StaleElementReferenceException e) {
+            System.err.println("Stale element encountered, retrying...");
+            // Retry the operation
+            try {
+                By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
+                WebElement inputBox = waitMessenger.until(
+                        ExpectedConditions.elementToBeClickable(inputLocator)
+                );
+                new Actions(driver)
+                        .click(inputBox)
+                        .sendKeys(sbFinal.toString())
+                        .sendKeys(Keys.ENTER)
+                        .sendKeys(Keys.ENTER)
+                        .perform();
+            } catch (Exception e2) {
+                System.err.println("Retry failed: " + e2.getMessage());
+            }
+        } catch (Exception e) {
+            System.err.println("Other error: " + e.getMessage());
+        }
     }
 
     public static String getClassByTargetId (WebDriver driver, String targetId) {

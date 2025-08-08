@@ -1,3 +1,5 @@
+package old;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,11 +16,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main8 {
+public class Main7 {
     private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats.txt";
 
     /*
@@ -28,19 +31,12 @@ public class Main8 {
     // Variables globales pour stocker les anciennes lignes
     private static String oldStatusShorten1 = "";
     private static String oldStatusShorten2 = "";
-    /*private static String oldStatusShorten3 = "";
-    private static String oldStatusShorten4 = "";
-    private static String oldStatusShorten5 = "";
-    private static String oldStatusShorten6 = "";*/
     private static String oldLine1 = "";
-    /*private static String oldLine2 = "";
-    private static String oldLine3 = "";*/
 
     // Flags pour indiquer si les lignes sont identiques
     private static boolean line1Identical = false;
-    /*private static boolean line2Identical = false;
-    private static boolean line3Identical = false;*/
     private static boolean newRestart = true;
+    private static boolean bothAreOnline = true;
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -76,14 +72,10 @@ public class Main8 {
                 if (!isInWindow) {
                     /* ***************************** */
                     String newLine1 = "";
-                    String newLine2 = "";
-                    String newLine3 = "";
 
                     StringBuffer sb2 = new StringBuffer();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
                     sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
-
-                    StringBuffer sb3 = new StringBuffer();
 
                     StringBuffer sb = new StringBuffer();
                     //System.out.println("******************************");
@@ -103,6 +95,16 @@ public class Main8 {
                     newLine1 = sTab[0];
                     oldStatusShorten1 = sTab[1];
                     oldStatusShorten2 = sTab[2];
+
+                    if (newLine1.contains("==:==") && !newLine1.contains("en ligne")) {
+                        System.out.println("newLine1 contient ==:==");
+                        bothAreOnline = false;
+                        System.out.println("bothAreOnline = " + bothAreOnline);
+                    } else {
+                        System.out.println("newLine1 ne contient pas ==:==");
+                        bothAreOnline = true;
+                        System.out.println("bothAreOnline = " + bothAreOnline);
+                    }
 
                     if (newLine1.equals("FD : ==:== <=> ==:== : SP")) {
                         line1Identical = true;
@@ -149,12 +151,10 @@ public class Main8 {
                     } else {
                         if (newRestart) {
                             sb2.append(" (restart)");
-                            sb3.append("restart : ");
                             newRestart = false;
                         }
                         if (!line1Identical) {
                             sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
-                            sb3.append(oldLine1).append(System.lineSeparator());
                         }
                        /* if (!line2Identical) {
                             sb2.append(System.lineSeparator()).append(oldLine2).append(System.lineSeparator());
@@ -163,7 +163,7 @@ public class Main8 {
                             sb2.append(System.lineSeparator()).append(oldLine3).append(System.lineSeparator());
                         }*/
                         searchAndClickContact(driver, "YAN WANG", 10);
-                        sendMessage(driver, sb3.toString(), 5);
+                        sendMessage(driver, sb2.toString(), 5);
                     }
                     writeResultToFile(sb2);
 
@@ -176,7 +176,18 @@ public class Main8 {
         };
 
         // Démarrer immédiatement puis toutes les 5 minutes
-        scheduler.scheduleAtFixedRate(task, 0, 3, TimeUnit.MINUTES);
+        ScheduledFuture<?> future = scheduler.scheduleAtFixedRate(task, 0, 4, TimeUnit.MINUTES);
+        if (bothAreOnline) {
+            System.out.println("dans if");
+            // only re-schedule if it actually changed
+            future.cancel(false);
+            future = scheduler.scheduleAtFixedRate(task, 0, 75, TimeUnit.SECONDS);
+        } else {
+            System.out.println("dans else");
+            future.cancel(false);
+            future = scheduler.scheduleAtFixedRate(task, 0, 4, TimeUnit.MINUTES);
+        }
+
 
         // Empêche le programme de se terminer
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {

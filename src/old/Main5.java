@@ -1,3 +1,5 @@
+package old;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -7,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,12 +16,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main7 {
+public class Main5 {
     private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats.txt";
 
     /*
@@ -30,12 +30,18 @@ public class Main7 {
     // Variables globales pour stocker les anciennes lignes
     private static String oldStatusShorten1 = "";
     private static String oldStatusShorten2 = "";
+    /*private static String oldStatusShorten3 = "";
+    private static String oldStatusShorten4 = "";
+    private static String oldStatusShorten5 = "";
+    private static String oldStatusShorten6 = "";*/
     private static String oldLine1 = "";
+    /*private static String oldLine2 = "";
+    private static String oldLine3 = "";*/
 
     // Flags pour indiquer si les lignes sont identiques
     private static boolean line1Identical = false;
-    private static boolean newRestart = true;
-    private static boolean bothAreOnline = true;
+    /*private static boolean line2Identical = false;
+    private static boolean line3Identical = false;*/
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -71,18 +77,16 @@ public class Main7 {
                 if (!isInWindow) {
                     /* ***************************** */
                     String newLine1 = "";
-
-                    StringBuffer sb2 = new StringBuffer();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
-                    sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+                    String newLine2 = "";
+                    String newLine3 = "";
 
                     StringBuffer sb = new StringBuffer();
                     //System.out.println("******************************");
-                    searchAndClickContact(driver, "Park", 10);
-                    String statut2 = getContactStatus(driver, 5);
-
-                    searchAndClickContact(driver, "Domon", 10);
+                    searchAndClickContact(driver, "Domon Frédéric", 10);
                     String statut = getContactStatus(driver, 5);
+
+                    searchAndClickContact(driver, "Stéphanie Park", 10);
+                    String statut2 = getContactStatus(driver, 5);
 
                     //searchAndClickContact(driver, "Damien Aguer", 10);
                     //String statut3 = getContactStatus(driver, 5);
@@ -95,25 +99,11 @@ public class Main7 {
                     oldStatusShorten1 = sTab[1];
                     oldStatusShorten2 = sTab[2];
 
-                    if (newLine1.contains("==:==") && !newLine1.contains("en ligne")) {
-                        System.out.println("newLine1 contient ==:==");
-                        bothAreOnline = false;
-                        System.out.println("bothAreOnline = " + bothAreOnline);
-                    } else {
-                        System.out.println("newLine1 ne contient pas ==:==");
-                        bothAreOnline = true;
-                        System.out.println("bothAreOnline = " + bothAreOnline);
-                    }
-
-                    if (newLine1.equals("FD : ==:== <=> ==:== : SP")) {
+                    if (oldLine1.equals(newLine1)) {
                         line1Identical = true;
                     } else {
-                        if (oldLine1.equals(newLine1) && !newLine1.contains("en ligne")) {
-                            line1Identical = true;
-                        } else {
-                            line1Identical = false;
-                            oldLine1 = newLine1;
-                        }
+                        line1Identical = false;
+                        oldLine1 = newLine1;
                     }
 
                     /*sTab = generateNewLine(statut3, statut2, oldStatusShorten3, oldStatusShorten4, "DA", "SP");
@@ -140,7 +130,9 @@ public class Main7 {
                         oldLine3 = newLine3;
                     }*/
 
-
+                    StringBuffer sb2 = new StringBuffer();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm");
+                    sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
                     //sb2.append(LocalDateTime.now().format(formatter));
                     if (line1Identical) {
                         //sb2.append("NO CHANGES").append(System.lineSeparator());;
@@ -148,10 +140,6 @@ public class Main7 {
                         sb2 = new StringBuffer();
                         sb2.append("_").append(time).append("_").append(System.lineSeparator());
                     } else {
-                        if (newRestart) {
-                            sb2.append(" (restart)");
-                            newRestart = false;
-                        }
                         if (!line1Identical) {
                             sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
                         }
@@ -161,13 +149,11 @@ public class Main7 {
                         if (!line3Identical) {
                             sb2.append(System.lineSeparator()).append(oldLine3).append(System.lineSeparator());
                         }*/
-                        searchAndClickContact(driver, "YAN WANG", 10);
-                        sendMessage(driver, sb2.toString(), 5);
                     }
                     writeResultToFile(sb2);
 
-                    /*searchAndClickContact(driver, "YAN WANG", 10);
-                    sendMessage(driver, sb2.toString(), 5);*/
+                    searchAndClickContact(driver, "YAN WANG", 10);
+                    sendMessage(driver, sb2.toString(), 5);
                 }
             } catch (Exception e) {
                 System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
@@ -175,18 +161,7 @@ public class Main7 {
         };
 
         // Démarrer immédiatement puis toutes les 5 minutes
-        ScheduledFuture<?> future = scheduler.scheduleAtFixedRate(task, 0, 4, TimeUnit.MINUTES);
-        if (bothAreOnline) {
-            System.out.println("dans if");
-            // only re-schedule if it actually changed
-            future.cancel(false);
-            future = scheduler.scheduleAtFixedRate(task, 0, 75, TimeUnit.SECONDS);
-        } else {
-            System.out.println("dans else");
-            future.cancel(false);
-            future = scheduler.scheduleAtFixedRate(task, 0, 4, TimeUnit.MINUTES);
-        }
-
+        scheduler.scheduleAtFixedRate(task, 0, 4, TimeUnit.MINUTES);
 
         // Empêche le programme de se terminer
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -251,9 +226,9 @@ public class Main7 {
         }
         sb.append(System.lineSeparator());
 
-//        if (newLine1.equals(prefix1 + " : ==:== <=> ==:== : " + prefix2)) {
-//            newLine1 = prefix1 + " : " + statut.replace("en ligne aujourd’hui à ", "") + " <=> " + statut2.replace("en ligne aujourd’hui à ", "") + " : " + prefix2;
-//        }
+        if (newLine1.equals(prefix1 + " : ==:== <=> ==:== : " + prefix2)) {
+            newLine1 = prefix1 + " : " + statut.replace("en ligne aujourd’hui à ", "") + " <=> " + statut2.replace("en ligne aujourd’hui à ", "") + " : " + prefix2;
+        }
 
         result[0] = newLine1;
         result[1] = oldStatusShorten1;
@@ -293,7 +268,7 @@ public class Main7 {
         return statusElem.getText().trim();
     }
 
-    public static void searchAndClickContact(WebDriver driver, String contactName, int timeoutSec) throws InterruptedException {
+    public static void searchAndClickContact(WebDriver driver, String contactName, int timeoutSec) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
 
         // 1) Cliquer sur la barre de recherche
@@ -309,7 +284,7 @@ public class Main7 {
 
         // 3) Attendre que les résultats apparaissent (au moins un <span @title>)
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//span[@title]"), 0));
-        Thread.sleep(1500);
+
 
         // 4) Cliquer sur le premier résultat avec gestion de StaleElementReferenceException
         int attempts = 0;

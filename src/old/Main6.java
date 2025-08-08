@@ -1,3 +1,5 @@
+package old;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -18,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main9 {
+public class Main6 {
     private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats.txt";
 
     /*
@@ -60,101 +62,119 @@ public class Main9 {
 
         // Planification de la tâche toutes les 5 minutes
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        final Runnable task = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // a) Vérifier la fenêtre temporelle (02:30 - 05:30)
-                    LocalTime now = LocalTime.now();
-                    LocalTime start = LocalTime.of(2, 30);
-                    LocalTime end = LocalTime.of(5, 30);
-                    boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
+        Runnable task = () -> {
+            try {
+                // 1) Récupérer l'heure locale actuelle
+                LocalTime now = LocalTime.now();
 
-                    if (!isInWindow) {
-                        // 1) Variables préparatoires pour le compte-rendu
-                        String newLine1 = "";
-                        StringBuffer sb2 = new StringBuffer();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
-                        sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+                // 2) Définir les bornes
+                LocalTime start = LocalTime.of(2, 30);  // 02:30
+                LocalTime end   = LocalTime.of(5, 30);  // 05:30
 
-                        StringBuffer sb3 = new StringBuffer();
+                // 3) Vérifier si now est après (ou égal) à start ET avant (ou égal) à end
+                boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
 
-                        // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
-                        String whatsappHandle = "";
-                        for (String handle : driver.getWindowHandles()) {
-                            driver.switchTo().window(handle);
-                            if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
-                                whatsappHandle = handle;
-                                break;
-                            }
-                        }
-                        driver.switchTo().window(whatsappHandle);
-                        Thread.sleep(1000);
+                // Exemple d'utilisation
+                if (!isInWindow) {
+                    /* ***************************** */
+                    String newLine1 = "";
+                    String newLine2 = "";
+                    String newLine3 = "";
 
-                        // 3) Récupérer le statut des contacts
-                        searchAndClickContact(driver, "Park", 10);
-                        String statut2 = getContactStatus(driver, 5);
+                    StringBuffer sb2 = new StringBuffer();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+                    sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
 
-                        searchAndClickContact(driver, "Domon", 10);
-                        String statut = getContactStatus(driver, 5);
+                    StringBuffer sb = new StringBuffer();
+                    //System.out.println("******************************");
+                    searchAndClickContact(driver, "Park", 10);
+                    String statut2 = getContactStatus(driver, 5);
 
-                        // 4) Construire la nouvelle ligne et mettre à jour le flag line1Identical
-                        String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1, oldStatusShorten2, "FD", "SP");
-                        newLine1 = sTab[0];
-                        oldStatusShorten1 = sTab[1];
-                        oldStatusShorten2 = sTab[2];
+                    searchAndClickContact(driver, "Domon", 10);
+                    String statut = getContactStatus(driver, 5);
 
-                        if (newLine1.equals("FD : ==:== <=> ==:== : SP")) {
+                    //searchAndClickContact(driver, "Damien Aguer", 10);
+                    //String statut3 = getContactStatus(driver, 5);
+
+                    //searchAndClickContact(driver, "Alexandre Massot", 10);
+                    //String statut4 = getContactStatus(driver, 5);
+
+                    String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1, oldStatusShorten2, "FD", "SP");
+                    newLine1 = sTab[0];
+                    oldStatusShorten1 = sTab[1];
+                    oldStatusShorten2 = sTab[2];
+
+                    if (newLine1.equals("FD : ==:== <=> ==:== : SP")) {
+                        line1Identical = true;
+                    } else {
+                        if (oldLine1.equals(newLine1) && !newLine1.contains("en ligne")) {
                             line1Identical = true;
                         } else {
-                            if (oldLine1.equals(newLine1) && !newLine1.contains("en ligne")) {
-                                line1Identical = true;
-                            } else {
-                                line1Identical = false;
-                                oldLine1 = newLine1;
-                            }
+                            line1Identical = false;
+                            oldLine1 = newLine1;
                         }
+                    }
 
-                        // 5) Gérer la sortie / envoi si changement détecté
-                        if (line1Identical) {
-                            String time = sb2.toString();
-                            sb2 = new StringBuffer();
-                            sb2.append("_").append(time).append("_").append(System.lineSeparator());
-                        } else {
-                            if (newRestart) {
-                                sb2.append(" (restart)");
-                                sb3.append("restart : ");
-                                newRestart = false;
-                            }
-                            if (!line1Identical) {
-                                sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
-                                sb3.append(oldLine1).append(System.lineSeparator());
-                            }
-                            searchAndClickContact(driver, "YAN WANG", 10);
-                            sendMessage(driver, sb3.toString(), 5);
-                        }
-                        writeResultToFile(sb2);
-                    }
-                } catch (Exception e) {
-                    System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
-                } finally {
-                    // 6) À la fin de l'exécution de ce tour, on calcule le délai d'attente avant le prochain
-                    long nextDelay;
-                    if (line1Identical) {
-                        // si identique → 3 minutes
-                        nextDelay = 180;
+                    /*sTab = generateNewLine(statut3, statut2, oldStatusShorten3, oldStatusShorten4, "DA", "SP");
+                    newLine2 = sTab[0];
+                    oldStatusShorten3 = sTab[1];
+                    oldStatusShorten4 = sTab[2];
+
+                    if (oldLine2.equals(newLine2)) {
+                        line2Identical = true;
                     } else {
-                        // si différent → 0.5 minute
-                        nextDelay = 30;
+                        line2Identical = false;
+                        oldLine2 = newLine2;
+                    }*/
+
+                    /*sTab = generateNewLine(statut4, statut2, oldStatusShorten5, oldStatusShorten6, "AM", "SP");
+                    newLine3 = sTab[0];
+                    oldStatusShorten5 = sTab[1];
+                    oldStatusShorten6 = sTab[2];
+
+                    if (oldLine3.equals(newLine3)) {
+                        line3Identical = true;
+                    } else {
+                        line3Identical = false;
+                        oldLine3 = newLine3;
+                    }*/
+
+
+                    //sb2.append(LocalDateTime.now().format(formatter));
+                    if (line1Identical) {
+                        //sb2.append("NO CHANGES").append(System.lineSeparator());;
+                        String time = sb2.toString();
+                        sb2 = new StringBuffer();
+                        sb2.append("_").append(time).append("_").append(System.lineSeparator());
+                    } else {
+                        if (newRestart) {
+                            sb2.append(" (restart)");
+                            newRestart = false;
+                        }
+                        if (!line1Identical) {
+                            sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
+                        }
+                       /* if (!line2Identical) {
+                            sb2.append(System.lineSeparator()).append(oldLine2).append(System.lineSeparator());
+                        }
+                        if (!line3Identical) {
+                            sb2.append(System.lineSeparator()).append(oldLine3).append(System.lineSeparator());
+                        }*/
+                        searchAndClickContact(driver, "YAN WANG", 10);
+                        sendMessage(driver, sb2.toString(), 5);
                     }
-                    // On reprogramme la même tâche avec le délai adapté
-                    scheduler.schedule(this, nextDelay, TimeUnit.SECONDS);
+                    writeResultToFile(sb2);
+
+                    /*searchAndClickContact(driver, "YAN WANG", 10);
+                    sendMessage(driver, sb2.toString(), 5);*/
                 }
+            } catch (Exception e) {
+                System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
             }
         };
 
         // Démarrer immédiatement puis toutes les 5 minutes
-        scheduler.schedule(task, 0, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(task, 0, 3, TimeUnit.MINUTES);
 
         // Empêche le programme de se terminer
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
