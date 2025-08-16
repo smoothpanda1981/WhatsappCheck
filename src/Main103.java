@@ -167,7 +167,7 @@ public class Main103 {
                     searchBox.sendKeys("Poirier");
 
                     // court délai pour laisser l’IHM montrer la liste
-                    Thread.sleep(3000);
+                    Thread.sleep(5000);
 
                     // 2) Cliquer sur la conversation « Marie-Claude Poirier »
                     By convLocator = By.xpath(
@@ -178,6 +178,7 @@ public class Main103 {
                             )
                     );
                     conversation.click();
+                    Thread.sleep(3000);
 
                     // 4) Récupérer le statut qui suit immédiatement le nom
                     By statusBy = By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/div/div[1]/div[1]/div/div[3]/div/div/div[1]/div/div/div/div[2]/div/div/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div[4]/div/span");
