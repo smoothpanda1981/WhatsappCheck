@@ -80,7 +80,7 @@ public class Main103 {
                     DayOfWeek today = LocalDate.now().getDayOfWeek();
                     // a) Vérifier la fenêtre temporelle (02:30 - 05:30)
                     LocalTime now = LocalTime.now();
-                    LocalTime start = LocalTime.of(6, 30);
+                    LocalTime start = LocalTime.of(7, 30);
                     LocalTime end = LocalTime.of(19, 30);
                     boolean isInWindow = !now.isBefore(start) && !now.isAfter(end);
                     StringBuffer sbFinal = new StringBuffer();
@@ -96,7 +96,7 @@ public class Main103 {
                                 }
                             }
                             driver.switchTo().window(whatsappHandle);
-                            Thread.sleep(1000);
+                            Thread.sleep(3000);
 
                             String bureau_b = getClassByTargetId(driver, targetId_B);
                             bureau_b = bureau_b.replace("shape workspace-shape fill-", "");
@@ -139,7 +139,7 @@ public class Main103 {
                             //writeResultToFile(sbFinal);
 
                             if (Boolean.parseBoolean(result[1]) || Boolean.parseBoolean(result[2]) || Boolean.parseBoolean(result[3]) || Boolean.parseBoolean(result[4]) || Boolean.parseBoolean(result[5])) {
-                                System.out.println("dans if  avec needTimeForMC false");
+                                System.out.println("dans if avec needTimeForMC false");
                                 needTimeForMC = false;
                             }
                     }
