@@ -145,29 +145,31 @@ public class Main106 {
                     }
                     Thread.sleep(3000);
 
-                    String messengerHandle = "";
-                    for (String handle : driver.getWindowHandles()) {
-                        driver.switchTo().window(handle);
-                        if (driver.getCurrentUrl().startsWith("https://www.messenger.com/")) {
-                            messengerHandle = handle;
-                            break;
+                    if (!needTimeForMC) {
+                        String messengerHandle = "";
+                        for (String handle : driver.getWindowHandles()) {
+                            driver.switchTo().window(handle);
+                            if (driver.getCurrentUrl().startsWith("https://www.messenger.com/")) {
+                                messengerHandle = handle;
+                                break;
+                            }
                         }
+                        driver.switchTo().window(messengerHandle);
+
+                        WebDriverWait waitMessenger = new WebDriverWait(driver, Duration.ofSeconds(15));
+                        By yanWangLink = By.xpath("//a[.//span[text()='Yan Wang']]");
+                        WebElement conversation = waitMessenger.until(
+                                ExpectedConditions.elementToBeClickable(yanWangLink)
+                        );
+                        conversation.click();
+
+                        // 3) Sélectionner la zone de saisie (textarea) et y insérer sbFinal
+                        By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
+                        WebElement inputBox = waitMessenger.until(
+                                ExpectedConditions.elementToBeClickable(inputLocator)
+                        );
+                        writeResultsToYanDiscussion(driver, waitMessenger, sbFinal);
                     }
-                    driver.switchTo().window(messengerHandle);
-
-                    WebDriverWait waitMessenger = new WebDriverWait(driver, Duration.ofSeconds(15));
-                    By yanWangLink = By.xpath("//a[.//span[text()='Yan Wang']]");
-                    WebElement conversation = waitMessenger.until(
-                            ExpectedConditions.elementToBeClickable(yanWangLink)
-                    );
-                    conversation.click();
-
-                    // 3) Sélectionner la zone de saisie (textarea) et y insérer sbFinal
-                    By inputLocator = By.xpath("//div[@role='textbox' and @contenteditable='true']");
-                    WebElement inputBox = waitMessenger.until(
-                            ExpectedConditions.elementToBeClickable(inputLocator)
-                    );
-                    writeResultsToYanDiscussion(driver, waitMessenger, sbFinal);
                     writeResultToFile(sbFinal);
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
