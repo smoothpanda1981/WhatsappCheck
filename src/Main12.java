@@ -52,7 +52,7 @@ public class Main12 {
 
 
     public static void main(String[] args) throws InterruptedException {
-        /*// 2) Créez vos ChromeOptions en y passant les arguments
+        // 2) Créez vos ChromeOptions en y passant les arguments
         ChromeOptions options = new ChromeOptions();
         // ouvrez Chrome avec le même user-data-dir (pour conserver votre profil/logins)
         options.addArguments(
@@ -141,10 +141,17 @@ public class Main12 {
                         newLine11_AG = sTab11[0];
                         oldStatusShorten11_AG = sTab11[1];
 
-                        String[] sTab6 = generateNewLineSingle(statut11, oldStatusShorten6_DA, "DA");
+                        String[] sTab6 = generateNewLineSingle(statut6, oldStatusShorten6_DA, "DA");
                         newLine6_DA = sTab6[0];
                         oldStatusShorten6_DA = sTab6[1];
 
+                        String[] sTab5 = generateNewLineSingle(statut5, oldStatusShorten5_BR, "BR");
+                        newLine5_BR = sTab5[0];
+                        oldStatusShorten5_BR = sTab5[1];
+
+                        String[] sTab8 = generateNewLineSingle(statut8, oldStatusShorten8_AM, "AM");
+                        newLine8_AM = sTab8[0];
+                        oldStatusShorten8_AM = sTab8[1];
 
                         if (newLine1_FD_SP.equals("FD : ==:== <=> ==:== : SP")) {
                             line1Identical_FD_SP = true;
@@ -168,6 +175,39 @@ public class Main12 {
                             }
                         }
 
+                        if (newLine6_DA.equals("DA : ==:==")) {
+                            line3Identical_DA = true;
+                        } else {
+                            if (oldLine3_DA.equals(newLine6_DA) && !newLine6_DA.contains("en ligne")) {
+                                line3Identical_DA = true;
+                            } else {
+                                line3Identical_DA = false;
+                                oldLine3_DA = newLine6_DA;
+                            }
+                        }
+
+                        if (newLine5_BR.equals("BR : ==:==")) {
+                            line4Identical_BR = true;
+                        } else {
+                            if (oldLine4_BR.equals(newLine5_BR) && !newLine5_BR.contains("en ligne")) {
+                                line4Identical_BR = true;
+                            } else {
+                                line4Identical_BR = false;
+                                oldLine4_BR = newLine5_BR;
+                            }
+                        }
+
+                        if (newLine8_AM.equals("AM : ==:==")) {
+                            line5Identical_AM = true;
+                        } else {
+                            if (oldLine5_AM.equals(newLine8_AM) && !newLine8_AM.contains("en ligne")) {
+                                line5Identical_AM = true;
+                            } else {
+                                line5Identical_AM = false;
+                                oldLine5_AM = newLine8_AM;
+                            }
+                        }
+
                         // 5) Gérer la sortie / envoi si changement détecté
                         if (line1Identical_FD_SP) {
                             String time = sb2.toString();
@@ -180,62 +220,41 @@ public class Main12 {
                                 newRestart = false;
                             }
                             if (!line1Identical_FD_SP) {
-                                if (!oldLine1_FD_SP.contains("FD : ==:==") && !oldLine1_FD_SP.contains("==:== : SP")) {
-                                    searchAndClickContact(driver, "Aguer", 10);
-                                    String statut6 = getContactStatus(driver, 5);
-                                    String da = generateForExtra(statut6, "DA");
-
-                                    searchAndClickContact(driver, "Roy", 10);
-                                    String statut5 = getContactStatus(driver, 5);
-                                    String br = generateForExtra(statut5, "BR");
-
-                                    if (!da.equals(oldStatusShorten6_DA)) {
-                                        oldStatusShorten6_DA = da;
-                                        sb2.append(System.lineSeparator()).append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
-                                        sb3.append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
-                                    } else if (!br.equals(oldStatusShorten5_BR)) {
-                                        oldStatusShorten5_BR = br;
-                                        sb2.append(System.lineSeparator()).append(oldLine1 + " (" + br + ")").append(System.lineSeparator());
-                                        sb3.append(oldLine1 + " (" + br + ")").append(System.lineSeparator());
-                                    } else {
-                                        searchAndClickContact(driver, "Massot", 10);
-                                        String statut8 = getContactStatus(driver, 5);
-                                        String am = generateForExtra(statut8, "AM");
-
-                                        if (!am.equals(oldStatusShorten8_AM)) {
-                                            oldStatusShorten8_AM = am;
-                                            sb2.append(System.lineSeparator()).append(oldLine1 + " (" + am + ")").append(System.lineSeparator());
-                                            sb3.append(oldLine1 + " (" + am + ")").append(System.lineSeparator());
-                                        } else {
-                                            sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
-                                            sb3.append(oldLine1).append(System.lineSeparator());
-                                        }
-                                    }
-                                } else if (oldLine1.contains("FD : ==:==") && !oldLine1.contains("==:== : SP")) {
-                                    searchAndClickContact(driver, "Aguer", 10);
-                                    String statut6 = getContactStatus(driver, 5);
-                                    String da = generateForExtra(statut6, "DA");
-                                    if (!da.equals(oldStatusShorten6_DA)) {
-                                        oldStatusShorten6_DA = da;
-                                        sb2.append(System.lineSeparator()).append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
-                                        sb3.append(oldLine1 + " (" + da + ")").append(System.lineSeparator());
-                                    } else {
-                                        sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
-                                        sb3.append(oldLine1).append(System.lineSeparator());
-                                    }
-                                } else {
-                                    sb2.append(System.lineSeparator()).append(oldLine1).append(System.lineSeparator());
-                                    sb3.append(oldLine1).append(System.lineSeparator());
-                                }
+                                    sb2.append(System.lineSeparator()).append(oldLine1_FD_SP).append(System.lineSeparator());
+                                    sb3.append(oldLine1_FD_SP).append(System.lineSeparator());
                             }
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3.toString(), 5);
                         }
 
-                        if (!line2Identical) {
-                            sb2.append(oldLine2).append(System.lineSeparator());
+                        if (!line2Identical_AG) {
+                            sb2.append(oldLine2_AG).append(System.lineSeparator());
                             sb3.setLength(0);
-                            sb3.append(oldLine2).append(System.lineSeparator());
+                            sb3.append(oldLine2_AG).append(System.lineSeparator());
+
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3.toString(), 5);
+                        }
+                        if (!line3Identical_DA) {
+                            sb2.append(oldLine3_DA).append(System.lineSeparator());
+                            sb3.setLength(0);
+                            sb3.append(oldLine3_DA).append(System.lineSeparator());
+
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3.toString(), 5);
+                        }
+                        if (!line4Identical_BR) {
+                            sb2.append(oldLine4_BR).append(System.lineSeparator());
+                            sb3.setLength(0);
+                            sb3.append(oldLine4_BR).append(System.lineSeparator());
+
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3.toString(), 5);
+                        }
+                        if (!line5Identical_AM) {
+                            sb2.append(oldLine5_AM).append(System.lineSeparator());
+                            sb3.setLength(0);
+                            sb3.append(oldLine5_AM).append(System.lineSeparator());
 
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3.toString(), 5);
@@ -247,7 +266,7 @@ public class Main12 {
                     // 6) À la fin de l'exécution de ce tour, on calcule le délai d'attente avant le prochain
                     long nextDelay;
                     if (isOutOfWindow) {
-                        if (line1Identical && line2Identical) {
+                        if (line1Identical_FD_SP && line2Identical_AG) {
                             // si identique → 3 minutes
                             nextDelay = 360;
                         } else {
@@ -255,7 +274,7 @@ public class Main12 {
                             nextDelay = 60;
                         }
                     } else {
-                        if (line1Identical && line2Identical) {
+                        if (line1Identical_FD_SP && line2Identical_AG) {
                             // si identique → 3 minutes
                             nextDelay = 180;
                         } else {
@@ -276,7 +295,7 @@ public class Main12 {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             scheduler.shutdown();
             driver.quit();
-        }));*/
+        }));
     }
 
     public static String[] generateNewLine(String statut, String statut2, String oldStatusShorten1, String oldStatusShorten2, String prefix1, String prefix2) {
