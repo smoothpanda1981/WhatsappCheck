@@ -235,27 +235,23 @@ public class Main12 {
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3.toString(), 5);
                         }
-                        if (!line3Identical_DA) {
-                            sb2.append(oldLine3_DA).append(System.lineSeparator());
+                        if (!line3Identical_DA || !line4Identical_BR || !line5Identical_AM) {
                             sb3.setLength(0);
-                            sb3.append(oldLine3_DA).append(System.lineSeparator());
-
-                            searchAndClickContact(driver, "YAN WANG", 10);
-                            sendMessage(driver, sb3.toString(), 5);
-                        }
-                        if (!line4Identical_BR) {
-                            sb2.append(oldLine4_BR).append(System.lineSeparator());
-                            sb3.setLength(0);
-                            sb3.append(oldLine4_BR).append(System.lineSeparator());
-
-                            searchAndClickContact(driver, "YAN WANG", 10);
-                            sendMessage(driver, sb3.toString(), 5);
-                        }
-                        if (!line5Identical_AM) {
-                            sb2.append(oldLine5_AM).append(System.lineSeparator());
-                            sb3.setLength(0);
-                            sb3.append(oldLine5_AM).append(System.lineSeparator());
-
+                            if (!line3Identical_DA) {
+                                sb2.append(oldLine3_DA).append("  ");
+                                sb3.append(oldLine3_DA).append("  ");
+                                System.out.println(sb3.toString());
+                            }
+                            if (!line4Identical_BR) {
+                                sb2.append(oldLine4_BR).append("  ");
+                                sb3.append(oldLine4_BR).append("  ");
+                                System.out.println(sb3.toString());
+                            }
+                            if (!line5Identical_AM) {
+                                sb2.append(oldLine5_AM).append("  ");
+                                sb3.append(oldLine5_AM).append("  ");
+                                System.out.println(sb3.toString());
+                            }
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3.toString(), 5);
                         }
