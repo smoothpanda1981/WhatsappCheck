@@ -1,14 +1,5 @@
 package old;
 
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.docs.v1.Docs;
-import com.google.api.services.docs.v1.DocsScopes;
-import com.google.api.services.docs.v1.model.BatchUpdateDocumentRequest;
-import com.google.api.services.docs.v1.model.InsertTextRequest;
-import com.google.api.services.docs.v1.model.Request;
-import com.google.auth.http.HttpCredentialsAdapter;
-import com.google.auth.oauth2.GoogleCredentials;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -195,50 +186,6 @@ public class Main101 {
             scheduler.shutdown();
             driver.quit();
         }));
-    }
-
-    /** Initialise et renvoie un client Google Docs authentifié via compte de service. */
-    private static Docs getDocsService() throws Exception {
-        // Lit la clé JSON du compte de service
-        GoogleCredentials creds = GoogleCredentials
-                .fromStream(new FileInputStream(CREDENTIALS_FILE_PATH))
-                .createScoped(Collections.singleton(DocsScopes.DOCUMENTS));
-
-        return new Docs.Builder(
-                GoogleNetHttpTransport.newTrustedTransport(),
-                JacksonFactory.getDefaultInstance(),
-                new HttpCredentialsAdapter(creds))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-    }
-
-    /**
-     * Ajoute (append) du texte à la fin du document Google Docs identifié par docId.
-     */
-    private static void appendToGoogleDoc(String docId, String text) throws Exception {
-        Docs docsService = getDocsService();
-
-        // Construire la requête d'insertion : on positionne index = 1 pour le début,
-        // ou index = document_length pour la fin. Ici on append à la fin :
-        int endIndex = docsService.documents()
-                .get(docId)
-                .execute()
-                .getBody()
-                .getContent()
-                .size() - 1;
-
-        Request insertRequest = new Request()
-                .setInsertText(new InsertTextRequest()
-                        .setText(text + "\n")
-                        .setLocation(new com.google.api.services.docs.v1.model.Location()
-                                .setIndex(endIndex)));
-
-        BatchUpdateDocumentRequest body = new BatchUpdateDocumentRequest()
-                .setRequests(Collections.singletonList(insertRequest));
-
-        docsService.documents()
-                .batchUpdate(docId, body)
-                .execute();
     }
 
 
