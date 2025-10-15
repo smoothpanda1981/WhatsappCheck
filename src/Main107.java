@@ -108,6 +108,7 @@ public class Main107 {
                             String [] result = generateNewLines(bureau_b, bureau_d, bureau_f, bureau_a, bureau_c, oldtargetIdB, oldtargetIdD, oldtargetIdF, oldtargetIdA, oldtargetIdC);
                             sbFinal.setLength(0);
                             sbFinal.append(result[0]);
+                            // System.out.println("Res : " + sbFinal.toString());
 
                             if (Boolean.parseBoolean(result[1])) {
                                 System.out.println("changemnt du B");
@@ -129,13 +130,7 @@ public class Main107 {
                                 System.out.println("changemnt du C");
                                 oldtargetIdC = bureau_c;
                             }
-
                             //writeResultToFile(sbFinal);
-
-                            if (Boolean.parseBoolean(result[1]) || Boolean.parseBoolean(result[2]) || Boolean.parseBoolean(result[3]) || Boolean.parseBoolean(result[4]) || Boolean.parseBoolean(result[5])) {
-                                System.out.println("dans if avec needTimeForMC false");
-                                needTimeForMC = false;
-                            }
                     }
                     Thread.sleep(3000);
 
