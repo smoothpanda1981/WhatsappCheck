@@ -49,10 +49,11 @@ public class Main108 {
     private static boolean needTimeForMC = true;
 
     // --- NOTION ---
-    private static final String NOTION_TOKEN   = System.getenv("NOTION_TOKEN"); // recommandé (sécurité)
-    private static final String NOTION_PAGE_ID = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"; // ta page
+    private static final String NOTION_TOKEN   = System.getenv("ntn_HiR3304196671dZmPZPJR9a2BDvsUfpFVl1cSQdEDFm0Ew"); // recommandé (sécurité)
+    private static final String NOTION_PAGE_ID = System.getenv("273001f82e2e80acb4ead5b5761d8cb1"); // ta page
     private static final String NOTION_VERSION = "2022-06-28"; // version stable API
 
+    
 
     public static void main(String[] args) throws InterruptedException {
         FirefoxBinary binary = new FirefoxBinary();
@@ -173,54 +174,122 @@ public class Main108 {
         }));
     }
 
-    public static void writeResultToNotion(String content) {
-        if (NOTION_TOKEN == null || NOTION_TOKEN.isBlank()) {
-            System.err.println("NOTION_TOKEN manquant (variable d'environnement).");
-            return;
-        }
-        if (content == null || content.isBlank()) {
-            // Évite d'envoyer des blocs vides
-            return;
-        }
+    // Écrit dans Notion en ajoutant des blocs "code" à la page.
+public static void writeResultToNotion(String content) {
+    if (NOTION_TOKEN == null || NOTION_TOKEN.isBlank()) {
+        System.err.println("NOTION_TOKEN manquant. Définis la variable d'environnement NOTION_TOKEN.");
+        return;
+    }
+    if (NOTION_PAGE_ID == null || NOTION_PAGE_ID.isBlank()) {
+        System.err.println("NOTION_PAGE_ID manquant. Définis la variable d'environnement NOTION_PAGE_ID.");
+        return;
+    }
+
+    // Découpe le contenu en blocs raisonnables pour Notion
+    String[] chunks = splitForNotion(content, 1800); // ~1800 caractères par bloc (sécurité)
+
+    String jsonBody = buildChildrenPayload(chunks);
+
+    HttpRequest req = HttpRequest.newBuilder()
+            .uri(URI.create("https://api.notion.com/v1/blocks/" + NOTION_PAGE_ID + "/children"))
+            .header("Authorization", "Bearer " + NOTION_TOKEN)
+            .header("Notion-Version", NOTION_VERSION)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+            .build();
+
+    HttpClient client = HttpClient.newHttpClient();
+
+    int maxAttempts = 3;
+    long backoffMs = 800;
+    for (int attempt = 1; attempt <= maxAttempts; attempt++) {
         try {
-            // Bloc "code" pour garder la mise en forme multi-lignes
-            String jsonBody = """
-        {
-          "children": [
-            {
-              "object": "block",
-              "type": "code",
-              "code": {
-                "language": "plain text",
-                "rich_text": [
-                  { "type": "text", "text": { "content": %s } }
-                ]
-              }
-            }
-          ]
-        }
-        """.formatted(toJsonString(content));
-
-            HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.notion.com/v1/blocks/" + NOTION_PAGE_ID + "/children"))
-                    .header("Authorization", "Bearer " + NOTION_TOKEN)
-                    .header("Notion-Version", NOTION_VERSION)
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-                    .build();
-
-            HttpClient client = HttpClient.newHttpClient();
             HttpResponse<String> resp = client.send(req, HttpResponse.BodyHandlers.ofString());
-
-            if (resp.statusCode() >= 200 && resp.statusCode() < 300) {
-                System.out.println("Écrit dans Notion OK.");
-            } else {
-                System.err.println("Échec Notion [" + resp.statusCode() + "]: " + resp.body());
+            int sc = resp.statusCode();
+            if (sc >= 200 && sc < 300) {
+                System.out.println("Notion: écriture OK (" + chunks.length + " bloc(s)).");
+                return;
             }
+            System.err.println("Notion: échec [" + sc + "] tentative " + attempt + "/" + maxAttempts + " - " + resp.body());
         } catch (Exception e) {
-            System.err.println("Erreur Notion: " + e.getMessage());
+            System.err.println("Notion: exception tentative " + attempt + "/" + maxAttempts + " - " + e.getMessage());
+        }
+
+        try { Thread.sleep(backoffMs); } catch (InterruptedException ignored) {}
+        backoffMs *= 2; // simple backoff
+    }
+
+    System.err.println("Notion: abandon après " + maxAttempts + " tentatives.");
+}
+
+// Construit un payload avec 1..N blocs "code" (garde la mise en forme multi-lignes)
+private static String buildChildrenPayload(String[] chunks) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("{\"children\":[");
+    for (int i = 0; i < chunks.length; i++) {
+        if (i > 0) sb.append(",");
+        sb.append("""
+        {
+          "object": "block",
+          "type": "code",
+          "code": {
+            "language": "plain text",
+            "rich_text": [
+              { "type": "text", "text": { "content": %s } }
+            ]
+          }
+        }
+        """.formatted(toJsonString(chunks[i])));
+    }
+    sb.append("]}");
+    return sb.toString();
+}
+
+// Découpe en morceaux de longueur max, en essayant de couper aux retours ligne
+private static String[] splitForNotion(String s, int maxLen) {
+    if (s == null) return new String[] { "" };
+    if (s.length() <= maxLen) return new String[] { s };
+
+    java.util.ArrayList<String> parts = new java.util.ArrayList<>();
+    int i = 0;
+    while (i < s.length()) {
+        int end = Math.min(i + maxLen, s.length());
+        // Essaie de reculer jusqu'au dernier '\n' dans cette fenêtre
+        int lastNl = s.lastIndexOf('\n', end - 1);
+        if (lastNl >= i && end - i > 200) { // évite des mini-chunks
+            parts.add(s.substring(i, lastNl + 1));
+            i = lastNl + 1;
+        } else {
+            parts.add(s.substring(i, end));
+            i = end;
         }
     }
+    return parts.toArray(new String[0]);
+}
+
+// Échappe correctement une chaîne pour JSON ("content": "...")
+private static String toJsonString(String s) {
+    StringBuilder out = new StringBuilder("\"");
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        switch (c) {
+            case '"'  -> out.append("\\\"");
+            case '\\' -> out.append("\\\\");
+            case '\b' -> out.append("\\b");
+            case '\f' -> out.append("\\f");
+            case '\n' -> out.append("\\n");
+            case '\r' -> out.append("\\r");
+            case '\t' -> out.append("\\t");
+            default -> {
+                if (c < 0x20) out.append(String.format("\\u%04x", (int)c));
+                else out.append(c);
+            }
+        }
+    }
+    out.append("\"");
+    return out.toString();
+}
+
 
     // Échappe proprement une String en JSON
     private static String toJsonString(String s) {
