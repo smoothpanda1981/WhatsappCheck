@@ -2,7 +2,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -17,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main107 {
+public class MainRoomz107 {
     private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats-roomz.txt";
     private static final  String targetId_B = "2210c58e-393d-4452-a086-650123181ea9";
     private static final  String targetId_D = "639b2da4-11f7-4226-ad79-8c0dfdc6599f";
