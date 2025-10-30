@@ -84,7 +84,7 @@ public class MainTelegram13 {
 
                     // Va sur le chat A, lit son statut
                     String statusA = searchAndClickContact_Telegram(driver, contactA, 10);
-                    // System.out.println("FD : " + statusA);
+                    System.out.println("FD : " + statusA);
 
                     // Construit lignes
                     String newLineA = buildStatusLine(statusA, oldStatus_A, "FD");
@@ -92,7 +92,7 @@ public class MainTelegram13 {
 
 
                     String statusB =  searchAndClickContact_Telegram(driver, contactB, 10);
-                    // System.out.println("AG : " + statusB);
+                    System.out.println("AG : " + statusB);
                     // Construit lignes
                     String newLineB = buildStatusLine(statusB, oldStatus_B, "AG");
                     oldStatus_B = extractLastSeenShort(statusB, oldStatus_B);
