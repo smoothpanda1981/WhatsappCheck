@@ -99,14 +99,14 @@ public class MainTelegram13 {
 
 
                     // Compare aux anciennes lignes pour éviter le spam
-                    if (newLineA.equals(oldLine_A)) {
+                    if (newLineA.equals(oldLine_A) && !newLineA.contains("online")) {
                         lineIdentical_A = true;
                     } else {
                         lineIdentical_A = false;
                         oldLine_A = newLineA;
                     }
                     // Compare aux anciennes lignes pour éviter le spam
-                    if (newLineB.equals(oldLine_B)) {
+                    if (newLineB.equals(oldLine_B) && !newLineB.contains("online")) {
                         lineIdentical_B = true;
                     } else {
                         lineIdentical_B = false;
@@ -218,7 +218,7 @@ public class MainTelegram13 {
                                           String prefix) {
         String shortNow = extractLastSeenShort(currentStatusFull, oldShort);
         String display;
-        if (shortNow.equalsIgnoreCase(oldShort)) {
+        if (shortNow.equalsIgnoreCase(oldShort) && !shortNow.equals("online")) {
             if (prefix.equals("AG")) {
                 display = " : ==:== " + prefix;
             } else {
