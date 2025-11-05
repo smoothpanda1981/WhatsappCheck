@@ -193,7 +193,7 @@ public class MainTelegram13 {
      * On retourne juste "online" ou "22:31" ou "recently".
      */
     private static String extractLastSeenShort(String fullStatus, String oldShort) {
-        if (fullStatus == null) return oldShort;
+        // if (fullStatus == null) return oldShort;
         String s = fullStatus.toLowerCase().trim();
         if (s.contains("online")) {
             return "online";
