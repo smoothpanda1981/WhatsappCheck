@@ -32,10 +32,6 @@ public class MainTelegram13 {
     private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats-telegram.txt";
 
     // anciennes valeurs pour ne pas spammer le fichier si rien n'a changé
-    private static String oldStatus_A = "";
-    private static String oldStatus_B = "";
-
-
     private static String oldLine_A = "";
     private static String oldLine_B = "";
 
@@ -86,33 +82,21 @@ public class MainTelegram13 {
                     String statusA = searchAndClickContact_Telegram(driver, contactA, 10);
                     System.out.println("FD : " + statusA);
 
-                    // Construit lignes
-                    String newLineA = buildStatusLine(statusA, oldStatus_A, "FD");
-                    oldStatus_A = extractLastSeenShort(statusA, oldStatus_A);
-
-
                     String statusB =  searchAndClickContact_Telegram(driver, contactB, 10);
                     System.out.println("AG : " + statusB);
-                    // Construit lignes
-                    String newLineB = buildStatusLine(statusB, oldStatus_B, "AG");
-                    oldStatus_B = extractLastSeenShort(statusB, oldStatus_B);
 
-
-                    // Compare aux anciennes lignes pour éviter le spam
-                    if (newLineA.equals(oldLine_A) && !newLineA.contains("online")) {
-                        lineIdentical_A = true;
-                    } else {
+                    if (!statusA.equals(oldLine_A)) {
+                        oldLine_A = statusA;
                         lineIdentical_A = false;
-                        oldLine_A = newLineA;
-                    }
-                    // Compare aux anciennes lignes pour éviter le spam
-                    if (newLineB.equals(oldLine_B) && !newLineB.contains("online")) {
-                        lineIdentical_B = true;
                     } else {
-                        lineIdentical_B = false;
-                        oldLine_B = newLineB;
+                        lineIdentical_A = true;
                     }
-
+                    if (!statusB.equals(oldLine_B)) {
+                        oldLine_B = statusB;
+                        lineIdentical_B = false;
+                    } else {
+                        lineIdentical_B = true;
+                    }
 
                     // Prépare le bloc à écrire
                     StringBuffer sbOut = new StringBuffer();
@@ -125,16 +109,20 @@ public class MainTelegram13 {
 
                     // Ajoute seulement les lignes qui ont changé
                     if (!lineIdentical_A && !lineIdentical_B) {
-                        sbOut.append(oldLine_A).append(" <=> ").append(oldLine_B).append(System.lineSeparator());
-                        sbOut2.append(oldLine_A).append(" <=> ").append(oldLine_B).append(System.lineSeparator());
+                        String newA = extractLastSeenShort(oldLine_A);
+                        String newB = extractLastSeenShort(oldLine_B);
+                        sbOut.append("FD : " + newA).append(" <=> ").append(newB + " : AG").append(System.lineSeparator());
+                        sbOut2.append("FD : " + newA).append(" <=> ").append(newB + " : AG").append(System.lineSeparator());
                     }
                     if (!lineIdentical_A && lineIdentical_B) {
-                        sbOut.append(oldLine_A).append(" <=> ").append(" ==:== AG").append(System.lineSeparator());
-                        sbOut2.append(oldLine_A).append(" <=> ").append(" ==:== AG").append(System.lineSeparator());
+                        String newA = extractLastSeenShort(oldLine_A);
+                        sbOut.append("FD : " + newA).append(" <=> ").append(" ==:== AG").append(System.lineSeparator());
+                        sbOut2.append("FD : " + newA).append(" <=> ").append(" ==:== AG").append(System.lineSeparator());
                     }
                     if (lineIdentical_A && !lineIdentical_B) {
-                        sbOut.append("FD : ==:== ").append(" <=> ").append(oldLine_B).append(System.lineSeparator());
-                        sbOut2.append("FD : ==:== ").append(" <=> ").append(oldLine_B).append(System.lineSeparator());
+                        String newB = extractLastSeenShort(oldLine_B);
+                        sbOut.append("FD : ==:== ").append(" <=> ").append(newB + " : AG").append(System.lineSeparator());
+                        sbOut2.append("FD : ==:== ").append(" <=> ").append(newB + " : AG").append(System.lineSeparator());
                     }
 
                     if (sbOut.length() == 0) {
@@ -192,46 +180,21 @@ public class MainTelegram13 {
      *
      * On retourne juste "online" ou "22:31" ou "recently".
      */
-    private static String extractLastSeenShort(String fullStatus, String oldShort) {
-        // if (fullStatus == null) return oldShort;
+    private static String extractLastSeenShort(String fullStatus) {
+        String result = "";
         String s = fullStatus.toLowerCase().trim();
         if (s.contains("online")) {
-            return "online";
-        }
-        if (s.contains("last seen at")) {
+            result = "online";
+        } else if (s.contains("last seen at")) {
             // ex: "last seen at 22:31"
-            return s.replace("last seen at", "").trim();
-        }
-        if (s.contains("last seen")) {
+            result = s.replace("last seen at", "").trim();
+        } else if (s.contains("last seen")) {
             // ex: "last seen recently", "last seen within a week"
-            return s.replace("last seen", "").trim();
-        }
-        return s;
-    }
-
-    /**
-     * Construit une ligne du style "A : online" ou "B : 22:31"
-     * Si identique à l'ancien, on remplace par ==:== comme dans Main12.
-     */
-    private static String buildStatusLine(String currentStatusFull,
-                                          String oldShort,
-                                          String prefix) {
-        String shortNow = extractLastSeenShort(currentStatusFull, oldShort);
-        String display;
-        if (shortNow.equalsIgnoreCase(oldShort) && !shortNow.equals("online")) {
-            if (prefix.equals("AG")) {
-                display = " : ==:== " + prefix;
-            } else {
-                display = prefix + " : ==:== ";
-            }
+            result = s.replace("last seen", "").trim();
         } else {
-            if (prefix.equals("AG")) {
-                display = shortNow + " : " + prefix;
-            } else {
-                display = prefix + " : " + shortNow;
-            }
+            result = s;
         }
-        return display;
+        return result;
     }
 
     /**
