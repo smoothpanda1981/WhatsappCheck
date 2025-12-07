@@ -1,6 +1,9 @@
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -43,15 +46,18 @@ public class MainTelegram13 {
 
     public static void main(String[] args) throws InterruptedException {
 
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments(
-                "--user-data-dir=/home/ywang/IdeaProjects/profil-telegram",
-                "--remote-debugging-port=9333",
-                "--no-sandbox",
-                "--disable-dev-shm-usage"
-        );
+        FirefoxBinary binary = new FirefoxBinary();
+        binary.addCommandLineOptions("--start-debugger-server", "9222");
 
-        WebDriver driver = new ChromeDriver(options);
+        FirefoxOptions options = new FirefoxOptions();
+        options.setBinary(binary);
+        // -no-remote permet d'ouvrir un profil parallèle sans interférer avec une instance existante
+        options.addArguments("-no-remote");
+        // si vous souhaitez réutiliser un profil spécifique :
+        options.addArguments("-profile", "/home/ywang/IdeaProjects/profil-telegram");
+
+        // 3) Lancez Firefox
+        WebDriver driver = new FirefoxDriver(options);
 
         driver.get("https://web.telegram.org/a/");
         Thread.sleep(10000); // temps pour que l'UI charge
