@@ -53,7 +53,7 @@ public class MainTelegram13 {
 
         WebDriver driver = new ChromeDriver(options);
 
-        driver.get("https://web.telegram.org/");
+        driver.get("https://web.telegram.org/a/");
         Thread.sleep(10000); // temps pour que l'UI charge
 
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
