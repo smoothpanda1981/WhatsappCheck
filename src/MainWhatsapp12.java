@@ -448,9 +448,13 @@ public class MainWhatsapp12 {
         Thread.sleep(6000);
         //By statusLocator = By.xpath("//header//span[@dir='auto' and starts-with(@title,'en ligne')]");
         By statusLocator = By.xpath("//*[@id=\"main\"]/header/div[2]/div[2]/span");
-        WebElement statusElem = wait.until(ExpectedConditions.visibilityOfElementLocated(statusLocator));
 
-        return statusElem.getText().trim();
+        if (statusLocator != null) {
+            WebElement statusElem = wait.until(ExpectedConditions.visibilityOfElementLocated(statusLocator));
+            return statusElem.getText().trim();
+        } else {
+            return "empty";
+        }
     }
 
     public static void searchAndClickContact(WebDriver driver, String contactName, int timeoutSec) throws InterruptedException {
