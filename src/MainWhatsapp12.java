@@ -133,28 +133,28 @@ public class MainWhatsapp12 {
                         String statut8 = getContactStatus(driver, 5);
 
                         // 4) Construire la nouvelle ligne et mettre à jour le flag line1Identical
-                        String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1_FD, oldStatusShorten2_SP, "FD", "SP");
+                        String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1_FD, oldStatusShorten2_SP, "1F", "1S");
                         newLine1_FD_SP = sTab[0];
                         oldStatusShorten1_FD = sTab[1];
                         oldStatusShorten2_SP = sTab[2];
 
-                        String[] sTab11 = generateNewLineSingle(statut11, oldStatusShorten11_AG, "AG");
+                        String[] sTab11 = generateNewLineSingle(statut11, oldStatusShorten11_AG, "1A");
                         newLine11_AG = sTab11[0];
                         oldStatusShorten11_AG = sTab11[1];
 
-                        String[] sTab6 = generateNewLineSingle(statut6, oldStatusShorten6_DA, "DA");
+                        String[] sTab6 = generateNewLineSingle(statut6, oldStatusShorten6_DA, "1D");
                         newLine6_DA = sTab6[0];
                         oldStatusShorten6_DA = sTab6[1];
 
-                        String[] sTab5 = generateNewLineSingle(statut5, oldStatusShorten5_BR, "BR");
+                        String[] sTab5 = generateNewLineSingle(statut5, oldStatusShorten5_BR, "1B");
                         newLine5_BR = sTab5[0];
                         oldStatusShorten5_BR = sTab5[1];
 
-                        String[] sTab8 = generateNewLineSingle(statut8, oldStatusShorten8_AM, "AM");
+                        String[] sTab8 = generateNewLineSingle(statut8, oldStatusShorten8_AM, "2A");
                         newLine8_AM = sTab8[0];
                         oldStatusShorten8_AM = sTab8[1];
 
-                        if (newLine1_FD_SP.equals("FD : ==:== <=> ==:== : SP")) {
+                        if (newLine1_FD_SP.equals("1F : ==:== <=> ==:== : 1S")) {
                             line1Identical_FD_SP = true;
                         } else {
                             if (oldLine1_FD_SP.equals(newLine1_FD_SP) && !newLine1_FD_SP.contains("en ligne")) {
@@ -165,7 +165,7 @@ public class MainWhatsapp12 {
                             }
                         }
 
-                        if (newLine11_AG.equals("AG : ==:==")) {
+                        if (newLine11_AG.equals("1A : ==:==")) {
                             line2Identical_AG = true;
                         } else {
                             if (oldLine2_AG.equals(newLine11_AG) && !newLine11_AG.contains("en ligne")) {
@@ -176,7 +176,7 @@ public class MainWhatsapp12 {
                             }
                         }
 
-                        if (newLine6_DA.equals("DA : ==:==")) {
+                        if (newLine6_DA.equals("1D : ==:==")) {
                             line3Identical_DA = true;
                         } else {
                             if (oldLine3_DA.equals(newLine6_DA) && !newLine6_DA.contains("en ligne")) {
@@ -187,7 +187,7 @@ public class MainWhatsapp12 {
                             }
                         }
 
-                        if (newLine5_BR.equals("BR : ==:==")) {
+                        if (newLine5_BR.equals("1B : ==:==")) {
                             line4Identical_BR = true;
                         } else {
                             if (oldLine4_BR.equals(newLine5_BR) && !newLine5_BR.contains("en ligne")) {
@@ -198,7 +198,7 @@ public class MainWhatsapp12 {
                             }
                         }
 
-                        if (newLine8_AM.equals("AM : ==:==")) {
+                        if (newLine8_AM.equals("2A : ==:==")) {
                             line5Identical_AM = true;
                         } else {
                             if (oldLine5_AM.equals(newLine8_AM) && !newLine8_AM.contains("en ligne")) {

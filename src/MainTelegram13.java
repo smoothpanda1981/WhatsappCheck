@@ -117,18 +117,18 @@ public class MainTelegram13 {
                     if (!lineIdentical_A && !lineIdentical_B) {
                         String newA = extractLastSeenShort(oldLine_A);
                         String newB = extractLastSeenShort(oldLine_B);
-                        sbOut.append("FD : " + newA).append(" <=> ").append(newB + " : AG").append(System.lineSeparator());
-                        sbOut2.append("FD : " + newA).append(" <=> ").append(newB + " : AG").append(System.lineSeparator());
+                        sbOut.append("Test1 : " + newA).append(" <=> ").append(newB + " : Res1").append(System.lineSeparator());
+                        sbOut2.append("Test1 : " + newA).append(" <=> ").append(newB + " : Res1").append(System.lineSeparator());
                     }
                     if (!lineIdentical_A && lineIdentical_B) {
                         String newA = extractLastSeenShort(oldLine_A);
-                        sbOut.append("FD : " + newA).append(" <=> ").append(" ==:== AG").append(System.lineSeparator());
-                        sbOut2.append("FD : " + newA).append(" <=> ").append(" ==:== AG").append(System.lineSeparator());
+                        sbOut.append("Test1 : " + newA).append(" <=> ").append(" ==:== Res1").append(System.lineSeparator());
+                        sbOut2.append("Test1 : " + newA).append(" <=> ").append(" ==:== Res1").append(System.lineSeparator());
                     }
                     if (lineIdentical_A && !lineIdentical_B) {
                         String newB = extractLastSeenShort(oldLine_B);
-                        sbOut.append("FD : ==:== ").append(" <=> ").append(newB + " : AG").append(System.lineSeparator());
-                        sbOut2.append("FD : ==:== ").append(" <=> ").append(newB + " : AG").append(System.lineSeparator());
+                        sbOut.append("Test1 : ==:== ").append(" <=> ").append(newB + " : Res1").append(System.lineSeparator());
+                        sbOut2.append("Test1 : ==:== ").append(" <=> ").append(newB + " : Res1").append(System.lineSeparator());
                     }
 
                     if (sbOut.length() == 0) {
