@@ -271,16 +271,26 @@ public class MainWhatsapp12 {
                     long nextDelay;
                     if (isOutOfWindow) {
                         if (line1Identical_FD_SP && line2Identical_AG) {
-                            // si identique → 3 minutes
-                            nextDelay = 360;
+                            if (!line4Identical_BR || !line5Identical_AM) {
+                                // si identique → 4 minutes
+                                nextDelay = 240;
+                            } else {
+                                // si identique → 6 minutes
+                                nextDelay = 360;
+                            }
                         } else {
                             // si différent → 0.5 minute
                             nextDelay = 60;
                         }
                     } else {
                         if (line1Identical_FD_SP && line2Identical_AG) {
-                            // si identique → 3 minutes
-                            nextDelay = 180;
+                            if (!line4Identical_BR || !line5Identical_AM) {
+                                // si identique → 1.5 minutes
+                                nextDelay = 90;
+                            } else {
+                                // si identique → 3 minutes
+                                nextDelay = 180;
+                            }
                         } else {
                             // si différent → 0.5 minute
                             nextDelay = 40;
