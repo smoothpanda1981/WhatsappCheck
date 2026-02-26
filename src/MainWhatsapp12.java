@@ -471,7 +471,9 @@ public class MainWhatsapp12 {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
 
         // 1) Cliquer sur la barre de recherche
-        WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@contenteditable='true' and @data-tab='3']")));
+        //WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@contenteditable='true' and @data-tab='3']")));
+        WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[3]/div/div[4]/div/div[1]/div/div/div/div/div/div/div[2]/input")));
+
         searchBar.click();
 
         // 2) Vider le champ si nécessaire (sélectionner tout et supprimer)
