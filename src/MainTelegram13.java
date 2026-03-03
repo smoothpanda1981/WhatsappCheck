@@ -86,10 +86,10 @@ public class MainTelegram13 {
 
                     // Va sur le chat A, lit son statut
                     String statusA = searchAndClickContact_Telegram(driver, contactA, 10);
-                    System.out.println("FD : " + statusA);
+                    System.out.println("1F : " + statusA);
 
                     String statusB =  searchAndClickContact_Telegram(driver, contactB, 10);
-                    System.out.println("AG : " + statusB);
+                    System.out.println("1A : " + statusB);
 
                     if (!statusA.equals(oldLine_A)) {
                         oldLine_A = statusA;
@@ -117,18 +117,18 @@ public class MainTelegram13 {
                     if (!lineIdentical_A && !lineIdentical_B) {
                         String newA = extractLastSeenShort(oldLine_A);
                         String newB = extractLastSeenShort(oldLine_B);
-                        sbOut.append("Test1 : " + newA).append(" <=> ").append(newB + " : Res1").append(System.lineSeparator());
-                        sbOut2.append("Test1 : " + newA).append(" <=> ").append(newB + " : Res1").append(System.lineSeparator());
+                        sbOut.append("1F : " + newA).append(" <=> ").append(newB + " : 1A").append(System.lineSeparator());
+                        sbOut2.append("1F : " + newA).append(" <=> ").append(newB + " : 1A").append(System.lineSeparator());
                     }
                     if (!lineIdentical_A && lineIdentical_B) {
                         String newA = extractLastSeenShort(oldLine_A);
-                        sbOut.append("Test1 : " + newA).append(" <=> ").append(" ==:== Res1").append(System.lineSeparator());
-                        sbOut2.append("Test1 : " + newA).append(" <=> ").append(" ==:== Res1").append(System.lineSeparator());
+                        sbOut.append("1F : " + newA).append(" <=> ").append(" ==:== 1A").append(System.lineSeparator());
+                        sbOut2.append("1F : " + newA).append(" <=> ").append(" ==:== 1A").append(System.lineSeparator());
                     }
                     if (lineIdentical_A && !lineIdentical_B) {
                         String newB = extractLastSeenShort(oldLine_B);
-                        sbOut.append("Test1 : ==:== ").append(" <=> ").append(newB + " : Res1").append(System.lineSeparator());
-                        sbOut2.append("Test1 : ==:== ").append(" <=> ").append(newB + " : Res1").append(System.lineSeparator());
+                        sbOut.append("1F : ==:== ").append(" <=> ").append(newB + " : 1A").append(System.lineSeparator());
+                        sbOut2.append("1F : ==:== ").append(" <=> ").append(newB + " : 1A").append(System.lineSeparator());
                     }
 
                     if (sbOut.length() == 0) {
