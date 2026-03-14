@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -50,7 +51,7 @@ public class MainTelegram13 {
         binary.addCommandLineOptions("--start-debugger-server", "9222");
 
         FirefoxOptions options = new FirefoxOptions();
-        options.setBinary(binary);
+        options.setBinary((Path) binary);
         // -no-remote permet d'ouvrir un profil parallèle sans interférer avec une instance existante
         options.addArguments("-no-remote");
         // si vous souhaitez réutiliser un profil spécifique :

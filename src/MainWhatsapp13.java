@@ -117,21 +117,21 @@ public class MainWhatsapp13 {
                         driver.switchTo().window(whatsappHandle);
                         Thread.sleep(1000);
 
+                        searchAndClickContact(driver, "Aguer", 10);
+                        String statut6 = getContactStatus(driver, 5);
+
                         // 3) Récupérer le statut des contacts
+                        searchAndClickContact(driver, "Domon", 10);
+                        String statut = getContactStatus(driver, 5);
+
                         searchAndClickContact(driver, "Park", 10);
                         String statut2 = getContactStatus(driver, 5);
 
                         searchAndClickContact(driver, "Girel", 10);
                         String statut11 = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Domon", 10);
-                        String statut = getContactStatus(driver, 5);
-
                         searchAndClickContact(driver, "Magali", 10);
                         String statut12 = getContactStatus(driver, 5);
-
-                        searchAndClickContact(driver, "Aguer", 10);
-                        String statut6 = getContactStatus(driver, 5);
 
                         searchAndClickContact(driver, "Roy", 10);
                         String statut5 = getContactStatus(driver, 5);
