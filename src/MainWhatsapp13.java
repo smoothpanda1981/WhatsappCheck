@@ -491,7 +491,7 @@ public class MainWhatsapp13 {
 
         Thread.sleep(6000);
         //By statusLocator = By.xpath("//header//span[@dir='auto' and starts-with(@title,'en ligne')]");
-        By statusLocator = By.xpath("//*[@id=\"main\"]/header/div[2]/div[2]/span");
+        By statusLocator = By.xpath("/html/body/div[1]/div/div/div/div/div[3]/div/div[5]/div/header/div[1]/div[2]/div[2]/span");
 
         if (statusLocator != null) {
             WebElement statusElem = wait.until(ExpectedConditions.visibilityOfElementLocated(statusLocator));
