@@ -35,11 +35,8 @@ public class MainWhatsapp14 {
     private static String oldStatusShorten5_BR = "";
     private static String oldStatusShorten6_DA = "";
     private static String oldStatusShorten8_AM = "";
-    private static String oldStatusShorten11_AG = "";
     private static String oldStatusShorten12_MP = "";
     private static String oldLine1_FD_SP = "";
-    private static String oldLine7_AG_MP = "";
-    private static String oldLine2_AG = "";
     private static String oldLine3_DA = "";
     private static String oldLine4_BR = "";
     private static String oldLine5_AM = "";
@@ -47,12 +44,10 @@ public class MainWhatsapp14 {
 
     // Flags pour indiquer si les lignes sont identiques
     private static boolean line1Identical_FD_SP = false;
-    private static boolean line2Identical_AG = false;
     private static boolean line3Identical_DA = false;
     private static boolean line4Identical_BR = false;
     private static boolean line5Identical_AM = false;
     private static boolean line6Identical_MP = false;
-    private static boolean line7Identical_AG_MP = false;
     private static boolean isOutOfWindow = false;
     private static boolean newRestart = true;
 
@@ -94,202 +89,193 @@ public class MainWhatsapp14 {
                     LocalTime end = LocalTime.of(5, 30);
                     isOutOfWindow = !now.isBefore(start) && !now.isAfter(end);
 
-                        // 1) Variables préparatoires pour le compte-rendu
-                        String newLine1_FD_SP = "";
-                        String newLine2_AG_MP = "";
-                        String newLine11_AG = "";
-                        String newLine6_DA = "";
-                        String newLine5_BR = "";
-                        String newLine8_AM = "";
-                        String newLine12_MP = "";
-                        StringBuffer sb2 = new StringBuffer();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
-                        sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+                    // 1) Variables préparatoires pour le compte-rendu
+                    String newLine1_FD_SP = "";
+                    String newLine11_AG = "";
+                    String newLine6_DA = "";
+                    String newLine5_BR = "";
+                    String newLine8_AM = "";
+                    String newLine12_MP = "";
+                    StringBuffer sb2 = new StringBuffer();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+                    sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
 
-                        StringBuffer sb3 = new StringBuffer();
+                    StringBuffer sb3 = new StringBuffer();
 
-                        // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
-                        String whatsappHandle = "";
-                        for (String handle : driver.getWindowHandles()) {
-                            driver.switchTo().window(handle);
-                            if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
-                                whatsappHandle = handle;
-                                break;
-                            }
+                    // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
+                    String whatsappHandle = "";
+                    for (String handle : driver.getWindowHandles()) {
+                        driver.switchTo().window(handle);
+                        if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
+                            whatsappHandle = handle;
+                            break;
                         }
-                        driver.switchTo().window(whatsappHandle);
-                        driver.navigate().refresh();
+                    }
+                    driver.switchTo().window(whatsappHandle);
+                    driver.navigate().refresh();
 
-                        Thread.sleep(5000); // laisser WhatsApp se reconnecter
+                    Thread.sleep(5000); // laisser WhatsApp se reconnecter
 
-                        searchAndClickContact(driver, "Park", 10);
-                        String statut2 = getContactStatus(driver, 5);
+                    // 3) Récupérer le statut des contacts
+                    searchAndClickContact(driver, "Domon", 10);
+                    String statut = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Girel", 10);
-                        String statut11 = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Park", 10);
+                    String statut2 = getContactStatus(driver, 5);
 
-                        // 3) Récupérer le statut des contacts
-                        searchAndClickContact(driver, "Domon", 10);
-                        String statut = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Magali", 10);
+                    String statut12 = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Magali", 10);
-                        String statut12 = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Roy", 10);
+                    String statut5 = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Roy", 10);
-                        String statut5 = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Massot", 10);
+                    String statut8 = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Massot", 10);
-                        String statut8 = getContactStatus(driver, 5);
-
-                        searchAndClickContact(driver, "Aguer", 10);
-                        String statut6 = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Aguer", 10);
+                    String statut6 = getContactStatus(driver, 5);
 
                     // 4) Construire la nouvelle ligne et mettre à jour le flag line1Identical
-                        String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1_FD, oldStatusShorten2_SP, "1F", "1S");
-                        newLine1_FD_SP = sTab[0];
-                        oldStatusShorten1_FD = sTab[1];
-                        oldStatusShorten2_SP = sTab[2];
+                    String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1_FD, oldStatusShorten2_SP, "1F", "1S");
+                    newLine1_FD_SP = sTab[0];
+                    oldStatusShorten1_FD = sTab[1];
+                    oldStatusShorten2_SP = sTab[2];
 
-                        String[] sTab2 = generateNewLine(statut11, statut12, oldStatusShorten11_AG, oldStatusShorten12_MP, "1A", "1M");
-                        newLine2_AG_MP = sTab2[0];
-                        oldStatusShorten11_AG = sTab2[1];
-                        oldStatusShorten12_MP = sTab2[2];
+                    String[] sTab6 = generateNewLineSingle(statut6, oldStatusShorten6_DA, "1D");
+                    newLine6_DA = sTab6[0];
+                    oldStatusShorten6_DA = sTab6[1];
 
-                        String[] sTab6 = generateNewLineSingle(statut6, oldStatusShorten6_DA, "1D");
-                        newLine6_DA = sTab6[0];
-                        oldStatusShorten6_DA = sTab6[1];
+                    String[] sTab5 = generateNewLineSingle(statut5, oldStatusShorten5_BR, "1B");
+                    newLine5_BR = sTab5[0];
+                    oldStatusShorten5_BR = sTab5[1];
 
-                        String[] sTab5 = generateNewLineSingle(statut5, oldStatusShorten5_BR, "1B");
-                        newLine5_BR = sTab5[0];
-                        oldStatusShorten5_BR = sTab5[1];
+                    String[] sTab8 = generateNewLineSingle(statut8, oldStatusShorten8_AM, "2A");
+                    newLine8_AM = sTab8[0];
+                    oldStatusShorten8_AM = sTab8[1];
 
-                        String[] sTab8 = generateNewLineSingle(statut8, oldStatusShorten8_AM, "2A");
-                        newLine8_AM = sTab8[0];
-                        oldStatusShorten8_AM = sTab8[1];
+                    String[] sTab12 = generateNewLineSingle(statut12, oldStatusShorten12_MP, "1M");
+                    newLine12_MP = sTab12[0];
+                    oldStatusShorten12_MP = sTab12[1];
 
-                        if (newLine1_FD_SP.equals("1F : ==:== <=> ==:== : 1S")) {
+                    if (newLine1_FD_SP.equals("1F : ==:== <=> ==:== : 1S")) {
+                        line1Identical_FD_SP = true;
+                    } else {
+                        if (oldLine1_FD_SP.equals(newLine1_FD_SP) && !newLine1_FD_SP.contains("en ligne")) {
                             line1Identical_FD_SP = true;
                         } else {
-                            if (oldLine1_FD_SP.equals(newLine1_FD_SP) && !newLine1_FD_SP.contains("en ligne")) {
-                                line1Identical_FD_SP = true;
-                            } else {
-                                line1Identical_FD_SP = false;
-                                oldLine1_FD_SP = newLine1_FD_SP;
-                            }
+                            line1Identical_FD_SP = false;
+                            oldLine1_FD_SP = newLine1_FD_SP;
                         }
+                    }
 
-                        if (newLine2_AG_MP.equals("1A : ==:== <=> ==:== : 1M")) {
-                            line7Identical_AG_MP = true;
-                        } else {
-                            if (oldLine7_AG_MP.equals(newLine2_AG_MP) && !newLine2_AG_MP.contains("en ligne")) {
-                                line7Identical_AG_MP = true;
-                            } else {
-                                line7Identical_AG_MP = false;
-                                oldLine7_AG_MP = newLine2_AG_MP;
-                            }
-                        }
-
-                        if (newLine6_DA.equals("1D : ==:==")) {
+                    if (newLine6_DA.equals("1D : ==:==")) {
+                        line3Identical_DA = true;
+                    } else {
+                        if (oldLine3_DA.equals(newLine6_DA) && !newLine6_DA.contains("en ligne")) {
                             line3Identical_DA = true;
                         } else {
-                            if (oldLine3_DA.equals(newLine6_DA) && !newLine6_DA.contains("en ligne")) {
-                                line3Identical_DA = true;
-                            } else {
-                                line3Identical_DA = false;
-                                oldLine3_DA = newLine6_DA;
-                            }
+                            line3Identical_DA = false;
+                            oldLine3_DA = newLine6_DA;
                         }
+                    }
 
-                        if (newLine5_BR.equals("1B : ==:==")) {
+                    if (newLine5_BR.equals("1B : ==:==")) {
+                        line4Identical_BR = true;
+                    } else {
+                        if (oldLine4_BR.equals(newLine5_BR) && !newLine5_BR.contains("en ligne")) {
                             line4Identical_BR = true;
                         } else {
-                            if (oldLine4_BR.equals(newLine5_BR) && !newLine5_BR.contains("en ligne")) {
-                                line4Identical_BR = true;
-                            } else {
-                                line4Identical_BR = false;
-                                oldLine4_BR = newLine5_BR;
-                            }
+                            line4Identical_BR = false;
+                            oldLine4_BR = newLine5_BR;
                         }
+                    }
 
-                        if (newLine8_AM.equals("2A : ==:==")) {
+                    if (newLine8_AM.equals("2A : ==:==")) {
+                        line5Identical_AM = true;
+                    } else {
+                        if (oldLine5_AM.equals(newLine8_AM) && !newLine8_AM.contains("en ligne")) {
                             line5Identical_AM = true;
                         } else {
-                            if (oldLine5_AM.equals(newLine8_AM) && !newLine8_AM.contains("en ligne")) {
-                                line5Identical_AM = true;
-                            } else {
-                                line5Identical_AM = false;
-                                oldLine5_AM = newLine8_AM;
-                            }
+                            line5Identical_AM = false;
+                            oldLine5_AM = newLine8_AM;
                         }
+                    }
 
-                        // 5) Gérer la sortie / envoi si changement détecté
-                        if (line1Identical_FD_SP) {
-                            String time = sb2.toString();
-                            sb2 = new StringBuffer();
-                            sb2.append("_").append(time).append("_").append(System.lineSeparator());
+                    if (newLine12_MP.equals("1M : ==:==")) {
+                        line6Identical_MP = true;
+                    } else {
+                        if (oldLine6_MP.equals(newLine12_MP) && !newLine12_MP.contains("en ligne")) {
+                            line6Identical_MP = true;
                         } else {
-                            if (newRestart) {
-                                sb2.append(" (restart)");
-                                sb3.append("restart : ");
-                                newRestart = false;
-                            }
-                            if (!line1Identical_FD_SP) {
-                                    sb2.append(System.lineSeparator()).append(oldLine1_FD_SP).append(System.lineSeparator());
-                                    sb3.append(oldLine1_FD_SP).append(System.lineSeparator());
-                            }
-                            searchAndClickContact(driver, "YAN WANG", 10);
-                            sendMessage(driver, sb3.toString(), 5);
+                            line6Identical_MP = false;
+                            oldLine6_MP = newLine12_MP;
                         }
+                    }
 
-                        if (line7Identical_AG_MP) {
-                            String time = sb2.toString();
-                            sb2 = new StringBuffer();
-                            sb2.append("_").append(time).append("_").append(System.lineSeparator());
-                        } else {
-                            if (!line7Identical_AG_MP) {
-                                sb2.append(System.lineSeparator()).append(oldLine7_AG_MP).append(System.lineSeparator());
-                                sb3.append(oldLine7_AG_MP).append(System.lineSeparator());
-                            }
-                            searchAndClickContact(driver, "YAN WANG", 10);
-                            sendMessage(driver, sb3.toString(), 5);
+                    // 5) Gérer la sortie / envoi si changement détecté
+                    if (line1Identical_FD_SP) {
+                        String time = sb2.toString();
+                        sb2 = new StringBuffer();
+                        sb2.append("_").append(time).append("_").append(System.lineSeparator());
+                    } else {
+                        if (newRestart) {
+                            sb2.append(" (restart)");
+                            sb3.append("restart : ");
+                            newRestart = false;
                         }
+                        if (!line1Identical_FD_SP) {
+                            sb2.append(System.lineSeparator()).append(oldLine1_FD_SP).append(System.lineSeparator());
+                            sb3.append(oldLine1_FD_SP).append(System.lineSeparator());
+                        }
+                        searchAndClickContact(driver, "YAN WANG", 10);
+                        sendMessage(driver, sb3.toString(), 5);
+                    }
 
-                        if (!line3Identical_DA || !line4Identical_BR || !line5Identical_AM) {
-                            sb3.setLength(0);
+                    if (!line6Identical_MP) {
+                        sb2.append(oldLine6_MP).append(System.lineSeparator());
+                        sb3.setLength(0);
+                        sb3.append(oldLine6_MP).append(System.lineSeparator());
+
+                        searchAndClickContact(driver, "YAN WANG", 10);
+                        sendMessage(driver, sb3.toString(), 5);
+                    }
+
+                    if (!line3Identical_DA || !line4Identical_BR || !line5Identical_AM) {
+                        sb3.setLength(0);
+                        if (!line3Identical_DA) {
+                            sb2.append(oldLine3_DA);
+                            sb3.append(oldLine3_DA);
+                        }
+                        if (!line4Identical_BR) {
                             if (!line3Identical_DA) {
-                                sb2.append(oldLine3_DA);
-                                sb3.append(oldLine3_DA);
+                                sb2.append(" -- ").append(oldLine4_BR);
+                                sb3.append(" -- ").append(oldLine4_BR);
+                            } else {
+                                sb2.append(oldLine4_BR);
+                                sb3.append(oldLine4_BR);
                             }
-                            if (!line4Identical_BR) {
-                                if (!line3Identical_DA) {
-                                    sb2.append(" -- ").append(oldLine4_BR);
-                                    sb3.append(" -- ").append(oldLine4_BR);
-                                } else {
-                                    sb2.append(oldLine4_BR);
-                                    sb3.append(oldLine4_BR);
-                                }
-                            }
-                            if (!line5Identical_AM) {
-                                if (!line3Identical_DA || !line4Identical_BR) {
-                                    sb2.append(" -- ").append(oldLine5_AM);
-                                    sb3.append(" -- ").append(oldLine5_AM);
-                                } else {
-                                    sb2.append(oldLine5_AM);
-                                    sb3.append(oldLine5_AM);
-                                }
-                            }
-                            searchAndClickContact(driver, "YAN WANG", 10);
-                            sendMessage(driver, sb3.toString(), 5);
                         }
-                        writeResultToFile(sb2);
+                        if (!line5Identical_AM) {
+                            if (!line3Identical_DA || !line4Identical_BR) {
+                                sb2.append(" -- ").append(oldLine5_AM);
+                                sb3.append(" -- ").append(oldLine5_AM);
+                            } else {
+                                sb2.append(oldLine5_AM);
+                                sb3.append(oldLine5_AM);
+                            }
+                        }
+                        searchAndClickContact(driver, "YAN WANG", 10);
+                        sendMessage(driver, sb3.toString(), 5);
+                    }
+                    writeResultToFile(sb2);
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
                 } finally {
                     // 6) À la fin de l'exécution de ce tour, on calcule le délai d'attente avant le prochain
                     long nextDelay;
                     if (isOutOfWindow) {
-                        if (line1Identical_FD_SP && line7Identical_AG_MP) {
-                            if (!line4Identical_BR || !line5Identical_AM) {
+                        if (line1Identical_FD_SP) {
+                            if (!line4Identical_BR || !line5Identical_AM || !line6Identical_MP) {
                                 // si identique → 4 minutes
                                 nextDelay = 240;
                             } else {
@@ -301,8 +287,8 @@ public class MainWhatsapp14 {
                             nextDelay = 60;
                         }
                     } else {
-                        if (line1Identical_FD_SP && line7Identical_AG_MP) {
-                            if (!line4Identical_BR || !line5Identical_AM) {
+                        if (line1Identical_FD_SP) {
+                            if (!line4Identical_BR || !line5Identical_AM || !line6Identical_MP) {
                                 // si identique → 1.5 minutes
                                 nextDelay = 90;
                             } else {
@@ -475,7 +461,7 @@ public class MainWhatsapp14 {
 
         Thread.sleep(6000);
         //By statusLocator = By.xpath("//header//span[@dir='auto' and starts-with(@title,'en ligne')]");
-        By statusLocator = By.xpath("//*[@id=\"main\"]/header/div[2]/div[2]/span");
+        By statusLocator = By.xpath("/html/body/div[1]/div/div/div/div/div[3]/div/div[5]/div/header/div[1]/div[2]/div[2]/span");
 
         if (statusLocator != null) {
             WebElement statusElem = wait.until(ExpectedConditions.visibilityOfElementLocated(statusLocator));
