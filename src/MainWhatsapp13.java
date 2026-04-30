@@ -491,7 +491,8 @@ public class MainWhatsapp13 {
 
         Thread.sleep(6000);
         //By statusLocator = By.xpath("//header//span[@dir='auto' and starts-with(@title,'en ligne')]");
-        By statusLocator = By.xpath("/html/body/div[1]/div/div/div/div/div[3]/div/div[5]/div/header/div[1]/div[2]/div[2]/span");
+        By statusLocator = By.xpath("/html/body/div[1]/div/div/div/div/div[3]/div/div[4]/div/header/div[1]/div[2]/div[2]/span");
+
 
         if (statusLocator != null) {
             WebElement statusElem = wait.until(ExpectedConditions.visibilityOfElementLocated(statusLocator));
@@ -506,7 +507,7 @@ public class MainWhatsapp13 {
 
         // 1) Cliquer sur la barre de recherche
         //WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@contenteditable='true' and @data-tab='3']")));
-        WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[3]/div/div[4]/div/div[1]/div/div/div/div/div/div/div[2]/input")));
+        WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[3]/div/div[3]/div/div[1]/div[1]/div/div/div/div/div/div[2]/input")));
 
         searchBar.click();
 
