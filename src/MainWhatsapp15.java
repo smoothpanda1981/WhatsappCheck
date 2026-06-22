@@ -167,7 +167,7 @@ public class MainWhatsapp15 {
                         newLine12_SP = sTab12[0];
                         oldStatusShorten12_SP = sTab12[1];
 
-                        if (newLine1_FD_MP.equals("1F : ==:== <=> ==:== : 1S")) {
+                        if (newLine1_FD_MP.equals("1F : ==:== <=> ==:== : 1M")) {
                             line1Identical_FD_MP = true;
                         } else {
                             if (oldLine1_FD_MP.equals(newLine1_FD_MP) && !newLine1_FD_MP.contains("en ligne")) {
@@ -222,7 +222,7 @@ public class MainWhatsapp15 {
                             }
                         }
 
-                        if (newLine12_SP.equals("1M : ==:==")) {
+                        if (newLine12_SP.equals("1S : ==:==")) {
                             line6Identical_SP = true;
                         } else {
                             if (oldLine6_SP.equals(newLine12_SP) && !newLine12_SP.contains("en ligne")) {
