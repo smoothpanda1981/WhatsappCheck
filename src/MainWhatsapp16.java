@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -22,9 +23,9 @@ import java.util.concurrent.TimeUnit;
 // https://chromedriver.storage.googleapis.com/index.html?path=114.0.5735.90/
 public class MainWhatsapp16 {
     private static final String RESULT_FILE = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats.txt";
-    private static final String RESULT_FILE_WEBEX = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats_webex.txt";
+    private static final String RESULT_FILE_WEBEX = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats-webex.txt";
     private static final String WEBEX_URL = "https://web.webex.com/spaces";
-    private static final String RESULT_FILE_ROOMZ = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats_roomz.txt";
+    private static final String RESULT_FILE_ROOMZ = "/home/ywang/IdeaProjects/WhatsappCheck/src/resultats-roomz.txt";
     private static final String ROOMZ_URL = "https://viewer.roomz.io/?roomz-public-id=TI-YlnNDfkeIN8o4ZgWeLA";
     /*
     Command line to open chrome : google-chrome --remote-debugging-port=9222 --user-data-dir="/home/ywang/IdeaProjects/profil-personnel"
@@ -62,7 +63,24 @@ public class MainWhatsapp16 {
     private static String roomzHandle    = "";
     private static String webexHandle    = "";
 
-    private static boolean runWebexHandler = false;
+    private static String oldLine101_FD = "";
+    private static String oldLine102_SP = "";
+    private static String oldLine103_AG = "";
+    private static String oldLine104_DA = "";
+    private static String oldLine105_BR = "";
+    private static String oldLine106_AM = "";
+    private static String oldLine107_MP = "";
+    private static String oldLine108_CP = "";
+    private static String oldLine109_CN = "";
+    private static boolean line101Identical_FD = false;
+    private static boolean line102Identical_SP = false;
+    private static boolean line103Identical_AG = false;
+    private static boolean line104Identical_DA = false;
+    private static boolean line105Identical_BR = false;
+    private static boolean line106Identical_AM = false;
+    private static boolean line107Identical_MP = false;
+    private static boolean line108Identical_CP = false;
+    private static boolean line109Identical_CN = false;
 
     public static void main(String[] args) throws InterruptedException {
         // 2) Créez vos ChromeOptions en y passant les arguments
@@ -90,10 +108,10 @@ public class MainWhatsapp16 {
         Thread.sleep(10000);  // ajustez selon votre connexion / machine
         //System.out.println("Titre : " + driver.getTitle());
 
-       /* // Onglet 2 : Roomz (ouvert via JavaScript)
+       // Onglet 2 : Roomz (ouvert via JavaScript)
         ((JavascriptExecutor) driver).executeScript("window.open(arguments[0], '_blank');", ROOMZ_URL);
         Thread.sleep(10000);
-*/
+
         // Onglet 3 : Webex (ouvert via JavaScript)
         ((JavascriptExecutor) driver).executeScript("window.open(arguments[0], '_blank');", WEBEX_URL);
         Thread.sleep(10000);
@@ -117,14 +135,18 @@ public class MainWhatsapp16 {
                         String newLine5_BR = "";
                         String newLine8_AM = "";
                         String newLine12_MP = "";
+
                         StringBuffer sb2 = new StringBuffer();
+                        StringBuffer sb2W = new StringBuffer();
+                        StringBuffer sb2R = new StringBuffer();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
                         sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+                        sb2W.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
 
                         StringBuffer sb3 = new StringBuffer();
 
                         // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
-                        /*for (String handle : driver.getWindowHandles()) {
+                        for (String handle : driver.getWindowHandles()) {
                             driver.switchTo().window(handle);
                             if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
                                 whatsappHandle = handle;
@@ -134,9 +156,9 @@ public class MainWhatsapp16 {
                         driver.switchTo().window(whatsappHandle);
                         driver.navigate().refresh();
                         Thread.sleep(5000); // laisser WhatsApp se reconnecter
-                        System.out.println("Refreshed WhatsApp");*/
+                        System.out.println("Refreshed WhatsApp");
 
-                       /* // 3) Récupérer le statut des contacts
+                       // 3) Récupérer le statut des contacts
                         searchAndClickContact(driver, "Domon", 10);
                         String statut = getContactStatus(driver, 5);
 
@@ -314,10 +336,10 @@ public class MainWhatsapp16 {
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3.toString(), 5);
                         }
-                        writeResultToFile(sb2);*/
+                        writeResultToFile(sb2);
 
 
-                    /*for (String handle : driver.getWindowHandles()) {
+                    for (String handle : driver.getWindowHandles()) {
                         driver.switchTo().window(handle);
                         if (driver.getCurrentUrl().startsWith("https://viewer.roomz.io/")) {
                             roomzHandle = handle;
@@ -337,27 +359,186 @@ public class MainWhatsapp16 {
                     String seat2E = "6d59b6fc-d6a4-4ebe-a0ec-c1a1b47d2d69";
                     String seat2F = "49e29c7f-332e-4723-9b68-36cf1468a655";
                     System.out.println(getSeatStatus(driver, 10, seat1B));
-                    runWebexHandler = true;
-                    System.out.println("Refreshed Roomz");*/
+                    System.out.println("Refreshed Roomz");
 
-                    if (!runWebexHandler) {
-                        for (String handle : driver.getWindowHandles()) {
-                            driver.switchTo().window(handle);
-                            if (driver.getCurrentUrl().startsWith("https://web.webex.com/")) {
-                                webexHandle = handle;
-                                break;
+                    LocalDateTime now2 = LocalDateTime.now();
+                    DayOfWeek day = now2.getDayOfWeek();
+                    int hour = now2.getHour();
+
+//                    boolean isWeekday = day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY;
+//                    boolean isWorkingHours = hour >= 7 && hour < 20;
+
+//                    if (isWeekday && isWorkingHours) {
+                      if (true) {
+                            for (String handle : driver.getWindowHandles()) {
+                                driver.switchTo().window(handle);
+                                if (driver.getCurrentUrl().startsWith("https://web.webex.com/")) {
+                                    webexHandle = handle;
+                                    break;
+                                }
                             }
-                        }
-                        driver.switchTo().window(webexHandle);
-                        driver.navigate().refresh();
-                        Thread.sleep(5000);
-                        String text1 = searchAndClickWebex(driver, "preveraud magali", 10);
-                        System.out.println("1M : " + text1);
-                        String text2 = searchAndClickWebex(driver, "Perez Cristian", 10);
-                        System.out.println("1C : " + text2);
-                        System.out.println("Refreshed Webex : ");
-                    }
+                            driver.switchTo().window(webexHandle);
+                            driver.navigate().refresh();
+                            Thread.sleep(5000);
 
+                            StringBuffer sb3W = new StringBuffer();
+
+                            String CN = searchAndClickWebex(driver, "Nlate Camille", 10);
+                            System.out.println("2C : " + CN);
+                            String MP = searchAndClickWebex(driver, "Preveraud magali", 10);
+                            System.out.println("1M : " + MP);
+                            String FD = searchAndClickWebex(driver, "Domon Frédéric", 10);
+                            System.out.println("1F : " + FD);
+                            String CP = searchAndClickWebex(driver, "Perez Cristian", 10);
+                            System.out.println("1C : " + CP);
+                            String AM = searchAndClickWebex(driver, "Massot Alexandre", 10);
+                            System.out.println("2A : " + AM);
+                            String AG = searchAndClickWebex(driver, "Girel Alexandra", 10);
+                            System.out.println("1A : " + AG);
+                            String BR = searchAndClickWebex(driver, "Roy Benjamin", 10);
+                            System.out.println("1B : " + BR);
+                            String SP = searchAndClickWebex(driver, "Park Stéphanie", 10);
+                            System.out.println("1S : " + SP);
+                            String DA = searchAndClickWebex(driver, "Aguer Damien", 10);
+                            System.out.println("1D : " + DA);
+
+                            if (oldLine101_FD.equals(FD)) {
+                                line101Identical_FD = true;
+                            } else {
+                                line101Identical_FD = false;
+                                oldLine101_FD = FD;
+                            }
+
+                            if (oldLine102_SP.equals(SP)) {
+                                line102Identical_SP = true;
+                            } else {
+                                line102Identical_SP = false;
+                                oldLine102_SP = SP;
+                            }
+
+                            if (oldLine103_AG.equals(AG)) {
+                                line103Identical_AG = true;
+                            } else {
+                                line103Identical_AG = false;
+                                oldLine103_AG = AG;
+                            }
+
+                            if (oldLine104_DA.equals(DA)) {
+                                line104Identical_DA = true;
+                            } else {
+                                line104Identical_DA = false;
+                                oldLine104_DA = DA;
+                            }
+
+                            if (oldLine105_BR.equals(BR)) {
+                                line105Identical_BR = true;
+                            } else {
+                                line105Identical_BR = false;
+                                oldLine105_BR = BR;
+                            }
+
+                            if (oldLine106_AM.equals(AM)) {
+                                line106Identical_AM = true;
+                            } else {
+                                line106Identical_AM = false;
+                                oldLine106_AM = AM;
+                            }
+
+                            if (oldLine107_MP.equals(MP)) {
+                                line107Identical_MP = true;
+                            } else {
+                                line107Identical_MP = false;
+                                oldLine107_MP = MP;
+                            }
+
+                            if (oldLine108_CP.equals(CP)) {
+                                line108Identical_CP = true;
+                            } else {
+                                line108Identical_CP = false;
+                                oldLine108_CP = CP;
+                            }
+
+                            if (oldLine109_CN.equals(CP)) {
+                                line109Identical_CN = true;
+                            } else {
+                                line109Identical_CN = false;
+                                oldLine109_CN = CN;
+                            }
+
+                            for (String handle : driver.getWindowHandles()) {
+                                driver.switchTo().window(handle);
+                                if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
+                                    roomzHandle = handle;
+                                    break;
+                                }
+                            }
+                            driver.switchTo().window(whatsappHandle);
+
+                            if (!line101Identical_FD) {
+                                sb2W.append("1F : ").append(oldLine101_FD).append(System.lineSeparator());
+                                sb3W.setLength(0);
+                                sb3W.append("1F : ").append(oldLine101_FD).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3W.toString(), 5);
+                            }
+                            if (!line102Identical_SP) {
+                                sb2W.append("1S : ").append(oldLine102_SP).append(System.lineSeparator());
+                                sb3W.setLength(0);
+                                sb3W.append("1S : ").append(oldLine102_SP).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3W.toString(), 5);
+                            }
+                              if (!line107Identical_MP) {
+                                  sb2W.append("1M : ").append(oldLine107_MP).append(System.lineSeparator());
+                                  sb3W.setLength(0);
+                                  sb3W.append("1M : ").append(oldLine107_MP).append(System.lineSeparator());
+                                  searchAndClickContact(driver, "YAN WANG", 10);
+                                  sendMessage(driver, sb3W.toString(), 5);
+                              }
+                          if (!line103Identical_AG) {
+                                sb2W.append("1A : ").append(oldLine103_AG).append(System.lineSeparator());
+                                sb3W.setLength(0);
+                                sb3W.append("1A : ").append(oldLine103_AG).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3W.toString(), 5);
+                            }
+                            if (!line104Identical_DA) {
+                                sb2W.append("1D : ").append(oldLine104_DA).append(System.lineSeparator());
+                                sb3W.setLength(0);
+                                sb3W.append("1D : ").append(oldLine104_DA).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3W.toString(), 5);
+                            }
+                            if (!line105Identical_BR) {
+                                sb2W.append("1B : ").append(oldLine105_BR).append(System.lineSeparator());
+                                sb3W.setLength(0);
+                                sb3W.append("1B : ").append(oldLine105_BR).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3W.toString(), 5);
+                            }
+                            if (!line106Identical_AM) {
+                                sb2W.append("2A : ").append(oldLine106_AM).append(System.lineSeparator());
+                                sb3W.setLength(0);
+                                sb3W.append("2A : ").append(oldLine106_AM).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3W.toString(), 5);
+                            }
+                           if (!line108Identical_CP) {
+                                sb2W.append("1C : ").append(oldLine108_CP).append(System.lineSeparator());
+                                sb3W.setLength(0);
+                                sb3W.append("1C : ").append(oldLine108_CP).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3W.toString(), 5);
+                            }
+                            if (!line109Identical_CN) {
+                                sb2W.append("2C : ").append(oldLine109_CN).append(System.lineSeparator());
+                                sb3W.setLength(0);
+                                sb3W.append("2C : ").append(oldLine109_CN).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3W.toString(), 5);
+                            }
+                            writeResultToFile(sb2W, RESULT_FILE_WEBEX);
+                        }
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
                 } finally {
@@ -367,27 +548,27 @@ public class MainWhatsapp16 {
                         if (line1Identical_FD_SP && line2Identical_AG) {
                             if (!line4Identical_BR || !line5Identical_AM || !line6Identical_MP) {
                                 // si identique → 4 minutes
-                                nextDelay = 240;
+                                nextDelay = 210;
                             } else {
                                 // si identique → 6 minutes
-                                nextDelay = 360;
+                                nextDelay = 300;
                             }
                         } else {
                             // si différent → 0.5 minute
-                            nextDelay = 60;
+                            nextDelay = 50;
                         }
                     } else {
                         if (line1Identical_FD_SP && line2Identical_AG) {
                             if (!line4Identical_BR || !line5Identical_AM || !line6Identical_MP) {
                                 // si identique → 1.5 minutes
-                                nextDelay = 90;
+                                nextDelay = 75;
                             } else {
                                 // si identique → 3 minutes
-                                nextDelay = 180;
+                                nextDelay = 150;
                             }
                         } else {
                             // si différent → 0.5 minute
-                            nextDelay = 40;
+                            nextDelay = 35;
                         }
                     }
                     // On reprogramme la même tâche avec le délai adapté
@@ -539,6 +720,15 @@ public class MainWhatsapp16 {
 
     public static void writeResultToFile(StringBuffer content) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(RESULT_FILE, true))) {
+            writer.write(content.toString());
+            writer.newLine();
+        } catch (IOException e) {
+            throw new RuntimeException("Erreur lors de l'écriture du fichier : " + e.getMessage(), e);
+        }
+    }
+
+    public static void writeResultToFile(StringBuffer content, String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             writer.write(content.toString());
             writer.newLine();
         } catch (IOException e) {
