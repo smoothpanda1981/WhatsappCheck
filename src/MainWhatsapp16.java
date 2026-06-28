@@ -351,8 +351,11 @@ public class MainWhatsapp16 {
                         driver.switchTo().window(webexHandle);
                         driver.navigate().refresh();
                         Thread.sleep(5000);
-                        searchAndClickWebex(driver, "preveraud magali", 10);
-                        System.out.println("Refreshed Webex");
+                        String text1 = searchAndClickWebex(driver, "preveraud magali", 10);
+                        System.out.println("1M : " + text1);
+                        String text2 = searchAndClickWebex(driver, "Perez Cristian", 10);
+                        System.out.println("1C : " + text2);
+                        System.out.println("Refreshed Webex : ");
                     }
 
                 } catch (Exception e) {
@@ -612,29 +615,37 @@ public class MainWhatsapp16 {
         throw new RuntimeException("Impossible de cliquer sur le premier résultat après plusieurs tentatives");
     }
 
-    public static void searchAndClickWebex(WebDriver driver, String contactName, int timeoutSec) throws InterruptedException {
+    public static String searchAndClickWebex(WebDriver driver, String contactName, int timeoutSec) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Actions actions = new Actions(driver);
 
         // ============================================================
-        // ETAPE 1 : Cliquer sur le bouton de recherche
+        // ETAPE 1 : Ouvrir/réutiliser la barre de recherche
         // ============================================================
         By searchButtonLocator = By.xpath("//*[@id=\"layout-wrapper\"]/div[3]/div/div/div[1]/div[2]/div/div/mdc-button");
-        wait.until(ExpectedConditions.elementToBeClickable(searchButtonLocator)).click();
-        System.out.println("✅ Clic sur le bouton recherche");
-        Thread.sleep(1000);
+        By searchFieldLocator = By.cssSelector("mdc-searchfield[data-test='general-search-input']");
+
+        boolean searchAlreadyOpen = !driver.findElements(searchFieldLocator).isEmpty();
+
+        if (!searchAlreadyOpen) {
+            // Premier appel : cliquer sur le bouton pour ouvrir la recherche
+            wait.until(ExpectedConditions.elementToBeClickable(searchButtonLocator)).click();
+            System.out.println("✅ Clic sur le bouton recherche");
+            Thread.sleep(1000);
+        } else {
+            System.out.println("✅ Barre de recherche déjà ouverte");
+        }
 
         // ============================================================
         // ETAPE 2 : Trouver l'input via Shadow DOM
         // ============================================================
         WebElement inputField = null;
-
         String[] jsQueries = {
+                "return document.querySelector('mdc-searchfield[data-test=\"general-search-input\"]')?.shadowRoot?.querySelector('input')",
                 "return document.activeElement?.shadowRoot?.querySelector('input')",
                 "return document.querySelector('mdc-textfield')?.shadowRoot?.querySelector('input')",
-                "return document.querySelector('mdc-search')?.shadowRoot?.querySelector('input')",
-                "return Array.from(document.querySelectorAll('mdc-textfield')).map(e => e.shadowRoot?.querySelector('input')).find(e => e != null)"
+                "return Array.from(document.querySelectorAll('mdc-searchfield')).map(e => e.shadowRoot?.querySelector('input')).find(e => e != null)"
         };
 
         for (String query : jsQueries) {
@@ -642,7 +653,7 @@ public class MainWhatsapp16 {
                 Object result = js.executeScript(query);
                 if (result instanceof WebElement) {
                     inputField = (WebElement) result;
-                    System.out.println("✅ Input trouvé via JS Shadow DOM : " + query);
+                    System.out.println("✅ Input trouvé via JS : " + query);
                     break;
                 }
             } catch (Exception e) {
@@ -651,84 +662,94 @@ public class MainWhatsapp16 {
         }
 
         if (inputField == null) {
-            throw new RuntimeException("❌ Impossible de trouver le champ de saisie après le clic");
+            throw new RuntimeException("❌ Impossible de trouver le champ de saisie");
         }
 
         // ============================================================
-        // ETAPE 3 : Effacer et taper le nom du contact
+        // ETAPE 3 : Effacer et taper le nouveau nom
         // ============================================================
         inputField.click();
+        Thread.sleep(300);
+
+        // Vider le champ via JavaScript (plus fiable dans le Shadow DOM)
+        js.executeScript("arguments[0].value = '';", inputField);
+        js.executeScript(
+                "arguments[0].dispatchEvent(new Event('input', {bubbles: true}));",
+                inputField
+        );
+        Thread.sleep(300);
+
+        // Triple-clic pour sélectionner tout puis supprimer (double sécurité)
         inputField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         inputField.sendKeys(Keys.DELETE);
+        Thread.sleep(300);
+
+        // Taper le nouveau nom
         inputField.sendKeys(contactName);
         System.out.println("✅ Texte saisi : " + contactName);
 
         // ============================================================
-        // ETAPE 4 : Attendre que les résultats apparaissent
+        // ETAPE 4 : Capitaliser le nom
         // ============================================================
         Thread.sleep(2000);
-
-        // Capitaliser chaque mot : "preveraud magali" → "Preveraud Magali"
         String[] nameParts = contactName.split(" ");
-        StringBuilder capitalizedName = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         for (String part : nameParts) {
             if (!part.isEmpty()) {
-                capitalizedName.append(Character.toUpperCase(part.charAt(0)))
+                sb.append(Character.toUpperCase(part.charAt(0)))
                         .append(part.substring(1).toLowerCase())
                         .append(" ");
             }
         }
-        String contactNameCapitalized = capitalizedName.toString().trim();
-        System.out.println("🔍 Recherche avec nom capitalisé : " + contactNameCapitalized);
+        String contactNameCapitalized = sb.toString().trim();
+        System.out.println("🔍 Recherche avec : " + contactNameCapitalized);
 
-        // Sélecteurs avec nom capitalisé
+        // ============================================================
+        // ETAPE 5 : Attendre que le résultat apparaisse
+        // ============================================================
         By personResultLocator = By.cssSelector(
                 "mdc-listitem[aria-label*='" + contactNameCapitalized + "']"
         );
 
-        boolean resultsFound = false;
-
-        // Essai avec le nom complet capitalisé
+        boolean found = false;
         try {
             wait.until(ExpectedConditions.presenceOfElementLocated(personResultLocator));
-            resultsFound = true;
-            System.out.println("✅ Résultat trouvé avec : " + contactNameCapitalized);
+            found = true;
+            System.out.println("✅ Résultat trouvé : " + contactNameCapitalized);
         } catch (Exception e) {
-            System.out.println("⚠️ Nom complet non trouvé, tentative avec parties du nom...");
-        }
-
-        // Fallback : essai avec chaque partie capitalisée
-        if (!resultsFound) {
             for (String part : nameParts) {
                 if (part.length() < 3) continue;
-                String partCapitalized = Character.toUpperCase(part.charAt(0)) + part.substring(1).toLowerCase();
-                By partLocator = By.cssSelector("mdc-listitem[aria-label*='" + partCapitalized + "']");
+                String partCap = Character.toUpperCase(part.charAt(0)) + part.substring(1).toLowerCase();
+                By partLocator = By.cssSelector("mdc-listitem[aria-label*='" + partCap + "']");
                 try {
                     wait.until(ExpectedConditions.presenceOfElementLocated(partLocator));
                     personResultLocator = partLocator;
-                    resultsFound = true;
-                    System.out.println("✅ Résultat trouvé avec la partie : " + partCapitalized);
+                    found = true;
+                    System.out.println("✅ Résultat trouvé via partie : " + partCap);
                     break;
-                } catch (Exception e) {
-                    System.out.println("❌ Partie non trouvée : " + partCapitalized);
+                } catch (Exception ex) {
+                    System.out.println("❌ Non trouvé : " + partCap);
                 }
             }
         }
 
-        if (!resultsFound) {
-            throw new RuntimeException("❌ Aucun résultat trouvé pour : " + contactName);
+        if (!found) {
+            throw new RuntimeException("❌ Aucun résultat pour : " + contactName);
         }
 
         Thread.sleep(500);
 
         // ============================================================
-        // ETAPE 5 : Hover sur l'avatar à gauche du résultat
+        // ETAPE 6 : Hover sur l'avatar, fermer le pop-up, récupérer le statut
         // ============================================================
-        String firstPartCapitalized = Character.toUpperCase(nameParts[0].charAt(0))
+        String firstPartCap = Character.toUpperCase(nameParts[0].charAt(0))
                 + nameParts[0].substring(1).toLowerCase();
 
         By avatarLocator = By.cssSelector(
-                "mdc-listitem[aria-label*='" + firstPartCapitalized + "'] mdc-avatarbutton"
+                "mdc-listitem[aria-label*='" + firstPartCap + "'] mdc-avatarbutton"
+        );
+        By statusLocator = By.cssSelector(
+                "mdc-listitem[aria-label*='" + firstPartCap + "'] mdc-text[slot='leading-text-secondary-label']"
         );
 
         int attempts = 0;
@@ -737,17 +758,31 @@ public class MainWhatsapp16 {
                 WebElement avatarButton = wait.until(
                         ExpectedConditions.presenceOfElementLocated(avatarLocator)
                 );
+
+                // Hover → ouvre le pop-up
                 actions.moveToElement(avatarButton).perform();
                 System.out.println("✅ Hover sur l'avatar de : " + contactNameCapitalized);
-                Thread.sleep(1500);
-                return;
+                Thread.sleep(2000);
+
+                // Déplacer la souris → ferme le pop-up
+                actions.moveByOffset(800, 0).perform();
+                System.out.println("✅ Souris déplacée, pop-up fermé");
+                Thread.sleep(1000);
+
+                // Récupérer le statut
+                WebElement statusElement = driver.findElement(statusLocator);
+                String statusText = statusElement.getText();
+                System.out.println("📋 Statut : " + statusText);
+
+                return statusText;
+
             } catch (StaleElementReferenceException e) {
-                System.out.println("⚠️ StaleElement sur hover, retry " + (attempts + 1) + "/3");
+                System.out.println("⚠️ StaleElement retry " + (attempts + 1) + "/3");
                 attempts++;
                 Thread.sleep(500);
             }
         }
 
-        throw new RuntimeException("❌ Impossible de hover sur l'avatar de : " + contactName + " après 3 tentatives");
+        throw new RuntimeException("❌ Impossible de récupérer le statut après 3 tentatives");
     }
 }
