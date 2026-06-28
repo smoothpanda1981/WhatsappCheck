@@ -337,6 +337,7 @@ public class MainWhatsapp16 {
                             sendMessage(driver, sb3.toString(), 5);
                         }
                         writeResultToFile(sb2);
+                    Thread.sleep(3000);
 
 
                     for (String handle : driver.getWindowHandles()) {
@@ -358,8 +359,25 @@ public class MainWhatsapp16 {
                     String seat2D = "2aa8bc92-c66f-4245-9b9a-92a4899fdeb2";
                     String seat2E = "6d59b6fc-d6a4-4ebe-a0ec-c1a1b47d2d69";
                     String seat2F = "49e29c7f-332e-4723-9b68-36cf1468a655";
-                    System.out.println(getSeatStatus(driver, 10, seat1B));
-                    System.out.println("Refreshed Roomz");
+                    String seat1BColor = searchAndClickRoomz(driver, seat1B, 10);
+                    String seat1AColor = searchAndClickRoomz(driver, seat1A, 10);
+                    String seat1CColor = searchAndClickRoomz(driver, seat1C, 10);
+                    String seat1DColor = searchAndClickRoomz(driver, seat1D, 10);
+                    String seat1FColor = searchAndClickRoomz(driver, seat1F, 10);
+                    String seat2CColor = searchAndClickRoomz(driver, seat2C, 10);
+                    String seat2DColor = searchAndClickRoomz(driver, seat2D, 10);
+                    String seat2EColor = searchAndClickRoomz(driver, seat2E, 10);
+                    String seat2FColor = searchAndClickRoomz(driver, seat2F, 10);
+                    System.out.println("1A : " + seat1AColor);
+                    System.out.println("1B : " + seat1BColor);
+                    System.out.println("1C : " + seat1CColor);
+                    System.out.println("1D : " + seat1DColor);
+                    System.out.println("1F : " + seat1FColor);
+                    System.out.println("2C : " + seat2CColor);
+                    System.out.println("2D : " + seat2DColor);
+                    System.out.println("2E : " + seat2EColor);
+                    System.out.println("2F : " + seat2FColor);
+                    Thread.sleep(3000);
 
                     LocalDateTime now2 = LocalDateTime.now();
                     DayOfWeek day = now2.getDayOfWeek();
@@ -538,7 +556,8 @@ public class MainWhatsapp16 {
                             sendMessage(driver, sb3W.toString(), 5);
                             }
                             writeResultToFile(sb2W, RESULT_FILE_WEBEX);
-                        }
+                          Thread.sleep(3000);
+                      }
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
                 } finally {
@@ -803,6 +822,44 @@ public class MainWhatsapp16 {
             }
         }
         throw new RuntimeException("Impossible de cliquer sur le premier résultat après plusieurs tentatives");
+    }
+
+    public static String searchAndClickRoomz(WebDriver driver, String workspaceId, int timeoutSec) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
+        By locator = By.cssSelector("g[data-workspaceId='" + workspaceId + "']");
+
+        try {
+            // Attendre que l'élément soit présent dans le DOM
+            WebElement workspaceElement = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(locator)
+            );
+
+            // Récupérer la classe CSS qui contient la couleur
+            String cssClass = workspaceElement.getAttribute("class");
+            System.out.println("🔍 Classe trouvée : " + cssClass + " pour workspaceId : " + workspaceId);
+
+            // Déterminer la couleur
+            String color;
+            if (cssClass.contains("fill-green")) {
+                color = "GREEN";
+            } else if (cssClass.contains("fill-red")) {
+                color = "RED";
+            } else if (cssClass.contains("fill-orange")) {
+                color = "ORANGE";
+            } else {
+                color = "UNKNOWN";
+            }
+
+            System.out.println("📋 Statut de la salle " + workspaceId + " : " + color);
+            return color;
+
+        } catch (TimeoutException e) {
+            System.out.println("❌ Timeout : workspace non trouvé après " + timeoutSec + "s : " + workspaceId);
+            return "NOT_FOUND";
+        } catch (NoSuchElementException e) {
+            System.out.println("❌ Workspace non trouvé : " + workspaceId);
+            return "NOT_FOUND";
+        }
     }
 
     public static String searchAndClickWebex(WebDriver driver, String contactName, int timeoutSec) throws InterruptedException {
