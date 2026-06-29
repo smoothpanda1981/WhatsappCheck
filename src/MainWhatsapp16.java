@@ -82,6 +82,29 @@ public class MainWhatsapp16 {
     private static boolean line108Identical_CP = false;
     private static boolean line109Identical_CN = false;
 
+    private static String oldSeat1A = "";
+    private static String oldSeat1B = "";
+    private static String oldSeat1C = "";
+    private static String oldSeat1D = "";
+    private static String oldSeat1F = "";
+    private static String oldSeat2A = "";
+    private static String oldSeat2B = "";
+    private static String oldSeat2C = "";
+    private static String oldSeat2D = "";
+    private static String oldSeat2E = "";
+    private static String oldSeat2F = "";
+    private static boolean lineIdentical_seat1A = false;
+    private static boolean lineIdentical_seat1B = false;
+    private static boolean lineIdentical_seat1C = false;
+    private static boolean lineIdentical_seat1D = false;
+    private static boolean lineIdentical_seat1F = false;
+    private static boolean lineIdentical_seat2A = false;
+    private static boolean lineIdentical_seat2B = false;
+    private static boolean lineIdentical_seat2C = false;
+    private static boolean lineIdentical_seat2D = false;
+    private static boolean lineIdentical_seat2E = false;
+    private static boolean lineIdentical_seat2F = false;
+
     public static void main(String[] args) throws InterruptedException {
         // 2) Créez vos ChromeOptions en y passant les arguments
         ChromeOptions options = new ChromeOptions();
@@ -141,6 +164,7 @@ public class MainWhatsapp16 {
                         StringBuffer sb2R = new StringBuffer();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
                         sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+                        sb2R.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
                         sb2W.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
 
                         StringBuffer sb3 = new StringBuffer();
@@ -339,225 +363,385 @@ public class MainWhatsapp16 {
                         writeResultToFile(sb2);
                     Thread.sleep(3000);
 
-
-                    for (String handle : driver.getWindowHandles()) {
-                        driver.switchTo().window(handle);
-                        if (driver.getCurrentUrl().startsWith("https://viewer.roomz.io/")) {
-                            roomzHandle = handle;
-                            break;
-                        }
-                    }
-                    driver.switchTo().window(roomzHandle);
-                    driver.navigate().refresh();
-                    Thread.sleep(5000); // laisser WhatsApp se reconnecter
-                    String seat1A = "6ad2265f-f596-4b47-8eff-00e3662e0d5e";
-                    String seat1B = "2210c58e-393d-4452-a086-650123181ea9";
-                    String seat1C = "5cbdb346-f49a-48c4-8c7b-b0526a51a4f6";
-                    String seat1D = "639b2da4-11f7-4226-ad79-8c0dfdc6599f";
-                    String seat1F = "6fa52c65-84b5-4338-a081-dc154666db0b";
-                    String seat2C = "2acfff03-f794-44ba-868c-25a2ec562a47";
-                    String seat2D = "2aa8bc92-c66f-4245-9b9a-92a4899fdeb2";
-                    String seat2E = "6d59b6fc-d6a4-4ebe-a0ec-c1a1b47d2d69";
-                    String seat2F = "49e29c7f-332e-4723-9b68-36cf1468a655";
-                    String seat1BColor = searchAndClickRoomz(driver, seat1B, 10);
-                    String seat1AColor = searchAndClickRoomz(driver, seat1A, 10);
-                    String seat1CColor = searchAndClickRoomz(driver, seat1C, 10);
-                    String seat1DColor = searchAndClickRoomz(driver, seat1D, 10);
-                    String seat1FColor = searchAndClickRoomz(driver, seat1F, 10);
-                    String seat2CColor = searchAndClickRoomz(driver, seat2C, 10);
-                    String seat2DColor = searchAndClickRoomz(driver, seat2D, 10);
-                    String seat2EColor = searchAndClickRoomz(driver, seat2E, 10);
-                    String seat2FColor = searchAndClickRoomz(driver, seat2F, 10);
-                    System.out.println("1A : " + seat1AColor);
-                    System.out.println("1B : " + seat1BColor);
-                    System.out.println("1C : " + seat1CColor);
-                    System.out.println("1D : " + seat1DColor);
-                    System.out.println("1F : " + seat1FColor);
-                    System.out.println("2C : " + seat2CColor);
-                    System.out.println("2D : " + seat2DColor);
-                    System.out.println("2E : " + seat2EColor);
-                    System.out.println("2F : " + seat2FColor);
-                    Thread.sleep(3000);
-
                     LocalDateTime now2 = LocalDateTime.now();
                     DayOfWeek day = now2.getDayOfWeek();
                     int hour = now2.getHour();
 
-//                    boolean isWeekday = day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY;
-//                    boolean isWorkingHours = hour >= 7 && hour < 20;
+                    boolean isWeekday = day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY;
+                    boolean isWorkingHours = hour >= 7 && hour < 20;
 
-//                    if (isWeekday && isWorkingHours) {
-                      if (true) {
-                            for (String handle : driver.getWindowHandles()) {
-                                driver.switchTo().window(handle);
-                                if (driver.getCurrentUrl().startsWith("https://web.webex.com/")) {
-                                    webexHandle = handle;
-                                    break;
-                                }
+                    if (isWeekday && isWorkingHours) {
+                        for (String handle : driver.getWindowHandles()) {
+                            driver.switchTo().window(handle);
+                            if (driver.getCurrentUrl().startsWith("https://viewer.roomz.io/")) {
+                                roomzHandle = handle;
+                                break;
                             }
-                            driver.switchTo().window(webexHandle);
-                            driver.navigate().refresh();
-                            Thread.sleep(5000);
-
-                            StringBuffer sb3W = new StringBuffer();
-
-                            String CN = searchAndClickWebex(driver, "Nlate Camille", 10);
-                            System.out.println("2C : " + CN);
-                            String MP = searchAndClickWebex(driver, "Preveraud magali", 10);
-                            System.out.println("1M : " + MP);
-                            String FD = searchAndClickWebex(driver, "Domon Frédéric", 10);
-                            System.out.println("1F : " + FD);
-                            String CP = searchAndClickWebex(driver, "Perez Cristian", 10);
-                            System.out.println("1C : " + CP);
-                            String AM = searchAndClickWebex(driver, "Massot Alexandre", 10);
-                            System.out.println("2A : " + AM);
-                            String AG = searchAndClickWebex(driver, "Girel Alexandra", 10);
-                            System.out.println("1A : " + AG);
-                            String BR = searchAndClickWebex(driver, "Roy Benjamin", 10);
-                            System.out.println("1B : " + BR);
-                            String SP = searchAndClickWebex(driver, "Park Stéphanie", 10);
-                            System.out.println("1S : " + SP);
-                            String DA = searchAndClickWebex(driver, "Aguer Damien", 10);
-                            System.out.println("1D : " + DA);
-
-                            if (oldLine101_FD.equals(FD)) {
-                                line101Identical_FD = true;
-                            } else {
-                                line101Identical_FD = false;
-                                oldLine101_FD = FD;
+                        }
+                        driver.switchTo().window(roomzHandle);
+                        driver.navigate().refresh();
+                        Thread.sleep(5000); // laisser WhatsApp se reconnecter
+                        String seat1A = "6ad2265f-f596-4b47-8eff-00e3662e0d5e";
+                        String seat1B = "2210c58e-393d-4452-a086-650123181ea9";
+                        String seat1C = "5cbdb346-f49a-48c4-8c7b-b0526a51a4f6";
+                        String seat1D = "639b2da4-11f7-4226-ad79-8c0dfdc6599f";
+                        String seat1F = "6fa52c65-84b5-4338-a081-dc154666db0b";
+                        String seat2A = "97b30ee4-6865-4670-9762-98b1fdb7123f";
+                        String seat2B = "4e9f9b32-8df5-45a8-90bd-92038927edbd";
+                        String seat2C = "2acfff03-f794-44ba-868c-25a2ec562a47";
+                        String seat2D = "2aa8bc92-c66f-4245-9b9a-92a4899fdeb2";
+                        String seat2E = "6d59b6fc-d6a4-4ebe-a0ec-c1a1b47d2d69";
+                        String seat2F = "49e29c7f-332e-4723-9b68-36cf1468a655";
+                        String seat1BColor = searchAndClickRoomz(driver, seat1B, 5);
+                        String seat1AColor = searchAndClickRoomz(driver, seat1A, 5);
+                        String seat1CColor = searchAndClickRoomz(driver, seat1C, 5);
+                        String seat1DColor = searchAndClickRoomz(driver, seat1D, 5);
+                        String seat1FColor = searchAndClickRoomz(driver, seat1F, 5);
+                        String seat2AColor = searchAndClickRoomz(driver, seat2A, 5);
+                        String seat2BColor = searchAndClickRoomz(driver, seat2B, 5);
+                        String seat2CColor = searchAndClickRoomz(driver, seat2C, 5);
+                        String seat2DColor = searchAndClickRoomz(driver, seat2D, 5);
+                        String seat2EColor = searchAndClickRoomz(driver, seat2E, 5);
+                        String seat2FColor = searchAndClickRoomz(driver, seat2F, 5);
+                        System.out.println("1A : " + seat1AColor);
+                        System.out.println("1B : " + seat1BColor);
+                        System.out.println("1C : " + seat1CColor);
+                        System.out.println("1D : " + seat1DColor);
+                        System.out.println("1F : " + seat1FColor);
+                        System.out.println("2A : " + seat2AColor);
+                        System.out.println("2B : " + seat2BColor);
+                        System.out.println("2C : " + seat2CColor);
+                        System.out.println("2D : " + seat2DColor);
+                        System.out.println("2E : " + seat2EColor);
+                        System.out.println("2F : " + seat2FColor);
+                        if (oldSeat1A.equals(seat1AColor)) {
+                            lineIdentical_seat1A = true;
+                        } else {
+                            lineIdentical_seat1A = false;
+                            oldSeat1A = seat1AColor;
+                        }
+                        if (oldSeat1B.equals(seat1BColor)) {
+                            lineIdentical_seat1B = true;
+                        } else {
+                            lineIdentical_seat1B = false;
+                            oldSeat1B = seat1BColor;
+                        }
+                        if (oldSeat1C.equals(seat1CColor)) {
+                            lineIdentical_seat1C = true;
+                        } else {
+                            lineIdentical_seat1C = false;
+                            oldSeat1C = seat1CColor;
+                        }
+                        if (oldSeat1D.equals(seat1DColor)) {
+                            lineIdentical_seat1D = true;
+                        } else {
+                            lineIdentical_seat1D = false;
+                            oldSeat1D = seat1DColor;
+                        }
+                        if (oldSeat1F.equals(seat1FColor)) {
+                            lineIdentical_seat1F = true;
+                        } else {
+                            lineIdentical_seat1F = false;
+                            oldSeat1F = seat1FColor;
+                        }
+                        if (oldSeat2A.equals(seat2AColor)) {
+                            lineIdentical_seat2A = true;
+                        } else {
+                            lineIdentical_seat2A = false;
+                            oldSeat2A = seat2AColor;
+                        }
+                        if (oldSeat2B.equals(seat2BColor)) {
+                            lineIdentical_seat2B = true;
+                        } else {
+                            lineIdentical_seat2B = false;
+                            oldSeat2B = seat2BColor;
+                        }
+                        if (oldSeat2C.equals(seat2CColor)) {
+                            lineIdentical_seat2C = true;
+                        } else {
+                            lineIdentical_seat2C = false;
+                            oldSeat2C = seat2CColor;
+                        }
+                        if (oldSeat2D.equals(seat2DColor)) {
+                            lineIdentical_seat2D = true;
+                        } else {
+                            lineIdentical_seat2D = false;
+                            oldSeat2D = seat2DColor;
+                        }
+                        if (oldSeat2E.equals(seat2EColor)) {
+                            lineIdentical_seat2E = true;
+                        } else {
+                            lineIdentical_seat2E = false;
+                            oldSeat2E = seat2EColor;
+                        }
+                        if (oldSeat2F.equals(seat2FColor)) {
+                            lineIdentical_seat2F = true;
+                        } else {
+                            lineIdentical_seat2F = false;
+                            oldSeat2F = seat2FColor;
+                        }
+                        for (String handle : driver.getWindowHandles()) {
+                            driver.switchTo().window(handle);
+                            if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
+                                roomzHandle = handle;
+                                break;
                             }
+                        }
+                        driver.switchTo().window(whatsappHandle);
+                        StringBuffer sb3R = new StringBuffer();
+                        sb3R.append(System.lineSeparator());
+                        if (!lineIdentical_seat1A) {
+                            sb2R.append("seat1A : ").append(oldSeat1A).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat1A : ").append(oldSeat1A).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        if (!lineIdentical_seat1B) {
+                            sb2R.append("seat1B : ").append(oldSeat1B).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat1B : ").append(oldSeat1B).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        if (!lineIdentical_seat1C) {
+                            sb2R.append("seat1C : ").append(oldSeat1C).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat1C : ").append(oldSeat1C).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        if (!lineIdentical_seat1D) {
+                            sb2R.append("seat1D : ").append(oldSeat1D).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat1D : ").append(oldSeat1D).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        if (!lineIdentical_seat1F) {
+                            sb2R.append("seat1F : ").append(oldSeat1F).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat1F : ").append(oldSeat1F).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        if (!lineIdentical_seat2A) {
+                            sb2R.append("seat2A : ").append(oldSeat2A).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat2A : ").append(oldSeat2A).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        if (!lineIdentical_seat2B) {
+                            sb2R.append("seat2B : ").append(oldSeat2B).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat2B : ").append(oldSeat2B).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        if (!lineIdentical_seat2C) {
+                            sb2R.append("seat2C : ").append(oldSeat2C).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat2C : ").append(oldSeat2C).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        if (!lineIdentical_seat2D) {
+                            sb2R.append("seat2D : ").append(oldSeat2D).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat2D : ").append(oldSeat2D).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        if (!lineIdentical_seat2E) {
+                            sb2R.append("seat2E : ").append(oldSeat2E).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat2E : ").append(oldSeat2E).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        if (!lineIdentical_seat2F) {
+                            sb2R.append("seat2F : ").append(oldSeat2F).append(System.lineSeparator());
+                            sb3R.setLength(0);
+                            sb3R.append("seat2F : ").append(oldSeat2F).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3R.toString(), 5);
+                        }
+                        writeResultToFile(sb2R, RESULT_FILE_ROOMZ);
+                        Thread.sleep(3000);
 
-                            if (oldLine102_SP.equals(SP)) {
-                                line102Identical_SP = true;
-                            } else {
-                                line102Identical_SP = false;
-                                oldLine102_SP = SP;
+
+                        for (String handle : driver.getWindowHandles()) {
+                            driver.switchTo().window(handle);
+                            if (driver.getCurrentUrl().startsWith("https://web.webex.com/")) {
+                                webexHandle = handle;
+                                break;
                             }
+                        }
+                        driver.switchTo().window(webexHandle);
+                        driver.navigate().refresh();
+                        Thread.sleep(5000);
 
-                            if (oldLine103_AG.equals(AG)) {
-                                line103Identical_AG = true;
-                            } else {
-                                line103Identical_AG = false;
-                                oldLine103_AG = AG;
+                        StringBuffer sb3W = new StringBuffer();
+                        sb3W.append(System.lineSeparator());
+
+                        String CN = searchAndClickWebex(driver, "Nlate Camille", 10);
+                        System.out.println("2C : " + CN);
+                        String MP = searchAndClickWebex(driver, "Preveraud magali", 10);
+                        System.out.println("1M : " + MP);
+                        String FD = searchAndClickWebex(driver, "Domon Frédéric", 10);
+                        System.out.println("1F : " + FD);
+                        String CP = searchAndClickWebex(driver, "Perez Cristian", 10);
+                        System.out.println("1C : " + CP);
+                        String AM = searchAndClickWebex(driver, "Massot Alexandre", 10);
+                        System.out.println("2A : " + AM);
+                        String AG = searchAndClickWebex(driver, "Girel Alexandra", 10);
+                        System.out.println("1A : " + AG);
+                        String BR = searchAndClickWebex(driver, "Roy Benjamin", 10);
+                        System.out.println("1B : " + BR);
+                        String SP = searchAndClickWebex(driver, "Park Stéphanie", 10);
+                        System.out.println("1S : " + SP);
+                        String DA = searchAndClickWebex(driver, "Aguer Damien", 10);
+                        System.out.println("1D : " + DA);
+
+                        if (oldLine101_FD.equals(FD)) {
+                            line101Identical_FD = true;
+                        } else {
+                            line101Identical_FD = false;
+                            oldLine101_FD = FD;
+                        }
+
+                        if (oldLine102_SP.equals(SP)) {
+                            line102Identical_SP = true;
+                        } else {
+                            line102Identical_SP = false;
+                            oldLine102_SP = SP;
+                        }
+
+                        if (oldLine103_AG.equals(AG)) {
+                            line103Identical_AG = true;
+                        } else {
+                            line103Identical_AG = false;
+                            oldLine103_AG = AG;
+                        }
+
+                        if (oldLine104_DA.equals(DA)) {
+                            line104Identical_DA = true;
+                        } else {
+                            line104Identical_DA = false;
+                            oldLine104_DA = DA;
+                        }
+
+                        if (oldLine105_BR.equals(BR)) {
+                            line105Identical_BR = true;
+                        } else {
+                            line105Identical_BR = false;
+                            oldLine105_BR = BR;
+                        }
+
+                        if (oldLine106_AM.equals(AM)) {
+                            line106Identical_AM = true;
+                        } else {
+                            line106Identical_AM = false;
+                            oldLine106_AM = AM;
+                        }
+
+                        if (oldLine107_MP.equals(MP)) {
+                            line107Identical_MP = true;
+                        } else {
+                            line107Identical_MP = false;
+                            oldLine107_MP = MP;
+                        }
+
+                        if (oldLine108_CP.equals(CP)) {
+                            line108Identical_CP = true;
+                        } else {
+                            line108Identical_CP = false;
+                            oldLine108_CP = CP;
+                        }
+
+                        if (oldLine109_CN.equals(CP)) {
+                            line109Identical_CN = true;
+                        } else {
+                            line109Identical_CN = false;
+                            oldLine109_CN = CN;
+                        }
+
+                        for (String handle : driver.getWindowHandles()) {
+                            driver.switchTo().window(handle);
+                            if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
+                                roomzHandle = handle;
+                                break;
                             }
+                        }
+                        driver.switchTo().window(whatsappHandle);
 
-                            if (oldLine104_DA.equals(DA)) {
-                                line104Identical_DA = true;
-                            } else {
-                                line104Identical_DA = false;
-                                oldLine104_DA = DA;
-                            }
-
-                            if (oldLine105_BR.equals(BR)) {
-                                line105Identical_BR = true;
-                            } else {
-                                line105Identical_BR = false;
-                                oldLine105_BR = BR;
-                            }
-
-                            if (oldLine106_AM.equals(AM)) {
-                                line106Identical_AM = true;
-                            } else {
-                                line106Identical_AM = false;
-                                oldLine106_AM = AM;
-                            }
-
-                            if (oldLine107_MP.equals(MP)) {
-                                line107Identical_MP = true;
-                            } else {
-                                line107Identical_MP = false;
-                                oldLine107_MP = MP;
-                            }
-
-                            if (oldLine108_CP.equals(CP)) {
-                                line108Identical_CP = true;
-                            } else {
-                                line108Identical_CP = false;
-                                oldLine108_CP = CP;
-                            }
-
-                            if (oldLine109_CN.equals(CP)) {
-                                line109Identical_CN = true;
-                            } else {
-                                line109Identical_CN = false;
-                                oldLine109_CN = CN;
-                            }
-
-                            for (String handle : driver.getWindowHandles()) {
-                                driver.switchTo().window(handle);
-                                if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
-                                    roomzHandle = handle;
-                                    break;
-                                }
-                            }
-                            driver.switchTo().window(whatsappHandle);
-
-                            if (!line101Identical_FD) {
-                                sb2W.append("1F : ").append(oldLine101_FD).append(System.lineSeparator());
-                                sb3W.setLength(0);
-                                sb3W.append("1F : ").append(oldLine101_FD).append(System.lineSeparator());
+                        if (!line101Identical_FD) {
+                            sb2W.append("1F : ").append(oldLine101_FD).append(System.lineSeparator());
+                            sb3W.setLength(0);
+                            sb3W.append("1F : ").append(oldLine101_FD).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
-                            }
-                            if (!line102Identical_SP) {
-                                sb2W.append("1S : ").append(oldLine102_SP).append(System.lineSeparator());
-                                sb3W.setLength(0);
-                                sb3W.append("1S : ").append(oldLine102_SP).append(System.lineSeparator());
+                        }
+                        if (!line102Identical_SP) {
+                            sb2W.append("1S : ").append(oldLine102_SP).append(System.lineSeparator());
+                            sb3W.setLength(0);
+                            sb3W.append("1S : ").append(oldLine102_SP).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
-                            }
-                              if (!line107Identical_MP) {
-                                  sb2W.append("1M : ").append(oldLine107_MP).append(System.lineSeparator());
-                                  sb3W.setLength(0);
-                                  sb3W.append("1M : ").append(oldLine107_MP).append(System.lineSeparator());
-                                  searchAndClickContact(driver, "YAN WANG", 10);
-                                  sendMessage(driver, sb3W.toString(), 5);
-                              }
-                          if (!line103Identical_AG) {
-                                sb2W.append("1A : ").append(oldLine103_AG).append(System.lineSeparator());
-                                sb3W.setLength(0);
-                                sb3W.append("1A : ").append(oldLine103_AG).append(System.lineSeparator());
+                        }
+                        if (!line107Identical_MP) {
+                            sb2W.append("1M : ").append(oldLine107_MP).append(System.lineSeparator());
+                            sb3W.setLength(0);
+                            sb3W.append("1M : ").append(oldLine107_MP).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
-                            }
-                            if (!line104Identical_DA) {
-                                sb2W.append("1D : ").append(oldLine104_DA).append(System.lineSeparator());
-                                sb3W.setLength(0);
-                                sb3W.append("1D : ").append(oldLine104_DA).append(System.lineSeparator());
+                        }
+                        if (!line103Identical_AG) {
+                            sb2W.append("1A : ").append(oldLine103_AG).append(System.lineSeparator());
+                            sb3W.setLength(0);
+                            sb3W.append("1A : ").append(oldLine103_AG).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
-                            }
-                            if (!line105Identical_BR) {
-                                sb2W.append("1B : ").append(oldLine105_BR).append(System.lineSeparator());
-                                sb3W.setLength(0);
-                                sb3W.append("1B : ").append(oldLine105_BR).append(System.lineSeparator());
+                        }
+                        if (!line104Identical_DA) {
+                            sb2W.append("1D : ").append(oldLine104_DA).append(System.lineSeparator());
+                            sb3W.setLength(0);
+                            sb3W.append("1D : ").append(oldLine104_DA).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
-                            }
-                            if (!line106Identical_AM) {
-                                sb2W.append("2A : ").append(oldLine106_AM).append(System.lineSeparator());
-                                sb3W.setLength(0);
-                                sb3W.append("2A : ").append(oldLine106_AM).append(System.lineSeparator());
+                        }
+                        if (!line105Identical_BR) {
+                            sb2W.append("1B : ").append(oldLine105_BR).append(System.lineSeparator());
+                            sb3W.setLength(0);
+                            sb3W.append("1B : ").append(oldLine105_BR).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
-                            }
-                           if (!line108Identical_CP) {
-                                sb2W.append("1C : ").append(oldLine108_CP).append(System.lineSeparator());
-                                sb3W.setLength(0);
-                                sb3W.append("1C : ").append(oldLine108_CP).append(System.lineSeparator());
+                        }
+                        if (!line106Identical_AM) {
+                            sb2W.append("2A : ").append(oldLine106_AM).append(System.lineSeparator());
+                            sb3W.setLength(0);
+                            sb3W.append("2A : ").append(oldLine106_AM).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
-                            }
-                            if (!line109Identical_CN) {
-                                sb2W.append("2C : ").append(oldLine109_CN).append(System.lineSeparator());
-                                sb3W.setLength(0);
-                                sb3W.append("2C : ").append(oldLine109_CN).append(System.lineSeparator());
+                        }
+                        if (!line108Identical_CP) {
+                            sb2W.append("1C : ").append(oldLine108_CP).append(System.lineSeparator());
+                            sb3W.setLength(0);
+                            sb3W.append("1C : ").append(oldLine108_CP).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
-                            }
-                            writeResultToFile(sb2W, RESULT_FILE_WEBEX);
-                          Thread.sleep(3000);
-                      }
+                        }
+                        if (!line109Identical_CN) {
+                            sb2W.append("2C : ").append(oldLine109_CN).append(System.lineSeparator());
+                            sb3W.setLength(0);
+                            sb3W.append("2C : ").append(oldLine109_CN).append(System.lineSeparator());
+                            searchAndClickContact(driver, "YAN WANG", 10);
+                            sendMessage(driver, sb3W.toString(), 5);
+                        }
+                        writeResultToFile(sb2W, RESULT_FILE_WEBEX);
+                        Thread.sleep(3000);
+                    }
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
                 } finally {
@@ -567,27 +751,27 @@ public class MainWhatsapp16 {
                         if (line1Identical_FD_SP && line2Identical_AG) {
                             if (!line4Identical_BR || !line5Identical_AM || !line6Identical_MP) {
                                 // si identique → 4 minutes
-                                nextDelay = 210;
+                                nextDelay = 240;
                             } else {
                                 // si identique → 6 minutes
-                                nextDelay = 300;
+                                nextDelay = 360;
                             }
                         } else {
                             // si différent → 0.5 minute
-                            nextDelay = 50;
+                            nextDelay = 60;
                         }
                     } else {
                         if (line1Identical_FD_SP && line2Identical_AG) {
                             if (!line4Identical_BR || !line5Identical_AM || !line6Identical_MP) {
                                 // si identique → 1.5 minutes
-                                nextDelay = 75;
+                                nextDelay = 30;
                             } else {
                                 // si identique → 3 minutes
-                                nextDelay = 150;
+                                nextDelay = 60;
                             }
                         } else {
                             // si différent → 0.5 minute
-                            nextDelay = 35;
+                            nextDelay = 10;
                         }
                     }
                     // On reprogramme la même tâche avec le délai adapté
