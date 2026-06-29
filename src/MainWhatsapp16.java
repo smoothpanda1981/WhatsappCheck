@@ -491,79 +491,79 @@ public class MainWhatsapp16 {
                         StringBuffer sb3R = new StringBuffer();
                         sb3R.append(System.lineSeparator());
                         if (!lineIdentical_seat1A) {
-                            sb2R.append("seat1A : ").append(oldSeat1A).append(System.lineSeparator());
+                            sb2R.append("seat A1 : ").append(oldSeat1A).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat1A : ").append(oldSeat1A).append(System.lineSeparator());
+                            sb3R.append("seat A1 : ").append(oldSeat1A).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
                         if (!lineIdentical_seat1B) {
-                            sb2R.append("seat1B : ").append(oldSeat1B).append(System.lineSeparator());
+                            sb2R.append("seat B1 : ").append(oldSeat1B).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat1B : ").append(oldSeat1B).append(System.lineSeparator());
+                            sb3R.append("seat B1 : ").append(oldSeat1B).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
                         if (!lineIdentical_seat1C) {
-                            sb2R.append("seat1C : ").append(oldSeat1C).append(System.lineSeparator());
+                            sb2R.append("seat C1 : ").append(oldSeat1C).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat1C : ").append(oldSeat1C).append(System.lineSeparator());
+                            sb3R.append("seat C1 : ").append(oldSeat1C).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
                         if (!lineIdentical_seat1D) {
-                            sb2R.append("seat1D : ").append(oldSeat1D).append(System.lineSeparator());
+                            sb2R.append("seat D1 : ").append(oldSeat1D).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat1D : ").append(oldSeat1D).append(System.lineSeparator());
+                            sb3R.append("seat D1 : ").append(oldSeat1D).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
                         if (!lineIdentical_seat1F) {
-                            sb2R.append("seat1F : ").append(oldSeat1F).append(System.lineSeparator());
+                            sb2R.append("seat F1 : ").append(oldSeat1F).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat1F : ").append(oldSeat1F).append(System.lineSeparator());
+                            sb3R.append("seat F1 : ").append(oldSeat1F).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
                         if (!lineIdentical_seat2A) {
-                            sb2R.append("seat2A : ").append(oldSeat2A).append(System.lineSeparator());
+                            sb2R.append("seat A2 : ").append(oldSeat2A).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat2A : ").append(oldSeat2A).append(System.lineSeparator());
+                            sb3R.append("seat A2 : ").append(oldSeat2A).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
                         if (!lineIdentical_seat2B) {
-                            sb2R.append("seat2B : ").append(oldSeat2B).append(System.lineSeparator());
+                            sb2R.append("seat B2 : ").append(oldSeat2B).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat2B : ").append(oldSeat2B).append(System.lineSeparator());
+                            sb3R.append("seat B2 : ").append(oldSeat2B).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
                         if (!lineIdentical_seat2C) {
-                            sb2R.append("seat2C : ").append(oldSeat2C).append(System.lineSeparator());
+                            sb2R.append("seat C2 : ").append(oldSeat2C).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat2C : ").append(oldSeat2C).append(System.lineSeparator());
+                            sb3R.append("seat C2 : ").append(oldSeat2C).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
                         if (!lineIdentical_seat2D) {
-                            sb2R.append("seat2D : ").append(oldSeat2D).append(System.lineSeparator());
+                            sb2R.append("seat D2 : ").append(oldSeat2D).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat2D : ").append(oldSeat2D).append(System.lineSeparator());
+                            sb3R.append("seat D2 : ").append(oldSeat2D).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
                         if (!lineIdentical_seat2E) {
-                            sb2R.append("seat2E : ").append(oldSeat2E).append(System.lineSeparator());
+                            sb2R.append("seat E2 : ").append(oldSeat2E).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat2E : ").append(oldSeat2E).append(System.lineSeparator());
+                            sb3R.append("seat E2 : ").append(oldSeat2E).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
                         if (!lineIdentical_seat2F) {
-                            sb2R.append("seat2F : ").append(oldSeat2F).append(System.lineSeparator());
+                            sb2R.append("seat F2 : ").append(oldSeat2F).append(System.lineSeparator());
                             sb3R.setLength(0);
-                            sb3R.append("seat2F : ").append(oldSeat2F).append(System.lineSeparator());
+                            sb3R.append("seat F2 : ").append(oldSeat2F).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3R.toString(), 5);
                         }
@@ -607,64 +607,100 @@ public class MainWhatsapp16 {
                         if (oldLine101_FD.equals(FD)) {
                             line101Identical_FD = true;
                         } else {
-                            line101Identical_FD = false;
-                            oldLine101_FD = FD;
+                            if (isMoreThanTenMinutes(FD)) {
+                                line101Identical_FD = true;
+                            } else {
+                                line101Identical_FD = false;
+                                oldLine101_FD = FD;
+                            }
                         }
 
                         if (oldLine102_SP.equals(SP)) {
                             line102Identical_SP = true;
                         } else {
-                            line102Identical_SP = false;
-                            oldLine102_SP = SP;
+                            if (isMoreThanTenMinutes(SP)) {
+                                line102Identical_SP = true;
+                            } else {
+                                line102Identical_SP = false;
+                                oldLine102_SP = SP;
+                            }
                         }
 
                         if (oldLine103_AG.equals(AG)) {
                             line103Identical_AG = true;
                         } else {
-                            line103Identical_AG = false;
-                            oldLine103_AG = AG;
+                            if (isMoreThanTenMinutes(AG)) {
+                                line103Identical_AG = true;
+                            } else {
+                                line103Identical_AG = false;
+                                oldLine103_AG = AG;
+                            }
                         }
 
                         if (oldLine104_DA.equals(DA)) {
                             line104Identical_DA = true;
                         } else {
-                            line104Identical_DA = false;
-                            oldLine104_DA = DA;
+                            if (isMoreThanTenMinutes(DA)) {
+                                line104Identical_DA = true;
+                            } else {
+                                line104Identical_DA = false;
+                                oldLine104_DA = DA;
+                            }
                         }
 
                         if (oldLine105_BR.equals(BR)) {
                             line105Identical_BR = true;
                         } else {
-                            line105Identical_BR = false;
-                            oldLine105_BR = BR;
+                            if (isMoreThanTenMinutes(BR)) {
+                                line105Identical_BR = true;
+                            } else {
+                                line105Identical_BR = false;
+                                oldLine105_BR = BR;
+                            }
                         }
 
                         if (oldLine106_AM.equals(AM)) {
                             line106Identical_AM = true;
                         } else {
-                            line106Identical_AM = false;
-                            oldLine106_AM = AM;
+                            if (isMoreThanTenMinutes(AM)) {
+                                line106Identical_AM = true;
+                            } else {
+                                line106Identical_AM = false;
+                                oldLine106_AM = AM;
+                            }
                         }
 
                         if (oldLine107_MP.equals(MP)) {
                             line107Identical_MP = true;
                         } else {
-                            line107Identical_MP = false;
-                            oldLine107_MP = MP;
+                            if (isMoreThanTenMinutes(MP)) {
+                                line107Identical_MP = true;
+                            } else {
+                                line107Identical_MP = false;
+                                oldLine107_MP = MP;
+                            }
                         }
 
                         if (oldLine108_CP.equals(CP)) {
                             line108Identical_CP = true;
                         } else {
-                            line108Identical_CP = false;
-                            oldLine108_CP = CP;
+                            if (isMoreThanTenMinutes(CP)) {
+                                line108Identical_CP = true;
+                            } else {
+                                line108Identical_CP = false;
+                                oldLine108_CP = CP;
+                            }
                         }
 
-                        if (oldLine109_CN.equals(CP)) {
+                        if (oldLine109_CN.equals(CN)) {
                             line109Identical_CN = true;
                         } else {
-                            line109Identical_CN = false;
-                            oldLine109_CN = CN;
+                            if (isMoreThanTenMinutes(CN)) {
+                                line109Identical_CN = true;
+                            } else {
+                                line109Identical_CN = false;
+                                oldLine109_CN = CN;
+                            }
                         }
 
                         for (String handle : driver.getWindowHandles()) {
@@ -677,65 +713,65 @@ public class MainWhatsapp16 {
                         driver.switchTo().window(whatsappHandle);
 
                         if (!line101Identical_FD) {
-                            sb2W.append("1F : ").append(oldLine101_FD).append(System.lineSeparator());
+                            sb2W.append("Wx - 1F : ").append(oldLine101_FD).append(System.lineSeparator());
                             sb3W.setLength(0);
-                            sb3W.append("1F : ").append(oldLine101_FD).append(System.lineSeparator());
+                            sb3W.append("Wx - 1F : ").append(oldLine101_FD).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
                         }
                         if (!line102Identical_SP) {
-                            sb2W.append("1S : ").append(oldLine102_SP).append(System.lineSeparator());
+                            sb2W.append("Wx - 1S : ").append(oldLine102_SP).append(System.lineSeparator());
                             sb3W.setLength(0);
-                            sb3W.append("1S : ").append(oldLine102_SP).append(System.lineSeparator());
+                            sb3W.append("Wx - 1S : ").append(oldLine102_SP).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
                         }
                         if (!line107Identical_MP) {
-                            sb2W.append("1M : ").append(oldLine107_MP).append(System.lineSeparator());
+                            sb2W.append("Wx - 1M : ").append(oldLine107_MP).append(System.lineSeparator());
                             sb3W.setLength(0);
-                            sb3W.append("1M : ").append(oldLine107_MP).append(System.lineSeparator());
+                            sb3W.append("Wx - 1M : ").append(oldLine107_MP).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
                         }
                         if (!line103Identical_AG) {
-                            sb2W.append("1A : ").append(oldLine103_AG).append(System.lineSeparator());
+                            sb2W.append("Wx - 1A : ").append(oldLine103_AG).append(System.lineSeparator());
                             sb3W.setLength(0);
-                            sb3W.append("1A : ").append(oldLine103_AG).append(System.lineSeparator());
+                            sb3W.append("Wx - 1A : ").append(oldLine103_AG).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
                         }
                         if (!line104Identical_DA) {
-                            sb2W.append("1D : ").append(oldLine104_DA).append(System.lineSeparator());
+                            sb2W.append("Wx - 1D : ").append(oldLine104_DA).append(System.lineSeparator());
                             sb3W.setLength(0);
-                            sb3W.append("1D : ").append(oldLine104_DA).append(System.lineSeparator());
+                            sb3W.append("Wx - 1D : ").append(oldLine104_DA).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
                         }
                         if (!line105Identical_BR) {
-                            sb2W.append("1B : ").append(oldLine105_BR).append(System.lineSeparator());
+                            sb2W.append("Wx - 1B : ").append(oldLine105_BR).append(System.lineSeparator());
                             sb3W.setLength(0);
-                            sb3W.append("1B : ").append(oldLine105_BR).append(System.lineSeparator());
+                            sb3W.append("Wx - 1B : ").append(oldLine105_BR).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
                         }
                         if (!line106Identical_AM) {
-                            sb2W.append("2A : ").append(oldLine106_AM).append(System.lineSeparator());
+                            sb2W.append("Wx - 2A : ").append(oldLine106_AM).append(System.lineSeparator());
                             sb3W.setLength(0);
-                            sb3W.append("2A : ").append(oldLine106_AM).append(System.lineSeparator());
+                            sb3W.append("Wx - 2A : ").append(oldLine106_AM).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
                         }
                         if (!line108Identical_CP) {
-                            sb2W.append("1C : ").append(oldLine108_CP).append(System.lineSeparator());
+                            sb2W.append("Wx - 1C : ").append(oldLine108_CP).append(System.lineSeparator());
                             sb3W.setLength(0);
-                            sb3W.append("1C : ").append(oldLine108_CP).append(System.lineSeparator());
+                            sb3W.append("Wx - 1C : ").append(oldLine108_CP).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
                         }
                         if (!line109Identical_CN) {
-                            sb2W.append("2C : ").append(oldLine109_CN).append(System.lineSeparator());
+                            sb2W.append("Wx - 2C : ").append(oldLine109_CN).append(System.lineSeparator());
                             sb3W.setLength(0);
-                            sb3W.append("2C : ").append(oldLine109_CN).append(System.lineSeparator());
+                            sb3W.append("Wx - 2C : ").append(oldLine109_CN).append(System.lineSeparator());
                             searchAndClickContact(driver, "YAN WANG", 10);
                             sendMessage(driver, sb3W.toString(), 5);
                         }
@@ -788,6 +824,25 @@ public class MainWhatsapp16 {
             scheduler.shutdown();
             driver.quit();
         }));
+    }
+
+    public static boolean isMoreThanTenMinutes(String text) {
+        boolean isMoreThanTenMinutes = false;
+        if (text.endsWith("hour ago") || text.endsWith("hours ago")) {
+            isMoreThanTenMinutes = true;
+        } else if (text.endsWith("minutes ago")) {
+            text.replace("Active ", "");
+            text.replace(" minutes ago", "");
+            if (Integer.parseInt(text) > 10) {
+                isMoreThanTenMinutes = true;
+            } else {
+                isMoreThanTenMinutes = false;
+            }
+        } else {
+            isMoreThanTenMinutes = false;
+        }
+
+        return isMoreThanTenMinutes;
     }
 
     public static String[] generateNewLine(String statut, String statut2, String oldStatusShorten1, String oldStatusShorten2, String prefix1, String prefix2) {
@@ -1025,13 +1080,13 @@ public class MainWhatsapp16 {
             // Déterminer la couleur
             String color;
             if (cssClass.contains("fill-green")) {
-                color = "GREEN";
+                color = "Free";
             } else if (cssClass.contains("fill-red")) {
-                color = "RED";
+                color = "Occupied";
             } else if (cssClass.contains("fill-orange")) {
-                color = "ORANGE";
+                color = "Gone";
             } else {
-                color = "UNKNOWN";
+                color = "Unknown";
             }
 
             System.out.println("📋 Statut de la salle " + workspaceId + " : " + color);
