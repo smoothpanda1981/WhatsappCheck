@@ -831,9 +831,8 @@ public class MainWhatsapp16 {
         if (text.endsWith("hour ago") || text.endsWith("hours ago")) {
             isMoreThanTenMinutes = true;
         } else if (text.endsWith("minutes ago")) {
-            text.replace("Active ", "");
-            text.replace(" minutes ago", "");
-            if (Integer.parseInt(text) > 10) {
+            String minutesStr = text.replace("Active ", "").replace(" minutes ago", "").trim();
+            if (Integer.parseInt(minutesStr) > 10) {
                 isMoreThanTenMinutes = true;
             } else {
                 isMoreThanTenMinutes = false;
