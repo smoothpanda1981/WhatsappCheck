@@ -844,6 +844,16 @@ public class MainWhatsapp16 {
         return isMoreThanTenMinutes;
     }
 
+    public static String removeNonBMPCharacters(String text) {
+        StringBuilder sb = new StringBuilder();
+        text.codePoints().forEach(cp -> {
+            if (cp <= 0xFFFF) {
+                sb.appendCodePoint(cp);
+            }
+        });
+        return sb.toString();
+    }
+
     public static String[] generateNewLine(String statut, String statut2, String oldStatusShorten1, String oldStatusShorten2, String prefix1, String prefix2) {
         String[] result = new String[3];
         StringBuffer sb = new StringBuffer();
@@ -970,8 +980,9 @@ public class MainWhatsapp16 {
                         By.xpath("//div[@contenteditable='true' and @data-tab='10']")
                 )
         );
+        String safeMessage = removeNonBMPCharacters(message);
         inputBox.click();
-        inputBox.sendKeys(message);
+        inputBox.sendKeys(safeMessage);
         inputBox.sendKeys(Keys.ENTER);
     }
 
