@@ -1,0 +1,404 @@
+*** 2026-06-30  07:52:47 ***
+*** 2026-06-30  08:00:15 ***Wx - 1M : Available
+Wx - 1A : Available | En télétravail 🏠
+
+*** 2026-06-30  08:05:23 ***Wx - 1M : Active 10 minutes ago
+
+*** 2026-06-30  08:09:42 ***
+*** 2026-06-30  08:13:55 ***
+*** 2026-06-30  08:17:47 ***Wx - 1M : Available
+Wx - 1D : Available
+Wx - 2A : Available
+
+*** 2026-06-30  08:22:06 ***Wx - 1S : Available
+
+*** 2026-06-30  08:25:50 ***Wx - 2C : Available
+
+*** 2026-06-30  08:29:26 ***
+*** 2026-06-30  08:32:50 ***
+*** 2026-06-30  08:36:32 ***Wx - 1M : Active 10 minutes ago
+
+*** 2026-06-30  08:40:33 ***
+*** 2026-06-30  08:44:42 ***Wx - 1M : Available
+
+*** 2026-06-30  08:48:33 ***Wx - 2C : Active 10 minutes ago
+
+*** 2026-06-30  08:53:42 ***Wx - 1C : Available
+
+*** 2026-06-30  08:57:46 ***
+*** 2026-06-30  09:02:04 ***Wx - 1F : In a meeting
+
+*** 2026-06-30  09:06:27 ***Wx - 1M : Presenting
+Wx - 2C : Available
+
+*** 2026-06-30  09:10:35 ***Wx - 1C : Active 10 minutes ago
+
+*** 2026-06-30  09:14:53 ***
+*** 2026-06-30  09:18:36 ***Wx - 1D : Active 10 minutes ago
+Wx - 1B : Available
+Wx - 1C : Available
+
+*** 2026-06-30  09:22:56 ***
+*** 2026-06-30  09:26:58 ***
+*** 2026-06-30  09:31:34 ***Wx - 1C : Active 10 minutes ago
+
+*** 2026-06-30  09:36:40 ***Wx - 1M : In a meeting
+Wx - 1C : Available
+
+*** 2026-06-30  09:40:54 ***Wx - 1F : Available
+Wx - 1M : Available
+
+*** 2026-06-30  09:45:19 ***Wx - 1B : Active 10 minutes ago
+Wx - 1C : Active 10 minutes ago
+
+*** 2026-06-30  09:50:05 ***Wx - 2A : Active 10 minutes ago
+
+*** 2026-06-30  09:54:22 ***Wx - 1B : Available
+
+*** 2026-06-30  09:58:36 ***Wx - 1F : In a meeting
+Wx - 2A : Available
+Wx - 1C : Available
+
+*** 2026-06-30  10:03:35 ***Wx - 1M : In a meeting
+Wx - 1D : Available
+Wx - 1C : In a meeting
+
+*** 2026-06-30  10:08:16 ***Wx - 1B : Active 10 minutes ago
+Wx - 2A : In a meeting
+
+*** 2026-06-30  10:11:58 ***
+*** 2026-06-30  10:16:00 ***
+*** 2026-06-30  10:20:10 ***Wx - 1B : Available
+
+*** 2026-06-30  10:24:06 ***Wx - 1M : Available
+Wx - 2A : Available
+Wx - 1C : Available
+Wx - 2C : Active 10 minutes ago
+
+*** 2026-06-30  10:28:26 ***Wx - 1D : Active 10 minutes ago
+Wx - 2C : Available
+
+*** 2026-06-30  10:32:13 ***Wx - 1A : Active 10 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  10:36:08 ***Wx - 1A : Active 15 minutes ago | En télétravail 🏠
+Wx - 1B : In a meeting
+Wx - 2A : Active 10 minutes ago
+
+*** 2026-06-30  10:41:21 ***Wx - 1A : Active 20 minutes ago | En télétravail 🏠
+Wx - 1D : Available
+
+*** 2026-06-30  10:45:50 ***Wx - 1F : On a call
+Wx - 1A : Active 25 minutes ago | En télétravail 🏠
+Wx - 1B : On a call
+
+*** 2026-06-30  10:49:49 ***Wx - 1D : Presenting
+
+*** 2026-06-30  10:53:27 ***Wx - 1F : Available
+Wx - 1A : Available | En télétravail 🏠
+Wx - 1D : Available
+Wx - 1B : Available
+
+*** 2026-06-30  10:58:11 ***Wx - 1F : Presenting
+Wx - 1C : Active 10 minutes ago
+
+*** 2026-06-30  11:02:23 ***Wx - 2A : Available
+Wx - 1C : In a meeting
+
+*** 2026-06-30  11:06:48 ***Wx - 1F : On a call
+Wx - 1D : On a call
+Wx - 2A : In a meeting
+
+*** 2026-06-30  11:11:41 ***
+*** 2026-06-30  11:15:20 ***Wx - 1F : Available
+
+*** 2026-06-30  11:18:53 ***Wx - 1F : Presenting
+Wx - 1B : Active 10 minutes ago
+
+*** 2026-06-30  11:23:21 ***Wx - 1F : Available
+Wx - 1D : Available
+
+*** 2026-06-30  11:27:46 ***
+*** 2026-06-30  11:31:18 ***
+*** 2026-06-30  11:34:56 ***Wx - 1F : On a call
+Wx - 1B : Available
+Wx - 2A : Presenting
+
+*** 2026-06-30  11:39:06 ***Wx - 1F : Available
+Wx - 1B : Presenting
+
+*** 2026-06-30  11:43:14 ***Wx - 2C : Active 10 minutes ago
+
+*** 2026-06-30  11:46:53 ***Wx - 2C : Available
+
+*** 2026-06-30  11:50:36 ***Wx - 1B : On a call
+
+*** 2026-06-30  11:54:11 ***Wx - 1B : Available
+
+*** 2026-06-30  11:57:54 ***
+*** 2026-06-30  12:03:00 ***Wx - 2A : Available
+
+*** 2026-06-30  12:07:12 ***Wx - 1C : Available
+
+*** 2026-06-30  12:10:55 ***Wx - 1A : Active 10 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  12:15:14 ***Wx - 1A : Available | En télétravail 🏠
+Wx - 1C : Active 10 minutes ago
+Wx - 2C : Active 10 minutes ago
+
+*** 2026-06-30  12:19:39 ***Wx - 1B : Active 10 minutes ago
+
+*** 2026-06-30  12:23:07 ***Wx - 1F : On a call
+
+*** 2026-06-30  12:26:47 ***Wx - 1F : Available
+
+*** 2026-06-30  12:31:11 ***Wx - 1S : Active 10 minutes ago
+Wx - 1D : Active 10 minutes ago
+
+*** 2026-06-30  12:35:06 ***Wx - 1M : Active 10 minutes ago
+Wx - 1A : Active 10 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  12:38:58 ***Wx - 1A : Active 15 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  12:42:52 ***Wx - 1A : Active 20 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  12:46:20 ***
+*** 2026-06-30  12:50:36 ***Wx - 1A : Active 25 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  12:54:49 ***Wx - 1A : Active 30 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  12:58:33 ***Wx - 1F : Active 10 minutes ago
+Wx - 1A : Active 35 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  13:02:25 ***
+*** 2026-06-30  13:06:11 ***Wx - 1A : Active 40 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  13:09:45 ***Wx - 1A : Active 45 minutes ago | En télétravail 🏠
+Wx - 2A : Active 10 minutes ago
+
+*** 2026-06-30  13:13:54 ***Wx - 1A : Available | En télétravail 🏠
+Wx - 2A : Available
+Wx - 2C : Available
+
+*** 2026-06-30  13:17:40 ***Wx - 1D : Available
+
+*** 2026-06-30  13:21:31 ***Wx - 1S : Available
+Wx - 1A : Active 10 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  13:25:17 ***Wx - 1A : Available | En télétravail 🏠
+
+*** 2026-06-30  13:29:09 ***Wx - 1S : In a meeting
+
+*** 2026-06-30  13:33:33 ***
+*** 2026-06-30  13:37:39 ***Wx - 1D : Active 10 minutes ago
+
+*** 2026-06-30  13:41:53 ***Wx - 1F : Available
+
+*** 2026-06-30  13:45:42 ***Wx - 1B : Available
+
+*** 2026-06-30  13:49:35 ***Wx - 1F : On a call
+Wx - 1A : On a call | En télétravail 🏠
+
+*** 2026-06-30  13:53:52 ***
+*** 2026-06-30  13:57:35 ***Wx - 1D : Available
+
+*** 2026-06-30  14:01:45 ***
+*** 2026-06-30  14:06:05 ***Wx - 1S : Available
+
+*** 2026-06-30  14:10:24 ***Wx - 1F : Available
+Wx - 1A : Available | En télétravail 🏠
+Wx - 1B : Active 10 minutes ago
+
+*** 2026-06-30  14:14:42 ***
+*** 2026-06-30  14:18:10 ***
+*** 2026-06-30  14:21:45 ***
+*** 2026-06-30  14:25:16 ***
+*** 2026-06-30  14:28:44 ***Wx - 1F : In a meeting
+
+*** 2026-06-30  14:32:23 ***
+*** 2026-06-30  14:35:51 ***Wx - 1F : Presenting
+Wx - 2A : Active 10 minutes ago
+
+*** 2026-06-30  14:40:17 ***Wx - 1F : In a meeting
+Wx - 2A : Available
+
+*** 2026-06-30  14:44:35 ***
+*** 2026-06-30  14:48:43 ***Wx - 1C : Available
+
+*** 2026-06-30  14:52:15 ***Wx - 1S : On a call
+
+*** 2026-06-30  14:55:53 ***Wx - 2A : Active 10 minutes ago
+
+*** 2026-06-30  14:59:30 ***Wx - 1S : Available
+Wx - 1C : In a meeting
+
+*** 2026-06-30  15:03:03 ***Wx - 2A : Available
+
+*** 2026-06-30  15:06:36 ***
+*** 2026-06-30  15:10:59 ***Wx - 1M : Available
+Wx - 1D : On a call
+
+*** 2026-06-30  15:14:52 ***
+*** 2026-06-30  15:19:05 ***Wx - 1F : Presenting
+Wx - 1M : Active 10 minutes ago
+
+*** 2026-06-30  15:22:50 ***Wx - 1F : In a meeting
+Wx - 1D : Available
+Wx - 1B : Available
+
+*** 2026-06-30  15:27:14 ***Wx - 1F : Available
+
+*** 2026-06-30  15:31:24 ***
+*** 2026-06-30  15:35:30 ***
+*** 2026-06-30  15:39:09 ***
+*** 2026-06-30  15:43:11 ***
+*** 2026-06-30  15:46:45 ***
+*** 2026-06-30  15:50:12 ***Wx - 1F : Active 10 minutes ago
+Wx - 1C : Available
+
+*** 2026-06-30  15:54:33 ***Wx - 1F : Available
+
+*** 2026-06-30  15:58:46 ***Wx - 1M : Available
+
+*** 2026-06-30  16:02:29 ***Wx - 1D : Active 10 minutes ago
+Wx - 2A : In a meeting
+Wx - 1C : Active 10 minutes ago
+
+*** 2026-06-30  16:06:03 ***Wx - 1F : Active 10 minutes ago
+Wx - 1M : In a meeting
+Wx - 2A : Available
+
+*** 2026-06-30  16:09:51 ***Wx - 2C : 
+
+*** 2026-06-30  16:14:10 ***
+*** 2026-06-30  16:18:26 ***Wx - 1B : Do Not Disturb until 5:19 PM
+
+*** 2026-06-30  16:21:57 ***
+*** 2026-06-30  16:26:20 ***Wx - 2A : Active 10 minutes ago
+
+*** 2026-06-30  16:30:06 ***Wx - 2A : Available
+
+*** 2026-06-30  16:34:15 ***Wx - 1F : Available
+
+*** 2026-06-30  16:38:32 ***Wx - 2A : Active 10 minutes ago
+
+*** 2026-06-30  16:42:41 ***Wx - 1F : Active 10 minutes ago
+
+*** 2026-06-30  16:46:59 ***Wx - 1F : Available
+
+*** 2026-06-30  16:50:41 ***Wx - 1S : Active 10 minutes ago
+
+*** 2026-06-30  16:54:17 ***
+*** 2026-06-30  16:58:02 ***Wx - 1F : Active 10 minutes ago
+
+*** 2026-06-30  17:02:17 ***Wx - 1F : Available
+Wx - 1M : Available
+
+*** 2026-06-30  17:06:38 ***Wx - 1A : Active 10 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  17:10:26 ***Wx - 1F : Active 10 minutes ago
+Wx - 1A : Available | En télétravail 🏠
+
+*** 2026-06-30  17:14:43 ***Wx - 1B : On a call
+
+*** 2026-06-30  17:18:24 ***Wx - 1F : Available
+Wx - 1M : Active 10 minutes ago
+
+*** 2026-06-30  17:22:03 ***Wx - 1A : Active 10 minutes ago | En télétravail 🏠
+Wx - 1B : Available
+
+*** 2026-06-30  17:25:41 ***Wx - 1A : Active 15 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  17:29:57 ***Wx - 1A : Active 20 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  17:33:39 ***Wx - 1M : Available
+Wx - 1B : Active 10 minutes ago
+
+*** 2026-06-30  17:37:53 ***Wx - 1A : Active 25 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  17:41:46 ***Wx - 1F : Active 10 minutes ago
+Wx - 1A : Active 30 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  17:46:04 ***Wx - 1A : Active 35 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  17:49:38 ***Wx - 1A : Active 40 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  17:53:13 ***
+*** 2026-06-30  17:57:17 ***Wx - 1M : Active 10 minutes ago
+Wx - 1A : Active 45 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  18:01:35 ***Wx - 1A : Active 50 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  18:05:32 ***Wx - 1A : Active 55 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  18:09:55 ***Wx - 1A : Active an hour ago | En télétravail 🏠
+
+*** 2026-06-30  18:14:07 ***
+*** 2026-06-30  18:17:31 ***Wx - 1F : Available
+
+*** 2026-06-30  18:21:22 ***
+*** 2026-06-30  18:25:05 ***
+*** 2026-06-30  18:29:09 ***Wx - 1F : Active 10 minutes ago
+
+*** 2026-06-30  18:33:22 ***
+*** 2026-06-30  18:36:42 ***
+*** 2026-06-30  18:40:06 ***
+*** 2026-06-30  18:44:13 ***
+*** 2026-06-30  18:47:57 ***
+*** 2026-06-30  18:52:00 ***
+*** 2026-06-30  18:56:00 ***
+*** 2026-06-30  19:00:03 ***
+*** 2026-06-30  19:03:52 ***
+*** 2026-06-30  19:07:56 ***
+*** 2026-06-30  19:11:19 ***Wx - 1A : Active 2 hours ago | En télétravail 🏠
+
+*** 2026-06-30  19:14:42 ***Wx - 1A : Available | En télétravail 🏠
+
+*** 2026-06-30  19:18:58 ***
+*** 2026-06-30  19:22:56 ***
+*** 2026-06-30  19:26:38 ***Wx - 1A : Active 10 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  19:30:07 ***Wx - 1A : Active 15 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  19:33:42 ***Wx - 1A : Active 20 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  19:37:16 ***
+*** 2026-06-30  19:41:21 ***Wx - 1A : Active 25 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  19:45:35 ***Wx - 1A : Active 30 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  19:49:44 ***Wx - 1A : Active 35 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  19:53:52 ***Wx - 1A : Active 40 minutes ago | En télétravail 🏠
+
+*** 2026-06-30  19:58:01 ***
+*** 2026-07-01  06:58:31 ***Wx - 1D : Available
+
+*** 2026-07-01  07:03:51 ***
+*** 2026-07-01  07:07:53 ***
+*** 2026-07-01  07:11:58 ***
+*** 2026-07-01  07:15:57 ***
+*** 2026-07-01  07:19:58 ***
+*** 2026-07-01  07:23:18 ***
+*** 2026-07-01  07:27:20 ***Wx - 1D : On a call
+
+*** 2026-07-01  07:31:29 ***Wx - 1D : Available
+
+*** 2026-07-01  07:35:43 ***Wx - 1S : Available
+
+*** 2026-07-01  07:39:54 ***Wx - 1A : Available | En télétravail 🏠
+
+*** 2026-07-01  07:44:06 ***Wx - 1A : Available
+
+*** 2026-07-01  07:47:31 ***
+*** 2026-07-01  07:50:55 ***Wx - 1S : Active 10 minutes ago
+
+*** 2026-07-01  07:54:27 ***
+*** 2026-07-01  07:58:25 ***Wx - 1D : Active 10 minutes ago
+
+*** 2026-07-01  08:01:55 ***
+*** 2026-07-01  08:05:24 ***
+*** 2026-07-01  08:08:56 ***
+*** 2026-07-01  08:12:22 ***Wx - 1S : Available
+
+*** 2026-07-01  08:15:56 ***Wx - 1D : Available
+

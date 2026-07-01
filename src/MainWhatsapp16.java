@@ -827,6 +827,11 @@ public class MainWhatsapp16 {
     }
 
     public static boolean isMoreThanTenMinutes(String text) {
+        // Supprimer tout ce qui se trouve après " | " (ex: "Active 40 minutes ago | En télétravail 🏠")
+        if (text.contains(" | ")) {
+            text = text.substring(0, text.indexOf(" | ")).trim();
+        }
+
         boolean isMoreThanTenMinutes = false;
         if (text.endsWith("hour ago") || text.endsWith("hours ago")) {
             isMoreThanTenMinutes = true;
