@@ -92,212 +92,212 @@ public class MainWhatsapp13 {
                     LocalTime end = LocalTime.of(5, 30);
                     isOutOfWindow = !now.isBefore(start) && !now.isAfter(end);
 
-                        // 1) Variables préparatoires pour le compte-rendu
-                        String newLine1_FD_SP = "";
-                        String newLine11_AG = "";
-                        String newLine6_DA = "";
-                        String newLine5_BR = "";
-                        String newLine8_AM = "";
-                        String newLine12_MP = "";
-                        StringBuffer sb2 = new StringBuffer();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
-                        sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
+                    // 1) Variables préparatoires pour le compte-rendu
+                    String newLine1_FD_SP = "";
+                    String newLine11_AG = "";
+                    String newLine6_DA = "";
+                    String newLine5_BR = "";
+                    String newLine8_AM = "";
+                    String newLine12_MP = "";
+                    StringBuffer sb2 = new StringBuffer();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
+                    sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
 
-                        StringBuffer sb3 = new StringBuffer();
+                    StringBuffer sb3 = new StringBuffer();
 
-                        // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
-                        String whatsappHandle = "";
-                        for (String handle : driver.getWindowHandles()) {
-                            driver.switchTo().window(handle);
-                            if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
-                                whatsappHandle = handle;
-                                break;
-                            }
+                    // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
+                    String whatsappHandle = "";
+                    for (String handle : driver.getWindowHandles()) {
+                        driver.switchTo().window(handle);
+                        if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
+                            whatsappHandle = handle;
+                            break;
                         }
-                        driver.switchTo().window(whatsappHandle);
-                        driver.navigate().refresh();
+                    }
+                    driver.switchTo().window(whatsappHandle);
+                    driver.navigate().refresh();
 
-                        Thread.sleep(5000); // laisser WhatsApp se reconnecter
+                    Thread.sleep(5000); // laisser WhatsApp se reconnecter
 
-                        // 3) Récupérer le statut des contacts
-                        searchAndClickContact(driver, "Domon", 10);
-                        String statut = getContactStatus(driver, 5);
+                    // 3) Récupérer le statut des contacts
+                    searchAndClickContact(driver, "Domon", 10);
+                    String statut = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Park", 10);
-                        String statut2 = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Park", 10);
+                    String statut2 = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Girel", 10);
-                        String statut11 = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Girel", 10);
+                    String statut11 = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Magali", 10);
-                        String statut12 = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Magali", 10);
+                    String statut12 = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Roy", 10);
-                        String statut5 = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Roy", 10);
+                    String statut5 = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Massot", 10);
-                        String statut8 = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Massot", 10);
+                    String statut8 = getContactStatus(driver, 5);
 
-                        searchAndClickContact(driver, "Aguer", 10);
-                        String statut6 = getContactStatus(driver, 5);
+                    searchAndClickContact(driver, "Aguer", 10);
+                    String statut6 = getContactStatus(driver, 5);
 
                     // 4) Construire la nouvelle ligne et mettre à jour le flag line1Identical
-                        String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1_FD, oldStatusShorten2_SP, "1F", "1S");
-                        newLine1_FD_SP = sTab[0];
-                        oldStatusShorten1_FD = sTab[1];
-                        oldStatusShorten2_SP = sTab[2];
+                    String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1_FD, oldStatusShorten2_SP, "1F", "1S");
+                    newLine1_FD_SP = sTab[0];
+                    oldStatusShorten1_FD = sTab[1];
+                    oldStatusShorten2_SP = sTab[2];
 
-                        String[] sTab11 = generateNewLineSingle(statut11, oldStatusShorten11_AG, "1A");
-                        newLine11_AG = sTab11[0];
-                        oldStatusShorten11_AG = sTab11[1];
+                    String[] sTab11 = generateNewLineSingle(statut11, oldStatusShorten11_AG, "1A");
+                    newLine11_AG = sTab11[0];
+                    oldStatusShorten11_AG = sTab11[1];
 
-                        String[] sTab6 = generateNewLineSingle(statut6, oldStatusShorten6_DA, "1D");
-                        newLine6_DA = sTab6[0];
-                        oldStatusShorten6_DA = sTab6[1];
+                    String[] sTab6 = generateNewLineSingle(statut6, oldStatusShorten6_DA, "1D");
+                    newLine6_DA = sTab6[0];
+                    oldStatusShorten6_DA = sTab6[1];
 
-                        String[] sTab5 = generateNewLineSingle(statut5, oldStatusShorten5_BR, "1B");
-                        newLine5_BR = sTab5[0];
-                        oldStatusShorten5_BR = sTab5[1];
+                    String[] sTab5 = generateNewLineSingle(statut5, oldStatusShorten5_BR, "1B");
+                    newLine5_BR = sTab5[0];
+                    oldStatusShorten5_BR = sTab5[1];
 
-                        String[] sTab8 = generateNewLineSingle(statut8, oldStatusShorten8_AM, "2A");
-                        newLine8_AM = sTab8[0];
-                        oldStatusShorten8_AM = sTab8[1];
+                    String[] sTab8 = generateNewLineSingle(statut8, oldStatusShorten8_AM, "2A");
+                    newLine8_AM = sTab8[0];
+                    oldStatusShorten8_AM = sTab8[1];
 
-                        String[] sTab12 = generateNewLineSingle(statut12, oldStatusShorten12_MP, "1M");
-                        newLine12_MP = sTab12[0];
-                        oldStatusShorten12_MP = sTab12[1];
+                    String[] sTab12 = generateNewLineSingle(statut12, oldStatusShorten12_MP, "1M");
+                    newLine12_MP = sTab12[0];
+                    oldStatusShorten12_MP = sTab12[1];
 
-                        if (newLine1_FD_SP.equals("1F : ==:== <=> ==:== : 1S")) {
+                    if (newLine1_FD_SP.equals("1F : ==:== <=> ==:== : 1S")) {
+                        line1Identical_FD_SP = true;
+                    } else {
+                        if (oldLine1_FD_SP.equals(newLine1_FD_SP) && !newLine1_FD_SP.contains("en ligne")) {
                             line1Identical_FD_SP = true;
                         } else {
-                            if (oldLine1_FD_SP.equals(newLine1_FD_SP) && !newLine1_FD_SP.contains("en ligne")) {
-                                line1Identical_FD_SP = true;
-                            } else {
-                                line1Identical_FD_SP = false;
-                                oldLine1_FD_SP = newLine1_FD_SP;
-                            }
+                            line1Identical_FD_SP = false;
+                            oldLine1_FD_SP = newLine1_FD_SP;
                         }
+                    }
 
-                        if (newLine11_AG.equals("1A : ==:==")) {
+                    if (newLine11_AG.equals("1A : ==:==")) {
+                        line2Identical_AG = true;
+                    } else {
+                        if (oldLine2_AG.equals(newLine11_AG) && !newLine11_AG.contains("en ligne")) {
                             line2Identical_AG = true;
                         } else {
-                            if (oldLine2_AG.equals(newLine11_AG) && !newLine11_AG.contains("en ligne")) {
-                                line2Identical_AG = true;
-                            } else {
-                                line2Identical_AG = false;
-                                oldLine2_AG = newLine11_AG;
-                            }
+                            line2Identical_AG = false;
+                            oldLine2_AG = newLine11_AG;
                         }
+                    }
 
-                        if (newLine6_DA.equals("1D : ==:==")) {
+                    if (newLine6_DA.equals("1D : ==:==")) {
+                        line3Identical_DA = true;
+                    } else {
+                        if (oldLine3_DA.equals(newLine6_DA) && !newLine6_DA.contains("en ligne")) {
                             line3Identical_DA = true;
                         } else {
-                            if (oldLine3_DA.equals(newLine6_DA) && !newLine6_DA.contains("en ligne")) {
-                                line3Identical_DA = true;
-                            } else {
-                                line3Identical_DA = false;
-                                oldLine3_DA = newLine6_DA;
-                            }
+                            line3Identical_DA = false;
+                            oldLine3_DA = newLine6_DA;
                         }
+                    }
 
-                        if (newLine5_BR.equals("1B : ==:==")) {
+                    if (newLine5_BR.equals("1B : ==:==")) {
+                        line4Identical_BR = true;
+                    } else {
+                        if (oldLine4_BR.equals(newLine5_BR) && !newLine5_BR.contains("en ligne")) {
                             line4Identical_BR = true;
                         } else {
-                            if (oldLine4_BR.equals(newLine5_BR) && !newLine5_BR.contains("en ligne")) {
-                                line4Identical_BR = true;
-                            } else {
-                                line4Identical_BR = false;
-                                oldLine4_BR = newLine5_BR;
-                            }
+                            line4Identical_BR = false;
+                            oldLine4_BR = newLine5_BR;
                         }
+                    }
 
-                        if (newLine8_AM.equals("2A : ==:==")) {
+                    if (newLine8_AM.equals("2A : ==:==")) {
+                        line5Identical_AM = true;
+                    } else {
+                        if (oldLine5_AM.equals(newLine8_AM) && !newLine8_AM.contains("en ligne")) {
                             line5Identical_AM = true;
                         } else {
-                            if (oldLine5_AM.equals(newLine8_AM) && !newLine8_AM.contains("en ligne")) {
-                                line5Identical_AM = true;
-                            } else {
-                                line5Identical_AM = false;
-                                oldLine5_AM = newLine8_AM;
-                            }
+                            line5Identical_AM = false;
+                            oldLine5_AM = newLine8_AM;
                         }
+                    }
 
-                        if (newLine12_MP.equals("1M : ==:==")) {
+                    if (newLine12_MP.equals("1M : ==:==")) {
+                        line6Identical_MP = true;
+                    } else {
+                        if (oldLine6_MP.equals(newLine12_MP) && !newLine12_MP.contains("en ligne")) {
                             line6Identical_MP = true;
                         } else {
-                            if (oldLine6_MP.equals(newLine12_MP) && !newLine12_MP.contains("en ligne")) {
-                                line6Identical_MP = true;
-                            } else {
-                                line6Identical_MP = false;
-                                oldLine6_MP = newLine12_MP;
-                            }
+                            line6Identical_MP = false;
+                            oldLine6_MP = newLine12_MP;
                         }
+                    }
 
-                        // 5) Gérer la sortie / envoi si changement détecté
-                        if (line1Identical_FD_SP) {
-                            String time = sb2.toString();
-                            sb2 = new StringBuffer();
-                            sb2.append("_").append(time).append("_").append(System.lineSeparator());
-                        } else {
-                            if (newRestart) {
-                                sb2.append(" (restart)");
-                                sb3.append("restart : ");
-                                newRestart = false;
-                            }
-                            if (!line1Identical_FD_SP) {
-                                    sb2.append(System.lineSeparator()).append(oldLine1_FD_SP).append(System.lineSeparator());
-                                    sb3.append(oldLine1_FD_SP).append(System.lineSeparator());
-                            }
-                            searchAndClickContact(driver, "YAN WANG", 10);
-                            sendMessage(driver, sb3.toString(), 5);
+                    // 5) Gérer la sortie / envoi si changement détecté
+                    if (line1Identical_FD_SP) {
+                        String time = sb2.toString();
+                        sb2 = new StringBuffer();
+                        sb2.append("_").append(time).append("_").append(System.lineSeparator());
+                    } else {
+                        if (newRestart) {
+                            sb2.append(" (restart)");
+                            sb3.append("restart : ");
+                            newRestart = false;
                         }
-
-                        if (!line2Identical_AG) {
-                            sb2.append(oldLine2_AG).append(System.lineSeparator());
-                            sb3.setLength(0);
-                            sb3.append(oldLine2_AG).append(System.lineSeparator());
-
-                            searchAndClickContact(driver, "YAN WANG", 10);
-                            sendMessage(driver, sb3.toString(), 5);
+                        if (!line1Identical_FD_SP) {
+                            sb2.append(System.lineSeparator()).append(oldLine1_FD_SP).append(System.lineSeparator());
+                            sb3.append(oldLine1_FD_SP).append(System.lineSeparator());
                         }
+                        searchAndClickContact(driver, "YAN WANG", 10);
+                        sendMessage(driver, sb3.toString(), 5);
+                    }
 
-                        if (!line6Identical_MP) {
-                            sb2.append(oldLine6_MP).append(System.lineSeparator());
-                            sb3.setLength(0);
-                            sb3.append(oldLine6_MP).append(System.lineSeparator());
+                    if (!line2Identical_AG) {
+                        sb2.append(oldLine2_AG).append(System.lineSeparator());
+                        sb3.setLength(0);
+                        sb3.append(oldLine2_AG).append(System.lineSeparator());
 
-                            searchAndClickContact(driver, "YAN WANG", 10);
-                            sendMessage(driver, sb3.toString(), 5);
+                        searchAndClickContact(driver, "YAN WANG", 10);
+                        sendMessage(driver, sb3.toString(), 5);
+                    }
+
+                    if (!line6Identical_MP) {
+                        sb2.append(oldLine6_MP).append(System.lineSeparator());
+                        sb3.setLength(0);
+                        sb3.append(oldLine6_MP).append(System.lineSeparator());
+
+                        searchAndClickContact(driver, "YAN WANG", 10);
+                        sendMessage(driver, sb3.toString(), 5);
+                    }
+
+                    if (!line3Identical_DA || !line4Identical_BR || !line5Identical_AM) {
+                        sb3.setLength(0);
+                        if (!line3Identical_DA) {
+                            sb2.append(oldLine3_DA);
+                            sb3.append(oldLine3_DA);
                         }
-
-                        if (!line3Identical_DA || !line4Identical_BR || !line5Identical_AM) {
-                            sb3.setLength(0);
+                        if (!line4Identical_BR) {
                             if (!line3Identical_DA) {
-                                sb2.append(oldLine3_DA);
-                                sb3.append(oldLine3_DA);
+                                sb2.append(" -- ").append(oldLine4_BR);
+                                sb3.append(" -- ").append(oldLine4_BR);
+                            } else {
+                                sb2.append(oldLine4_BR);
+                                sb3.append(oldLine4_BR);
                             }
-                            if (!line4Identical_BR) {
-                                if (!line3Identical_DA) {
-                                    sb2.append(" -- ").append(oldLine4_BR);
-                                    sb3.append(" -- ").append(oldLine4_BR);
-                                } else {
-                                    sb2.append(oldLine4_BR);
-                                    sb3.append(oldLine4_BR);
-                                }
-                            }
-                            if (!line5Identical_AM) {
-                                if (!line3Identical_DA || !line4Identical_BR) {
-                                    sb2.append(" -- ").append(oldLine5_AM);
-                                    sb3.append(" -- ").append(oldLine5_AM);
-                                } else {
-                                    sb2.append(oldLine5_AM);
-                                    sb3.append(oldLine5_AM);
-                                }
-                            }
-                            searchAndClickContact(driver, "YAN WANG", 10);
-                            sendMessage(driver, sb3.toString(), 5);
                         }
-                        writeResultToFile(sb2);
+                        if (!line5Identical_AM) {
+                            if (!line3Identical_DA || !line4Identical_BR) {
+                                sb2.append(" -- ").append(oldLine5_AM);
+                                sb3.append(" -- ").append(oldLine5_AM);
+                            } else {
+                                sb2.append(oldLine5_AM);
+                                sb3.append(oldLine5_AM);
+                            }
+                        }
+                        searchAndClickContact(driver, "YAN WANG", 10);
+                        sendMessage(driver, sb3.toString(), 5);
+                    }
+                    writeResultToFile(sb2);
                 } catch (Exception e) {
                     System.err.println("Erreur pendant l'exécution de la tâche : " + e.getMessage());
                 } finally {
@@ -518,11 +518,12 @@ public class MainWhatsapp13 {
         // 3) Taper le nom du contact
         searchBar.sendKeys(contactName);
 
-        // 3) Attendre que les résultats apparaissent (au moins un <span @title>)
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//span[@title]"), 0));
+        // 4) Attendre que les résultats apparaissent (au moins un span porteur d'un @title)
         Thread.sleep(1500);
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//span[@title]"), 0));
 
-        // 4) Cliquer sur le premier résultat avec gestion de StaleElementReferenceException
+        // 5) Cliquer sur le résultat correspondant au nom recherché (à défaut, le premier)
+        //    pour afficher la conversation à droite.
         int attempts = 0;
         while (attempts < 3) {
             try {
@@ -530,16 +531,29 @@ public class MainWhatsapp13 {
                 if (results.isEmpty()) {
                     throw new RuntimeException("Aucun résultat trouvé pour " + contactName);
                 }
-                results.get(0).click();
+                // On privilégie la ligne dont le titre contient le nom recherché.
+                WebElement cible = null;
+                for (WebElement r : results) {
+                    String titre = r.getAttribute("title");
+                    if (titre != null
+                            && titre.toLowerCase().contains(contactName.toLowerCase())) {
+                        cible = r;
+                        break;
+                    }
+                }
+                if (cible == null) {
+                    cible = results.get(0);
+                }
+                try {
+                    cible.click();
+                } catch (ElementClickInterceptedException ce) {
+                    // clic de secours via JavaScript si un élément intercepte le clic
+                    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", cible);
+                }
                 return;
             } catch (StaleElementReferenceException e) {
                 attempts++;
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    throw new RuntimeException("Interrupted during retry", ie);
-                }
+                Thread.sleep(500);
             }
         }
         throw new RuntimeException("Impossible de cliquer sur le premier résultat après plusieurs tentatives");
