@@ -507,7 +507,7 @@ public class MainWhatsapp13 {
 
         // 1) Cliquer sur la barre de recherche
         //WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@contenteditable='true' and @data-tab='3']")));
-        WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[3]/div/div[3]/div/div[1]/div[1]/div/div/div/div/div/div[2]/input")));
+        WebElement searchBar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='side']//div[@contenteditable='true'] | //div[@id='side']//input[not(@type='hidden')] | //div[@contenteditable='true' and @data-tab='3']")));
 
         searchBar.click();
 
