@@ -491,7 +491,7 @@ public class MainWhatsapp13 {
 
         Thread.sleep(6000);
         //By statusLocator = By.xpath("//header//span[@dir='auto' and starts-with(@title,'en ligne')]");
-        By statusLocator = By.xpath("/html/body/div[1]/div/div/div/div/div[3]/div/div[4]/div/header/div[1]/div[2]/div[2]/span");
+        By statusLocator = By.xpath("//div[@id='main']//header//span[starts-with(text(),'en ligne')] | //div[@id='main']//header//span[starts-with(@title,'en ligne')] | //header//span[@dir='auto' and starts-with(@title,'en ligne')]");
 
 
         if (statusLocator != null) {
