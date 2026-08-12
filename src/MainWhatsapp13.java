@@ -108,16 +108,33 @@ public class MainWhatsapp13 {
                     // 2) Revenir sur l’onglet WhatsApp (au cas où on serait ailleurs)
                     String whatsappHandle = "";
                     for (String handle : driver.getWindowHandles()) {
-                        driver.switchTo().window(handle);
-                        if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
-                            whatsappHandle = handle;
-                            break;
+                        try {
+                            driver.switchTo().window(handle);
+                            if (driver.getCurrentUrl().startsWith("https://web.whatsapp.com/")) {
+                                whatsappHandle = handle;
+                                break;
+                            }
+                        } catch (Exception e) {
+                            // onglet qui ne répond pas : on l'ignore et on passe au suivant
                         }
                     }
+                    if (whatsappHandle.isEmpty()) {
+                        System.err.println("Onglet WhatsApp introuvable, on saute ce tour.");
+                        return; // le bloc finally reprogramme quand même le prochain passage
+                    }
                     driver.switchTo().window(whatsappHandle);
-                    driver.navigate().refresh();
 
-                    Thread.sleep(5000); // laisser WhatsApp se reconnecter
+                    // On NE recharge PLUS la page à chaque tour (source de gel).
+                    // On attend simplement que l'interface soit prête ; refresh de secours seulement si besoin.
+                    By sideReady = By.xpath("//div[@id='side']//div[@contenteditable='true'] | //div[@id='side']//input[not(@type='hidden')]");
+                    try {
+                        new WebDriverWait(driver, Duration.ofSeconds(20))
+                                .until(ExpectedConditions.presenceOfElementLocated(sideReady));
+                    } catch (TimeoutException te) {
+                        driver.navigate().refresh();
+                        new WebDriverWait(driver, Duration.ofSeconds(30))
+                                .until(ExpectedConditions.presenceOfElementLocated(sideReady));
+                    }
 
                     // 3) Récupérer le statut des contacts
                     searchAndClickContact(driver, "Domon", 10);
@@ -493,11 +510,12 @@ public class MainWhatsapp13 {
         //By statusLocator = By.xpath("//header//span[@dir='auto' and starts-with(@title,'en ligne')]");
         By statusLocator = By.xpath("//div[@id='main']//header//span[starts-with(text(),'en ligne')] | //div[@id='main']//header//span[starts-with(@title,'en ligne')] | //header//span[@dir='auto' and starts-with(@title,'en ligne')]");
 
-
-        if (statusLocator != null) {
+        // Si le statut n'apparaît pas (contact masquant son "vu à…", page lente,
+        // commande figée…), on renvoie "empty" au lieu de faire planter tout le tour.
+        try {
             WebElement statusElem = wait.until(ExpectedConditions.visibilityOfElementLocated(statusLocator));
             return statusElem.getText().trim();
-        } else {
+        } catch (Exception e) {
             return "empty";
         }
     }
