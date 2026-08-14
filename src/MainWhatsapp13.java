@@ -37,20 +37,20 @@ public class MainWhatsapp13 {
     private static String oldStatusShorten8_AM = "";
     private static String oldStatusShorten11_AG = "";
     private static String oldStatusShorten12_MP = "";
-    private static String oldLine1_FD_SP = "";
+    private static String oldLine1_FD_MP = "";
     private static String oldLine2_AG = "";
     private static String oldLine3_DA = "";
     private static String oldLine4_BR = "";
     private static String oldLine5_AM = "";
-    private static String oldLine6_MP = "";
+    private static String oldLine6_SP = "";
 
     // Flags pour indiquer si les lignes sont identiques
-    private static boolean line1Identical_FD_SP = false;
+    private static boolean line1Identical_FD_MP = false;
     private static boolean line2Identical_AG = false;
     private static boolean line3Identical_DA = false;
     private static boolean line4Identical_BR = false;
     private static boolean line5Identical_AM = false;
-    private static boolean line6Identical_MP = false;
+    private static boolean line6Identical_SP = false;
     private static boolean isOutOfWindow = false;
     private static boolean newRestart = true;
 
@@ -93,12 +93,12 @@ public class MainWhatsapp13 {
                     isOutOfWindow = !now.isBefore(start) && !now.isAfter(end);
 
                     // 1) Variables préparatoires pour le compte-rendu
-                    String newLine1_FD_SP = "";
+                    String newLine1_FD_MP = "";
                     String newLine11_AG = "";
                     String newLine6_DA = "";
                     String newLine5_BR = "";
                     String newLine8_AM = "";
-                    String newLine12_MP = "";
+                    String newLine12_SP = "";
                     StringBuffer sb2 = new StringBuffer();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm:ss");
                     sb2.append("*** ").append(LocalDateTime.now().format(formatter)).append(" ***");
@@ -140,14 +140,14 @@ public class MainWhatsapp13 {
                     searchAndClickContact(driver, "Domon", 10);
                     String statut = getContactStatus(driver, 5);
 
+                    searchAndClickContact(driver, "Magali", 10);
+                    String statut12 = getContactStatus(driver, 5);
+
                     searchAndClickContact(driver, "Park", 10);
                     String statut2 = getContactStatus(driver, 5);
 
                     searchAndClickContact(driver, "Girel", 10);
                     String statut11 = getContactStatus(driver, 5);
-
-                    searchAndClickContact(driver, "Magali", 10);
-                    String statut12 = getContactStatus(driver, 5);
 
                     searchAndClickContact(driver, "Roy", 10);
                     String statut5 = getContactStatus(driver, 5);
@@ -159,10 +159,10 @@ public class MainWhatsapp13 {
                     String statut6 = getContactStatus(driver, 5);
 
                     // 4) Construire la nouvelle ligne et mettre à jour le flag line1Identical
-                    String[] sTab = generateNewLine(statut, statut2, oldStatusShorten1_FD, oldStatusShorten2_SP, "1F", "1S");
-                    newLine1_FD_SP = sTab[0];
+                    String[] sTab = generateNewLine(statut, statut12, oldStatusShorten1_FD, oldStatusShorten12_MP, "1F", "1M");
+                    newLine1_FD_MP = sTab[0];
                     oldStatusShorten1_FD = sTab[1];
-                    oldStatusShorten2_SP = sTab[2];
+                    oldStatusShorten12_MP = sTab[2];
 
                     String[] sTab11 = generateNewLineSingle(statut11, oldStatusShorten11_AG, "1A");
                     newLine11_AG = sTab11[0];
@@ -180,18 +180,18 @@ public class MainWhatsapp13 {
                     newLine8_AM = sTab8[0];
                     oldStatusShorten8_AM = sTab8[1];
 
-                    String[] sTab12 = generateNewLineSingle(statut12, oldStatusShorten12_MP, "1M");
-                    newLine12_MP = sTab12[0];
-                    oldStatusShorten12_MP = sTab12[1];
+                    String[] sTab12 = generateNewLineSingle(statut2, oldStatusShorten2_SP, "1S");
+                    newLine12_SP = sTab12[0];
+                    oldStatusShorten2_SP = sTab12[1];
 
-                    if (newLine1_FD_SP.equals("1F : ==:== <=> ==:== : 1S")) {
-                        line1Identical_FD_SP = true;
+                    if (newLine1_FD_MP.equals("1F : ==:== <=> ==:== : 1M")) {
+                        line1Identical_FD_MP = true;
                     } else {
-                        if (oldLine1_FD_SP.equals(newLine1_FD_SP) && !newLine1_FD_SP.contains("en ligne")) {
-                            line1Identical_FD_SP = true;
+                        if (oldLine1_FD_MP.equals(newLine1_FD_MP) && !newLine1_FD_MP.contains("en ligne")) {
+                            line1Identical_FD_MP = true;
                         } else {
-                            line1Identical_FD_SP = false;
-                            oldLine1_FD_SP = newLine1_FD_SP;
+                            line1Identical_FD_MP = false;
+                            oldLine1_FD_MP = newLine1_FD_MP;
                         }
                     }
 
@@ -239,19 +239,19 @@ public class MainWhatsapp13 {
                         }
                     }
 
-                    if (newLine12_MP.equals("1M : ==:==")) {
-                        line6Identical_MP = true;
+                    if (newLine12_SP.equals("1S : ==:==")) {
+                        line6Identical_SP = true;
                     } else {
-                        if (oldLine6_MP.equals(newLine12_MP) && !newLine12_MP.contains("en ligne")) {
-                            line6Identical_MP = true;
+                        if (oldLine6_SP.equals(newLine12_SP) && !newLine12_SP.contains("en ligne")) {
+                            line6Identical_SP = true;
                         } else {
-                            line6Identical_MP = false;
-                            oldLine6_MP = newLine12_MP;
+                            line6Identical_SP = false;
+                            oldLine6_SP = newLine12_SP;
                         }
                     }
 
                     // 5) Gérer la sortie / envoi si changement détecté
-                    if (line1Identical_FD_SP) {
+                    if (line1Identical_FD_MP) {
                         String time = sb2.toString();
                         sb2 = new StringBuffer();
                         sb2.append("_").append(time).append("_").append(System.lineSeparator());
@@ -261,9 +261,9 @@ public class MainWhatsapp13 {
                             sb3.append("restart : ");
                             newRestart = false;
                         }
-                        if (!line1Identical_FD_SP) {
-                            sb2.append(System.lineSeparator()).append(oldLine1_FD_SP).append(System.lineSeparator());
-                            sb3.append(oldLine1_FD_SP).append(System.lineSeparator());
+                        if (!line1Identical_FD_MP) {
+                            sb2.append(System.lineSeparator()).append(oldLine1_FD_MP).append(System.lineSeparator());
+                            sb3.append(oldLine1_FD_MP).append(System.lineSeparator());
                         }
                         searchAndClickContact(driver, "YAN WANG", 10);
                         sendMessage(driver, sb3.toString(), 5);
@@ -278,10 +278,10 @@ public class MainWhatsapp13 {
                         sendMessage(driver, sb3.toString(), 5);
                     }
 
-                    if (!line6Identical_MP) {
-                        sb2.append(oldLine6_MP).append(System.lineSeparator());
+                    if (!line6Identical_SP) {
+                        sb2.append(oldLine6_SP).append(System.lineSeparator());
                         sb3.setLength(0);
-                        sb3.append(oldLine6_MP).append(System.lineSeparator());
+                        sb3.append(oldLine6_SP).append(System.lineSeparator());
 
                         searchAndClickContact(driver, "YAN WANG", 10);
                         sendMessage(driver, sb3.toString(), 5);
@@ -321,8 +321,8 @@ public class MainWhatsapp13 {
                     // 6) À la fin de l'exécution de ce tour, on calcule le délai d'attente avant le prochain
                     long nextDelay;
                     if (isOutOfWindow) {
-                        if (line1Identical_FD_SP && line2Identical_AG) {
-                            if (!line4Identical_BR || !line5Identical_AM || !line6Identical_MP) {
+                        if (line1Identical_FD_MP && line2Identical_AG) {
+                            if (!line4Identical_BR || !line5Identical_AM || !line6Identical_SP) {
                                 // si identique → 4 minutes
                                 nextDelay = 240;
                             } else {
@@ -334,8 +334,8 @@ public class MainWhatsapp13 {
                             nextDelay = 60;
                         }
                     } else {
-                        if (line1Identical_FD_SP && line2Identical_AG) {
-                            if (!line4Identical_BR || !line5Identical_AM || !line6Identical_MP) {
+                        if (line1Identical_FD_MP && line2Identical_AG) {
+                            if (!line4Identical_BR || !line5Identical_AM || !line6Identical_SP) {
                                 // si identique → 1.5 minutes
                                 nextDelay = 90;
                             } else {
