@@ -269,19 +269,19 @@ public class MainWhatsapp13 {
                         sendMessage(driver, sb3.toString(), 5);
                     }
 
-                    if (!line2Identical_AG) {
-                        sb2.append(oldLine2_AG).append(System.lineSeparator());
+                    if (!line6Identical_SP) {
+                        sb2.append(oldLine6_SP).append(System.lineSeparator());
                         sb3.setLength(0);
-                        sb3.append(oldLine2_AG).append(System.lineSeparator());
+                        sb3.append(oldLine6_SP).append(System.lineSeparator());
 
                         searchAndClickContact(driver, "YAN WANG", 10);
                         sendMessage(driver, sb3.toString(), 5);
                     }
 
-                    if (!line6Identical_SP) {
-                        sb2.append(oldLine6_SP).append(System.lineSeparator());
+                    if (!line2Identical_AG) {
+                        sb2.append(oldLine2_AG).append(System.lineSeparator());
                         sb3.setLength(0);
-                        sb3.append(oldLine6_SP).append(System.lineSeparator());
+                        sb3.append(oldLine2_AG).append(System.lineSeparator());
 
                         searchAndClickContact(driver, "YAN WANG", 10);
                         sendMessage(driver, sb3.toString(), 5);
